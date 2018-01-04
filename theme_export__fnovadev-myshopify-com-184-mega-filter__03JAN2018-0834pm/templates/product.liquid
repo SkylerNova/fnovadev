@@ -1,0 +1,16 @@
+{% include '_product' %}
+{% include 'nosto-element' with 'productpage-nosto-3' %}
+
+{% include 'nosto-element' with 'productpage-nosto-1' %}
+
+{% include 'nosto-element' with 'productpage-nosto-2' %}
+<!-- brontoBrowseObject:start -->
+<script>
+  (function(window) {
+    var BROWSE_PRODUCT = "brontoBrowseObject";
+    window[BROWSE_PRODUCT] = {
+      product: {{ product | json }}
+    };
+  })(window);
+</script>
+<!-- brontoBrowseObject:end -->

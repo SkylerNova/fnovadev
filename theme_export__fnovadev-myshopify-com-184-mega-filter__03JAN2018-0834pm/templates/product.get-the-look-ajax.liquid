@@ -1,0 +1,4 @@
+{% layout none %}
+{% if product.available %}
+{% include 'product_item', currentProduct: product, quickview: false, isCarousel: true, miniView: true %}
+{% endif %}

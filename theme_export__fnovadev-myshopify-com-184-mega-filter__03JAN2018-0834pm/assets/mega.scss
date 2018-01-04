@@ -1,0 +1,211 @@
+//transitions
+.blur {
+  filter: blur(8px);
+  transition: filter .4s;
+  transition-delay: .2s;
+}
+.unblur {
+  filter: none;
+  transition: filter .3s;
+  transition-delay: .1s;
+}
+
+//mega menu
+.menu-container {
+  margin: 0 auto;
+  background: #000;
+}
+.menu-mobile {
+  display: none;
+}
+.menu > ul {
+  margin: 0 auto;
+  width: 100%;
+  list-style: none;
+  padding: 0 10%;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+}
+.menu > ul > li {
+  position: static;
+  float: left;
+  background: #000;
+  padding: 0 2%;
+  margin: 0;
+}
+.menu > ul > li a {
+  text-decoration: none;
+  padding: 1em 0;
+  display: block;
+}
+.menu > ul > li:hover {
+  background: #000;
+}
+.menu > ul > li > ul {
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-bottom: 0;
+  padding-top: 0;
+  max-height: 0;
+  z-index: 99;
+  transition: max-height .3s, padding-bottom .4s, padding-top .4s;
+  overflow: hidden;
+  width: 100%;
+  background: rgba(255,255,255,0.9);
+  position: absolute;
+  left: 0;
+  margin: 0;
+  list-style: none;
+  box-sizing: border-box;
+}
+.menu > ul > li:hover > ul {
+  padding-bottom: 20px;
+  padding-top: 20px;
+  max-height: 1000px;
+  transition: max-height .3s, padding-bottom .3s, padding-top .3s;
+  transition-delay: .2s;
+}
+.menu > ul > li > ul:before,
+.menu > ul > li > ul:after {
+  content: "";
+  display: table;
+}
+.menu > ul > li > ul:after {
+  clear: both;
+}
+.menu > ul > li > ul > li {
+  height: 100%;
+  text-align: left;
+  margin: 0;
+  padding-bottom: 0;
+  list-style: none;
+  background: none;
+  float: left;
+  padding-bottom: 1000px;
+  margin-bottom: -1000px;
+}
+.menu > ul > li > ul > li a {
+  color: #000;
+  padding: .2em 0;
+  width: 95%;
+  display: block;
+}
+.menu > ul > li > ul > li > a{
+  border-bottom: 1px solid #000;
+  font-size: 16px;
+}
+.menu > ul > li  > ul > li:not(:last-of-type) {
+  border-right: 1px solid #ddd;
+}
+.menu > ul > li > ul > li > ul {
+  display: block;
+  padding: 0;
+  margin: 10px 0 0;
+  list-style: none;
+  box-sizing: border-box;
+}
+.menu > ul > li > ul > li > ul:before,
+.menu > ul > li > ul > li > ul:after {
+  content: "";
+  display: table;
+}
+.menu > ul > li > ul > li > ul:after {
+  clear: both;
+}
+.menu > ul > li > ul > li > ul > li {
+  word-wrap: break-word;
+  word-break: keep-all;
+  text-transform: capitalize;
+  font-family: "proxima-nova",sans-serif;
+  text-align: left;
+  float: left;
+  width: 100%;
+  padding: 2px 0;
+  margin: 0;
+  font-size: 1em;
+}
+.menu > ul > li > ul > li:not(:first-of-type) {
+  padding-left: 21px;
+}
+.menu > ul > li > ul > li > ul > li a {
+  font-weight: normal;
+  border: 0;
+}
+.menu > ul > li > ul > li > ul > li:first-child > a{
+  font-family: 'Oswald', sans-serif;
+  padding: .2em 0;
+  width: calc(100% - 10px);
+  display: block;
+  font-weight: bold;
+  border-bottom: 1px solid #000;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+.menu > ul > li > ul > li img {
+  width: 100%;
+}
+.menu > ul > li:nth-of-type(1) > ul > li img {
+  max-height: 500px;
+  max-width: 500px;
+}
+
+//mega sizing
+.menu > ul > li .mega-large-image {
+  padding-left: 15% !important;
+  padding-right: 15% !important;
+}
+.single, .stacked {
+  width: calc(12.5% - 22px);
+}
+.double {
+  width: calc(25% - 22px);
+}
+.mega-large-image .single, .mega-large-image .stacked {
+  width: calc(16.6666% - 22px);
+}
+.mega-large-image .double {
+  width: calc(33.3333% - 22px);
+}
+.mega-med-image .single, .mega-large-image .stacked {
+  width: calc(15% - 22px);
+}
+.mega-med-image .double {
+  width: calc(30% - 22px);
+}
+.double > ul > li:not(:first-of-type) {
+  width: 50%;
+  float: left;
+}
+.double > ul > li:first-of-type {
+  width: 100%;
+}
+.smallR a, .bigR a, .medR a, .smallL a, .bigL a, .medL a {
+  border-bottom: none !important;
+}
+.smallR, .bigR, .medR {
+  padding-left: 21px;
+}
+.smallL, .bigL, .medL {
+  padding-right: 21px;
+}
+.smallL, .smallR{
+  width: calc(25% - 22px);
+}
+.bigL, .bigR{
+  width: calc(66.6666% - 22px);
+}
+.medL, .medR{
+  width: calc(40% - 22px);
+}
+
+//mega-mobile
+@media only screen and (max-width: 1078px) {
+  .menu-mobile {
+    display: block;
+  }
+  .menu > ul {
+    display: none;
+  }
+}

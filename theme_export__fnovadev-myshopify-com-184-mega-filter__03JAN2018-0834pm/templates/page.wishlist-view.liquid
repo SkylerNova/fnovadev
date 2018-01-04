@@ -1,0 +1,77 @@
+<style>
+	#my-wishlist {text-align: center;}
+	#my-wishlist h1 {margin-top: 30px;}
+	#my-wishlist .grid__item {margin-bottom: 30px;}
+	#my-wishlist .grid__item .wrap {background: #f5f5f5; padding: 10px;}
+	#my-wishlist .loading {margin-top: 50px; margin-bottom: 50px;}
+	#my-wishlist .loading img {width: auto;}
+	#my-wishlist img {width: 100%;}
+	#my-wishlist .title {font-weight: bold; margin-top: 15px;}
+	#my-wishlist .removeButton {text-transform: uppercase; font-weight: bold; font-size: 10px; margin-bottom: 10px;}
+	#my-wishlist .variant-title, #my-wishlist .addButton {margin: 10px 0;}
+	#my-wishlist .login {margin-bottom: 45px;}
+	#my-wishlist .share {margin-bottom: 20px;}
+	#my-wishlist .share ul {list-style: none;}
+	#my-wishlist .share li {display: inline; margin-left: 15px;}
+  	#my-wishlist .share li:first-of-type {margin-left: 0;}
+	#my-wishlist .share i {width: 42px; height: 42px; background: #000; color: #fff; border-radius: 100%; padding-top: 11px; font-size: 20px; box-sizing: border-box;}
+	.isNotMobile #my-wishlist .share i:hover {opacity: 0.5; filter: alpha(opacity=50)}
+</style>
+
+<script>
+	$(function(){
+		var getQueryParam = function(name, url) {
+			if (!url) url = window.location.href;
+			name = name.replace(/[\[\]]/g, "\\$&");
+			var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+				results = regex.exec(url);
+			if (!results) return null;
+			if (!results[2]) return '';
+			return decodeURIComponent(results[2].replace(/\+/g, " "));
+		}
+
+		var noImageUrl = '{{ 'wishlist-no-image.gif' | asset_url }}';
+		var cid = getQueryParam('cid');
+		if(cid && cid!="") {
+			wishlist.getCustomerWishlist(cid, function(data){
+				$('#my-wishlist h1').html( (data.customer!="" ? data.customer+"'s " : "") + 'Favorites' ); //Title
+				$('#my-wishlist .loading').hide();
+
+				if(data.items.length > 0) {
+					$.each(data.items, function(index, product){
+						product.img = (product.img=='no-image' ? noImageUrl : product.img);
+						$("#wishlistTemplate").tmpl(product).appendTo("#my-wishlist .wishlistItems");
+					});
+				} else {
+					$("#my-wishlist .wishlistItems").html('<div class="grid__item">The wishlist is empty.</div>');
+				}
+			});
+		}
+	});
+</script>
+
+<div id="my-wishlist">
+	<div class="container">
+		<h1>Favorites</h1>
+
+		<div class="loading"><img src="{{ 'wishlist-loading.gif' | asset_url }}"></div>
+		<div class="wishlistItems grid-uniform"></div>
+
+		<script id="wishlistTemplate" type="text/x-jquery-tmpl">
+			<div class="grid__item one-quarter medium-down--one-half tmpl">
+				<div class="wrap">
+					<form action="/cart/add" method="post">
+						<input type="hidden" name="id" value="${variant.id}" />
+						<a href="/products/${handle}?variant=${variant.id}">
+							<div><img src="${img}" /></div>
+							<div class="title">${title}</div>
+						</a>
+						<div class="variant-title">${variant.title}</div>
+						<div class="price">$${variant.price}</div>
+						<div class="addButton"><input type="submit" class="btn" value="Add to Cart" /></div>
+					</form>
+				</div>
+			</div>
+		</script>
+	</div>
+</div>

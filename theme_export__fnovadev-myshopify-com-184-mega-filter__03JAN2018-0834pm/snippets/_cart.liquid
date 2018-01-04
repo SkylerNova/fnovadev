@@ -1,0 +1,88 @@
+{% if cart.items == empty %} 
+    <div class="empty"><i class="fa fa-shopping-cart"></i><br /><a href="/collections/new">- Your shopping cart is empty. Click here to start shopping! -</a></div>
+{% else %}
+	<h1>MY BAG</h1>
+
+    <form action="/cart" method="post" id="cartform" class="clearfix">
+      
+      <div class="clearfix">
+        <div class="left small--one-whole">
+        	{% if settings.allow_note %}	
+              <div id="checkout-addnote">
+                <div>
+                  <input type="checkbox" id="chk-is-gift" class="checkbox-custom" {% if cart.note != nil and cart.note != "" %} checked="checked" {% endif %} />
+                  <label for="chk-is-gift" class="checkbox-custom-label animation">Add special instructions to your order</label>
+                </div>
+                <div id="gift-note">
+                  <textarea id="note" name="note" maxlength="100">{{ cart.note }}</textarea>
+                </div>
+              </div>
+          	{% endif %}
+        </div>
+        <div class="right small--one-whole">
+        	<div class="bottom-btns text-right small--text-center">
+              <div class="checkout-button"><input type="submit" id="update-cart" class="btn animation" name="checkout" value="Checkout" /></div>
+              {% if additional_checkout_buttons %}
+              	<div id="additional-checkout-buttons">{{ content_for_additional_checkout_buttons }}</div>
+              {% endif %}
+              <div class="continue-button"><a href="/">Continue Shopping</a></div>
+            </div>
+        </div>
+      </div>
+      
+      <table>
+        <thead class="small--hide">
+          <tr class="top-labels">
+            <th class="text-left">Item</th>
+            <th>Remove</th>
+            <th>Save for later</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for item in cart.items %}
+        	{% include '_cart-item' %}
+        {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6" class="small--text-center" style="">
+              Subtotal <b>{{ cart.total_price | money }}</b>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+
+      {% if settings.cart_additional_msg != "" %}
+      <div class="additional-message">{{ settings.cart_additional_msg }}</div>
+      {% endif %}
+
+      {% if settings.cart_return_policy != "" %}
+      <div id="return-policy"><div class="title">Return Policy</div>{{ settings.cart_return_policy }}</div>
+      <div class="return-policy-button"><a href="#" onclick="$.fancybox({href: '#return-policy' }); return false;">RETURN POLICY</a></div>
+      {% endif%}
+
+    </form>
+
+	{% include 'shipping-calculator' %}
+	
+	{% capture checkout %}{{ shop.url }}/cart/{% for item in cart.items %}{{ item.variant.id }}:{{ item.quantity }}{% unless forloop.last %},{% endunless %}{% endfor %}{% endcapture %}
+    
+	{{ 'clipboard.min.js' | asset_url | script_tag }}
+	{% include 'social_sharing', urlToShare:checkout %}
+    <script>
+      $(function(){
+        $('.share-cart').click(function(event){
+          event.preventDefault();
+          var conf = {};
+          $.extend(conf, fancyboxSettings, {href: '#sharing-popup'});
+          $.fancybox(conf);
+          return false;
+        });
+      });
+    </script>
+    <div id="sharing">
+      <a href="javascript:void(0);" class="share-icon share-cart">Share your cart</a>
+    </div>
+{% endif %}
+<br />

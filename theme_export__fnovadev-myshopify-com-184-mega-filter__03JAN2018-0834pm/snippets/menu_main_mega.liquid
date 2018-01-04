@@ -1,0 +1,163 @@
+<div class="menu-container">
+  <div class="menu">
+    <ul>
+      {% for link in linklists.mega.links %}
+      {% assign list_handle = link.title | handleize %}
+      {% assign list_first = linklists[list_handle].links.first.title | handleize %}
+      {% if linklists[list_handle].links != blank %}     
+        <li><a href="{{ linklists[list_first].links.first.url }}">
+              {% if link.title == "mega-1" %}
+                  {{ settings.mega1_label }}
+              {% elsif link.title == "mega-2" %}
+                  {{ settings.mega2_label }}      
+              {% elsif link.title == "mega-3" %}
+                  {{ settings.mega3_label }}
+              {% elsif link.title == "mega-4" %}
+                  {{ settings.mega4_label }}
+              {% elsif link.title == "mega-5" %}
+                  {{ settings.mega5_label }}
+              {% elsif link.title == "mega-6" %}
+                  {{ settings.mega6_label }}
+              {%endif %}
+            </a>
+          <ul> 
+            
+            <!-- add small medium or large image on left side of mega menu -->
+            {% if link.title == "mega-1" %}
+              {% if settings.mega1_location == "smallL" %} 
+               <li class="smallL"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega1_banner.jpg' | asset_img_url: '900x' }}"/></a></li>
+              {% elsif settings.mega1_location == "bigL" %} 
+              <li class="bigL"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega1_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>
+              {% elsif settings.mega1_location == "medL" %} 
+              <li class="medL"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega1_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>            
+              {% endif %} 
+            {% elsif link.title == "mega-2" %}
+              {% if settings.mega2_location == "smallL" %} 
+               <li class="smallL"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega2_banner.jpg' | asset_img_url: '900x' }}"/></a></li>
+              {% elsif settings.mega2_location == "bigL" %} 
+              <li class="bigL"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega2_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>
+              {% elsif settings.mega2_location == "medL" %} 
+              <li class="medL"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega2_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>                        
+              {% endif %}       
+            {% elsif link.title == "mega-3" %}
+              {% if settings.mega3_location == "smallL" %} 
+               <li class="smallL"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega3_banner.jpg' | asset_img_url: '900x' }}"/></a></li>
+              {% elsif settings.mega3_location == "bigL" %} 
+              <li class="bigL"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega3_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>
+              {% elsif settings.mega3_location == "medL" %} 
+              <li class="medL"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega3_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>             
+              {% endif %}
+            {% elsif link.title == "mega-4" %}
+              {% if settings.mega4_location == "smallL" %} 
+               <li class="smallL"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega4_banner.jpg' | asset_img_url: '900x' }}"/></a></li>
+              {% elsif settings.mega4_location == "bigL" %} 
+              <li class="bigL"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega4_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>
+              {% elsif settings.mega4_location == "medL" %} 
+              <li class="medL"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega4_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>             
+              {% endif %}   
+            {% elsif link.title == "mega-5" %}
+              {% if settings.mega5_location == "smallL" %} 
+               <li class="smallL"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega5_banner.jpg' | asset_img_url: '900x' }}"/></a></li>
+              {% elsif settings.mega5_location == "bigL" %} 
+              <li class="bigL"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega5_banner.jpg' | asset_img_url: '1280x' }}"/></a></li> 
+              {% elsif settings.mega5_location == "medL" %} 
+              <li class="medL"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega5_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>             
+              {% endif %}
+            {% elsif link.title == "mega-6" %}
+              {% if settings.mega6_location == "smallL" %} 
+               <li class="smallL"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega6_banner.jpg' | asset_img_url: '900x' }}"/></a></li>
+              {% elsif settings.mega6_location == "bigL" %} 
+              <li class="bigL"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega6_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>
+              {% elsif settings.mega6_location == "medL" %} 
+              <li class="medL"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega6_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>             
+              {% endif %}               
+            {%endif %}
+            
+            <!-- add single double or stacked columns to mega menu -->
+            {% for level2_link in linklists[list_handle].links %}           
+            {% assign level2_handle = level2_link.title | handleize %}
+              {% if level2_link.title contains "single" %}
+              <li class="{{level2_handle}} single">  
+              {% elsif level2_link.title contains "double" %}
+              <li class="{{level2_handle}} double">  
+              {% elsif level2_link.title contains "stacked" %}
+              <li class="{{level2_handle}} stacked">
+              {% else %}
+              <li class="{{level2_handle}}">
+              {% endif %}
+                <ul class="sub-menu">
+                  {% for level3_link in linklists[level2_handle].links %}
+                  {% assign tmp2 = level3_link.title | escape | truncate: 4, "" %}
+                  {% if tmp2 == "Mega" %}
+                    <li class="tk-proxima-nova {{ level3_link.title | escape }}"><a href="{{ level3_link.url }}">{{ level3_link.title | escape | remove: "[no-drop]" | remove_first: "Mega " }}</a></li>            
+                  {% else %}  
+                    <li class="tk-proxima-nova {{ level3_link.title | escape }}"><a href="{{ level3_link.url }}">{{ level3_link.title | escape }}</a></li>  
+                  {% endif %}
+                  {% endfor %}
+                </ul>                    
+              </li>
+            {% endfor %}
+            
+            <!-- add small medium or large image on right side of mega menu -->            
+            {% if link.title == "mega-1" %}
+              {% if settings.mega1_location == "smallR" %} 
+               <li class="smallR"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega1_banner.jpg' | asset_img_url: '900x' }}"/></a></li>
+              {% elsif settings.mega1_location == "bigR" %} 
+              <li class="bigR"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega1_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>
+              {% elsif settings.mega1_location == "medR" %} 
+              <li class="medR"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega1_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>            
+              {% endif %} 
+            {% elsif link.title == "mega-2" %}
+              {% if settings.mega2_location == "smallR" %} 
+               <li class="smallR"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega2_banner.jpg' | asset_img_url: '900x' }}"/></a></li>
+              {% elsif settings.mega2_location == "bigR" %} 
+              <li class="bigR"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega2_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>
+              {% elsif settings.mega2_location == "medR" %} 
+              <li class="medR"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega2_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>                        
+              {% endif %}       
+            {% elsif link.title == "mega-3" %}
+              {% if settings.mega3_location == "smallR" %} 
+               <li class="smallR"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega3_banner.jpg' | asset_img_url: '900x' }}"/></a></li>
+              {% elsif settings.mega3_location == "bigR" %} 
+              <li class="bigR"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega3_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>
+              {% elsif settings.mega3_location == "medR" %} 
+              <li class="medR"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega3_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>             
+              {% endif %}
+            {% elsif link.title == "mega-4" %}
+              {% if settings.mega4_location == "smallR" %} 
+               <li class="smallR"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega4_banner.jpg' | asset_img_url: '900x' }}"/></a></li>
+              {% elsif settings.mega4_location == "bigR" %} 
+              <li class="bigR"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega4_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>
+              {% elsif settings.mega4_location == "medR" %} 
+              <li class="medR"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega4_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>             
+              {% endif %}   
+            {% elsif link.title == "mega-5" %}
+              {% if settings.mega5_location == "smallR" %} 
+               <li class="smallR"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega5_banner.jpg' | asset_img_url: '900x' }}"/></a></li>
+              {% elsif settings.mega5_location == "bigR" %} 
+              <li class="bigR"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega5_banner.jpg' | asset_img_url: '1280x' }}"/></a></li> 
+              {% elsif settings.mega5_location == "medR" %} 
+              <li class="medR"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega5_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>             
+              {% endif %}
+            {% elsif link.title == "mega-6" %}
+              {% if settings.mega6_location == "smallR" %} 
+               <li class="smallR"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega6_banner.jpg' | asset_img_url: '900x' }}"/></a></li>
+              {% elsif settings.mega6_location == "bigR" %} 
+              <li class="bigR"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega6_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>
+              {% elsif settings.mega6_location == "medR" %} 
+              <li class="medR"><a href="{{ linklists[list_first].links.first.url }}"><img src="{{ 'mega6_banner.jpg' | asset_img_url: '1280x' }}"/></a></li>             
+              {% endif %}               
+            {%endif %}
+      
+          </ul>
+        </li>
+      <!-- regular link -->
+      {% else %}
+        <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{{ 'mega.scss.css' | asset_url | stylesheet_tag }}
+{{ 'mega.js' | asset_url | script_tag }}

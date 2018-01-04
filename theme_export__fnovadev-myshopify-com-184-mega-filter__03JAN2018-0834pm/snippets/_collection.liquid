@@ -1,0 +1,63 @@
+<script>
+  function trackProduct(name, type, price, index) {
+      dataLayer.push({
+      'event':'e_productClick',
+      'ecommerce':{
+        'click':{
+          'actionField':{'list':'{{ collection.title }}'},
+          'products':[{
+            'name':name,
+            'category':type,
+            'position':index,
+            'price':price
+          }]
+        }
+      }
+    });
+  }
+</script>
+
+<div id="collection" class="container clearfix">
+  {% paginate collection.products by 50 %}
+  
+  <div class="total-items">{{ paginate.items }} styles</div>
+  
+  {% if collection.products.size > 0 %}
+  	<div class="grid-uniform">
+      {% for product in collection.products %}
+        
+          {% include 'product_item', currentProduct: product, quickview: settings.allow_quick_view %}
+
+      {% endfor %}
+      
+      <script>
+        var impressions = [];
+        var index = {% increment index %};
+      {% for product in collection.products %}
+        
+          impressions.push({
+            'name':"{{ product.title }}",
+            'category':'{{ product.type }}',
+            'list':'{{ collection.title }}',
+            'position': {{ forloop.index }},
+            'price':'{{ product.price | money_without_currency }}'
+          });	
+        
+      {% endfor %}
+      </script>
+  	</div>
+  	{% include 'pagination' %}
+  {% else %}    
+  	<div id="no-products"><i class="fa fa-tag"></i><br />No products found in this collection</div>
+  {% endif %}
+  {% endpaginate %}
+</div>
+
+<script>
+  dataLayer.push({
+   'event':'e_productImpressions',
+   'ecommerce':{
+     'impressions':impressions
+   }
+ });
+</script>

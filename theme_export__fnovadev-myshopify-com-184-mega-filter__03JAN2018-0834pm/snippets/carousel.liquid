@@ -1,0 +1,121 @@
+{% if settings.show_carousel %}
+
+<script>
+  function trackCarousel(index) {
+    dataLayer.push({
+     'event':'e_promotionClick',
+     'ecommerce':{
+       'promoClick':{
+         'promotions':[{
+           'name':'carousel_'+index,
+           'creative':'main_banner',
+           'position':'home_banner_slot_'+index
+         }]
+       }
+     }
+   }); 
+  }
+
+  var promotions = [];
+  {% for i in (1..15) %}
+  {% assign carousel_alt = 'carousel_item_' | append: i | append: '_alt' %}
+  {% assign carousel_position = 'home_banner_slot_' | append: i %}
+  {% if settings[carousel_alt] != "" %}
+  promotions.push({
+   'name':'{{ settings[carousel_alt] }}',
+   'creative':'main_banner',
+    'position':'{{ carousel_position }}'
+  });
+  {% endif %}
+  {% endfor %}
+
+  dataLayer.push({
+   'event':'e_promotionImpressions',
+   'ecommerce':{
+     'promoView':{
+       'promotions':promotions
+     }
+   }
+ });
+</script>  
+
+<script>
+  $(document).ready(function(){
+    {% if settings.carousel_full_height %}
+      {% if settings.header_behavior == "drop-over" %}
+        $('#carousel .item_img.full-height').height($(window).height());
+        $(window).resize(function(){
+          $('#carousel .item_img.full-height').height($(window).height());
+        });
+      {% else %}
+    	$('#carousel .item_img.full-height').height($(window).height() - $('#header').height());
+        $(window).resize(function(){
+          $('#carousel .item_img.full-height').height($(window).height() - $('#header').height());
+        });
+      {% endif %}
+    {% endif %}
+
+    $('#carousel').slick({
+      autoplay: true,
+      dots: {% if settings.show_carousel_dots %}true{% else %}false{% endif %},
+      arrows: {% if settings.show_carousel_nav %}true{% else %}false{% endif %},
+      fade: false,
+      pauseOnHover: false,
+      speed: 1000,
+      autoplaySpeed: 5000,
+      prevArrow: '<i class="lnr lnr-chevron-left animation left-arrow"></i>',
+      nextArrow: '<i class="lnr lnr-chevron-right animation right-arrow"></i>'
+    });
+    
+  });
+</script>
+
+<div id="carousel" class="slick-pending {% unless settings.carousel_full_width %}container{% endunless %}">
+  {% for i in (1..15) %}
+    {% assign show_carousel_item = 'show_carousel_item_' | append: i %}
+    {% assign item_link = 'carousel_item_' | append: i | append: '_link' %}
+    {% assign item_img = 'carousel-item-' | append: i | append: '.jpg' %}
+  	{% assign item_img_mobile = 'carousel-mobile-item-' | append: i | append: '.jpg' %}
+    {% assign item_alt = 'carousel_item_' | append: i | append: '_alt' %}
+    {% assign item_title = 'carousel_item_' | append: i | append: '_title' %}
+    {% assign item_text = 'carousel_item_' | append: i | append: '_text' %}
+    {% assign item_button = 'carousel_item_' | append: i | append: '_button' %}
+
+    {% if settings[show_carousel_item] %}
+      <div class="item {% if forloop.first %}active{% endif %}">
+        {% if settings.carousel_show_captions == false and settings[item_link] != empty %}
+          <a onClick="trackCarousel({{ i }});" href="{{settings[item_link]}}">
+        {% endif %}
+            
+            <div class="small--hide">
+            	<div class="item_img {% if settings.carousel_full_height %}full-height{% else %}normal{% endif %}" style="background-image: url('{{ item_img | asset_url }}');"></div>
+            </div>
+            <div class="hide small--show">
+            	<div class="item_img {% if settings.carousel_full_height %}full-height{% else %}normal{% endif %}" style="background-image: url('{{ item_img_mobile | asset_url }}');"></div>
+            </div>
+            <div class="item-overlay overlay-{{ i }} {% if forloop.first %}active{% endif %}">
+              <div class="wrap">
+                <div class="content">
+              {% if settings.carousel_show_captions %}
+                {% if settings[item_title] != "" %}
+                    <h1 class="title">{{ settings[item_title] }}</h1>
+                {% endif %}
+                {% if settings[item_text] != "" %}
+                    <p class="text">{{ settings[item_text] }}</p>
+                {% endif %}
+                {% if settings[item_button] != "" %}
+                    <input class="btn animation" type="button" value="{{ settings[item_button] }}" {% if settings[item_link] != empty %}onclick="location.href='{{ settings[item_link] }}'; return false;"{% else %}onclick="return false;"{% endif %} />
+                {% endif %}
+              {% endif %}
+                </div>
+              </div>
+            </div>
+        {% if settings.carousel_show_captions != true and settings[item_link] != empty %}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endfor %}    
+</div>
+
+{% endif %} 

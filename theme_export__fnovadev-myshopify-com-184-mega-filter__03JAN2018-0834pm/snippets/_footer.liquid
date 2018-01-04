@@ -1,0 +1,144 @@
+<footer id="footer">
+  <div class="container clearfix">
+    {% comment %}
+    <div class="hide small--show">
+      <div class="title">FOLLOW US</div>
+      {% include 'social_links' %}
+    </div>
+    {% endcomment %}
+    
+    <div class="large--text-left large--right large--one-half">
+      <div class="grid">
+        <div class="contact grid__item">
+          <div class="title">FOLLOW US</div>
+          {% include 'social_links' %}
+        </div>
+        {% comment %}
+        <div class="contact grid__item hide large--show large--three-fifths">
+          <div class="title">CONTACT US</div>
+          <div class="clearfix">
+            <div class="left medium-down--one-whole">
+              <i class="fa fa-envelope"></i>
+              <a href="mailto:info@fashionnova.com">info@fashionnova.com</a>
+            </div>
+            
+            <div class="right medium-down--one-whole">
+              <i class="fa fa-phone"></i>
+              1-800-866-0286
+            </div>
+          </div>
+        </div>
+        {% endcomment %}
+      </div>
+      <div class="mailing-list">
+        <div class="hide small--show"><img src="//cdn.shopify.com/s/files/1/0293/9277/t/47/assets/fn-email.png?410138607168662516"></div>
+        <div class="discounts hide small--show">Get exclusive Discounts &amp new styles</div>
+        <div class="title">{{ settings.footer_mailing_text }}</div>
+        <div class="clearfix">
+          	<form action="{{ settings.mailing_link }}" method="post" target="_blank">
+              <input type="hidden" name="g" value="dKVs2H">
+              <div class="left three-quarters">
+                  <input class="email required" name="email" type="text" placeholder="Email" />
+              </div>
+              <div class="left one-quarter">
+                  <input type="submit" name="subscribe" value="SIGN UP" class="btn" />
+              </div>
+            </form>
+        </div>
+        <div class="success">{{ settings.mailing_success_msg }}</div>
+      </div>
+      <div class="payment-method medium-down--hide clearfix">
+        Payment Methods
+      </div>
+      <div class="text-right medium-down--hide clearfix">
+        <div class="left">
+        	{% include 'credit_cards' %}
+        </div>
+        <div class="right">
+        	{% include 'currency-picker' %}
+        </div>
+      </div>
+    </div>
+    
+    <div class="links large--text-left large--left large--one-half small--hide">
+      <div class="grid">
+        <div class="grid__item one-third small--one-whole">
+          <div class="title">FASHION NOVA</div>
+          <ul>
+            {% for link in linklists['footer-customer-care'].links %}
+              <li class="{% if forloop.first %}first{% elsif forloop.last %}last{%endif%} animation">
+                  <a href="{{ link.url }}" class="animation">{{ link.title | escape }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="grid__item one-third small--one-whole">
+          <div class="title">CUSTOMEr CARE</div>
+          <ul>
+            {% for link in linklists['footer-information'].links %}
+              <li class="{% if forloop.first %}first{% elsif forloop.last %}last{%endif%} animation">
+                  <a href="{{ link.url }}" class="animation">{{ link.title | escape }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="grid__item one-third small--one-whole">
+          <div class="title">QUICK LINKS</div>
+          <ul>
+            {% for link in linklists['footer-quick-links'].links %}
+              <li class="{% if forloop.first %}first{% elsif forloop.last %}last{%endif%} animation">
+                  <a href="{{ link.url }}" class="animation">{{ link.title | escape }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="links hide small--show">
+      <ul>
+        {% for link in linklists['footer-customer-care'].links %}
+          <li class="{% if forloop.first %}first{% elsif forloop.last %}last{%endif%} animation">
+            <a href="{{ link.url }}" class="animation">{{ link.title | escape }}</a>
+          </li>
+        {% endfor %}
+        {% for link in linklists['footer-information'].links %}
+          <li class="{% if forloop.first %}first{% elsif forloop.last %}last{%endif%} animation">
+            <a href="{{ link.url }}" class="animation">{{ link.title | escape }}</a>
+          </li>
+        {% endfor %}
+        {% for link in linklists['footer-quick-links'].links %}
+          <li class="{% if forloop.first %}first{% elsif forloop.last %}last{%endif%} animation">
+            <a href="{{ link.url }}" class="animation">{{ link.title | escape }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    
+    {% comment %}
+    <div class="contact hide medium-down--show">
+      <div class="title">CONTACT US</div>
+      <div class="clearfix">
+        <div class="left one-half small--one-whole medium--text-right">
+          <i class="fa fa-envelope"></i>
+          info@fashionnova.com
+        </div>
+        {% comment %}
+        <div class="right one-half small--one-whole medium--text-left">
+          <i class="fa fa-phone"></i>
+          1-800-866-0286
+        </div>
+        {% endcomment %}
+      </div>
+    </div>
+    {% endcomment %}
+    
+    <div class="hide medium-down--show">
+      <div class="currency">{% include 'currency-picker' %}</div>
+      <div class="payment-method">
+        Payment Methods
+      </div>
+      <div>{% include 'credit_cards' %}</div>
+    </div>
+  </div>
+</footer>

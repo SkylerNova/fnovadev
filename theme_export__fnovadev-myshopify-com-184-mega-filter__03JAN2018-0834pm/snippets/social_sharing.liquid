@@ -1,0 +1,110 @@
+{% if settings.share_prod_on_twitter or settings.share_prod_on_facebook or settings.share_prod_on_googleplus or settings.share_prod_on_pinterest %}
+
+<script>
+  $(function(){
+  	var copy = new Clipboard('.copy-button');
+    copy.on('success', function(event) {
+		event.clearSelection();
+      	$(event.trigger).find('span').html('COPIED');
+		window.setTimeout(function() {
+          $(event.trigger).find('span').html('COPY');
+		}, 2000);
+	});
+    
+    $(".sms-share").on("click", function(event){
+      event.preventDefault();
+      var conf = {};
+      $.extend(conf, fancyboxSettings, {href: '#sms-popup'});
+      $.fancybox(conf);
+      return false;
+    });
+  });
+</script>
+<div class="hide" id="sms-popup">
+  <app-smshero width="300" height="250"></app-smshero>
+</div>
+<div class="hide">
+	<div id="sharing-popup">
+      	<h2>SHARE THIS ITEM</h2>
+      
+        <ul class="social-meta">
+          {% if settings.share_prod_on_facebook %}
+          {% unless urlToShare %}
+			{% assign urlToShareFB = "https://www.facebook.com/sharer/sharer.php?u=" | append: shop.url | append: product.url %}
+          {% else %}
+            {% assign urlToShareFB = "https://www.facebook.com/sharer/sharer.php?u=" | append: urlToShare %}
+          {% endunless %}
+          <li><a class="facebook-share" href="{{urlToShareFB}}" target="_blank"><i class="fa fa-facebook"></i></a></li>
+          {% endif %}
+
+          {% if settings.share_prod_on_twitter %}
+          {% unless urlToShare %}
+			{% assign urlToShareTW = "https://twitter.com/share?url=" | append: shop.url | append: product.url %}
+          {% else %}
+            {% assign urlToShareTW = "https://twitter.com/share?url=" | append: urlToShare %}
+          {% endunless %}
+          <li><a class="twitter-share" href="{{urlToShareTW}}" target="_blank"><i class="fa fa-twitter"></i></a></li>
+          {% endif %}
+
+          {% if settings.share_prod_on_googleplus %}
+          {% unless urlToShare %}
+			{% assign urlToShareGP = "https://plus.google.com/share?url=" | append: shop.url | append: product.url %}
+          {% else %}
+            {% assign urlToShareGP = "https://plus.google.com/share?url=" | append: urlToShare %}
+          {% endunless %}
+          <li><a class="google-share" href="{{ urlToShareGP }}" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+          {% endif %}
+
+          {% if settings.share_prod_on_pinterest %}
+          {% unless urlToShare %}
+		  <li><a class="pinterest-share" href="//pinterest.com/pin/create/button/?url={{ shop.url }}{{ product.url }}&media={{ product.featured_image | product_img_url: 'original' }}&description={{ product.title | strip_html | escape | replace: ' ', '%20' }}" target="_blank"><i class="fa fa-pinterest-p"></i></a></li>
+          {% endunless %}
+          {% endif %}
+
+          {% if settings.share_prod_on_mail %}
+          {% unless urlToShare %}
+			{% assign urlToShareML = "mailto:?&body=" | append: shop.url | append: product.url %}
+          {% else %}
+            {% assign urlToShareML = "mailto:?&body=" | append:urlToShare %}
+          {% endunless %}
+          <li><a class="mail-share small--show" href="{{ urlToShareML }}"><i class="fa fa-envelope-o"></i></a></li>
+          {% endif %}
+          
+          {% if settings.share_prod_on_whatsapp %}
+          {% unless urlToShare %}
+          	{% assign urlToShareWP = shop.url | append: product.url %}
+            {% assign productClean = product.title | strip_html | escape | append: " - " | replace: ' ', '%20' | append: urlToShareWP %}
+			{% assign textToShare = "whatsapp://send?text=" | append: productClean %}
+          	
+          {% else %}
+          	{% assign urlToShareWP = urlToShare %}
+            {% assign textToShare = "whatsapp://send?text=Check out my cart - " | replace: ' ', '%20' | append: urlToShare %}
+          {% endunless %}
+          <li><a class="whatsapp-share hide small--show" href="{{ textToShare }}" data-action="{{urlToShareWP}}"><i class="fa fa-whatsapp"></i></a></li>
+          {% endif %}
+          
+          {% comment %}
+          <li><a class="sms-share hide small--show" href="#"><i class="fa fa-mobile"></i></a></li>
+          {% endcomment %}
+          
+
+        </ul>
+      	
+      	<div class="copy-url">
+      		<div>COPY URL</div>
+            {% unless urlToShare %}
+              {% assign urlToShareCP = shop.url | append: product.url %}
+            {% else %}
+              {% assign urlToShareCP = urlToShare %}
+            {% endunless %}
+          	<div class="url">{{ urlToShareCP }}</div>
+          	<div>
+              <a href="#" onclick="return false;" class="copy-button" data-clipboard-target=".copy-url .url">
+              	<i class="fa fa-copy"></i><span>COPY</span>
+              </a>
+          	</div>
+        </div>
+     </div>
+</div>
+
+{% endif %}

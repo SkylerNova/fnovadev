@@ -1,0 +1,62 @@
+<script>
+  function trackButton(title,index) {
+    dataLayer.push({
+     'event':'e_promotionClick',
+     'ecommerce':{
+       'promoClick':{
+         'promotions':[{
+           'name':title,
+           'creative':'featured_touts',
+           'position':'featured_tout_slot_'+index
+         }]
+       }
+     }
+  });
+  }
+</script>
+
+<section class="featured-touts container">
+  <div class="grid">
+    <div class="grid__item item large--one-{{settings.home_featured_touts_row}} medium-down--one-{{settings.mobile_featured_touts_row}} text-center">
+        <a onClick='trackButton("Featured Tout 1", 1);' href="{{ settings.home_featured_touts_btn_url_1 }}">
+          <img src="{{ settings.home_featured_touts_image_1 | img_url: 'large' }}" alt="{{ settings.home_featured_touts_alt_1 }}" />
+          {% if settings.home_featured_touts_title_1 != "" %}<div class="title">{{ settings.home_featured_touts_title_1 }}</div>{% endif %}
+          {% if settings.home_featured_touts_description_1 != "" %}<div class="description">{{ settings.home_featured_touts_description_1 }}</div>{% endif %}
+          {% if settings.home_featured_touts_btn_text_1 != "" %}<div class="button btn">{{ settings.home_featured_touts_btn_text_1 }}</div>{% endif %}
+        </a>
+    </div>
+    <div class="grid__item item large--one-{{settings.home_featured_touts_row}} medium-down--one-{{settings.mobile_featured_touts_row}} text-center">
+        <a onClick='trackButton("Featured Tout 2", 2);' href="{{ settings.home_featured_touts_btn_url_2 }}">
+          <img src="{{ settings.home_featured_touts_image_2 | img_url: 'large' }}" alt="{{ settings.home_featured_touts_alt_2 }}" />
+          {% if settings.home_featured_touts_title_2 != "" %}<div class="title">{{ settings.home_featured_touts_title_2 }}</div>{% endif %}
+          {% if settings.home_featured_touts_description_2 != "" %}<div class="description">{{ settings.home_featured_touts_description_2 }}</div>{% endif %}
+          {% if settings.home_featured_touts_btn_text_2 != "" %}<div class="button btn">{{ settings.home_featured_touts_btn_text_2 }}</div>{% endif %}
+        </a>
+    </div>
+    <div class="grid__item item large--one-{{settings.home_featured_touts_row}} medium-down--one-{{settings.mobile_featured_touts_row}} text-center">
+        <a onClick='trackButton("Featured Tout 3", 3);' href="{{ settings.home_featured_touts_btn_url_3 }}">
+          <img src="{{ settings.home_featured_touts_image_3 | img_url: 'large' }}" alt="{{ settings.home_featured_touts_alt_3 }}" />
+          {% if settings.home_featured_touts_title_3 != "" %}<div class="title">{{ settings.home_featured_touts_title_3 }}</div>{% endif %}
+          {% if settings.home_featured_touts_description_3 != "" %}<div class="description">{{ settings.home_featured_touts_description_3 }}</div>{% endif %}
+          {% if settings.home_featured_touts_btn_text_3 != "" %}<div class="button btn">{{ settings.home_featured_touts_btn_text_3 }}</div>{% endif %}
+        </a>
+    </div>
+    <div class="grid__item item large--one-{{settings.home_featured_touts_row}} medium-down--one-{{settings.mobile_featured_touts_row}} text-center">
+        <a onClick='trackButton("Featured Tout 4", 4);' href="{{ settings.home_featured_touts_btn_url_4 }}">
+          <img src="{{ settings.home_featured_touts_image_4 | img_url: 'large' }}" alt="{{ settings.home_featured_touts_alt_4 }}" />
+          {% if settings.home_featured_touts_title_4 != "" %}<div class="title">{{ settings.home_featured_touts_title_4 }}</div>{% endif %}
+          {% if settings.home_featured_touts_description_4 != "" %}<div class="description">{{ settings.home_featured_touts_description_4 }}</div>{% endif %}
+          {% if settings.home_featured_touts_btn_text_4 != "" %}<div class="button btn">{{ settings.home_featured_touts_btn_text_4 }}</div>{% endif %}
+        </a>
+    </div>
+  </div>
+  
+  <div class="grid">
+    <div class="lookbooks grid__item one-half medium--one-whole small--one-whole text-center">
+      <a href="/pages/lookbooks"><img src="{{ 'lookbook_banner.jpg' | asset_img_url: '1280x' }}" /></a>
+    </div>
+    <div class="lookbooks grid__item one-half medium--one-whole small--one-whole text-center">
+      <a class="fancybox fancybox.iframe" href="{{settings.video}}?autoplay=1&loop=1&autopause=0"><div class="video" ></div></a>
+    </div>  
+  </div>
+</section>

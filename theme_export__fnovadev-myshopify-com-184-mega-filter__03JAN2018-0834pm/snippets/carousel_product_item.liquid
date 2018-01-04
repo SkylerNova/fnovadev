@@ -1,0 +1,72 @@
+<div class="product-item item grid-item-{{ item.id }}">
+  <div class="wrapper animation">
+    <div class="image">
+      {% if settings.grid_product_image_behavior == "thumbs_swatches" %}
+        {% include 'product_item_img_swatches', currentProduct: item %}
+      {% else %}
+      	{% if settings.grid_product_image_behavior == "color_swatches" %}
+      		{% include 'product_item_img_color_swatches', currentProduct: item %}
+        {% else %}
+      		{% include 'product_item_img_alternate', currentProduct: item %}
+	    {% endif %}
+      {% endif %}
+      
+      {% if quickview %}  
+        <div class="layer quick-view-btn ease-animation">
+          <div>QUICK VIEW <i class="lnr lnr-arrow-right"></i></div>
+        </div>
+      {% endif %}
+    </div>
+    
+    {% if settings.grid_product_image_behavior == "thumbs_swatches" %}
+      {% include 'thumbs_swatches', currentProduct: item %}
+    {% else %}
+    	{% if settings.grid_product_image_behavior == "color_swatches" %}
+      		{% include 'thumbs_colors', currentProduct: item %}
+    	{% endif %}
+    {% endif %}
+    
+    <a href="{{item.url | within: collection }}">
+      <div class="info">
+        <div class="title animation">{{item.title}}</div>
+        <div class="price clearfix">
+          {% if item.price_min < item.compare_at_price_min %}
+            <div class="retail">
+              <span>{{ item.compare_at_price | money | remove: ' ' }}</span>
+            </div>
+          {% endif %}
+          <div class="deal">
+            <span>{{ item.price_min | money | remove: ' ' }}</span>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+  {% if quickview %}
+  	<script>
+      $(function(){
+        $(document).on('click', '.grid-item-{{ item.id }} .quick-view-btn', function(){
+          var conf = {};
+          var url = $(this).closest('.item').find('a:eq(0)').attr('href');
+          var variantId = false;
+          if(url.indexOf('?')>=0) {
+          	url = url + '&view=quick-view';
+            variantId = getQueryParam('variant', url);
+          } else {
+          	url = url + '?view=quick-view';
+          }
+          $.extend(conf, fancyboxSettings, {'autoSize': false, 'width': '100%', 'height': '100%', type: 'ajax', href: url, beforeShow:function(){
+            if(variantId) {
+            	var variantTitle = $('.quick-view .select-variant option[value='+variantId+']').text();
+                $.each(variantTitle.split(' / '), function(key, val){
+                  $('.quick-view .single-option-selector:eq('+key+')').val(val).change();
+                });
+            }
+          }});
+          $.fancybox(conf);
+          return false;
+        });
+      });
+    </script>
+  {% endif %}
+</div>

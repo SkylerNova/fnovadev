@@ -1,0 +1,95 @@
+<!-- GOOGLE GTM -->
+
+  {% case template %}
+    {% when 'index' %}
+      <script type="text/javascript">
+        var dataLayer = dataLayer || [];
+        dataLayer.push({
+          'PageType': 'HomePage',
+          'HashedEmail': ''
+        });
+      </script>
+
+    {% when 'collection' %}
+
+      <script type="text/javascript">
+      var collection_items = [];
+      var collection_items_handle = [];
+        var dataLayer = dataLayer || [];
+        {% for item in collection.products limit:3 %}
+          collection_items.push("{{item.id}}");
+        {% endfor %}
+        {% for item in collection.products limit:3 %}
+          collection_items_handle.push("{{item.handle}}");
+        {% endfor %}
+          dataLayer.push({
+            'PageType': 'CollectionPage',
+            'HashedEmail': '',
+            'CollectionProductIDList': collection_items,
+            'CollectionHandleList' : collection_items_handle
+          });
+      </script>
+
+    {% when 'product' %}
+      <script type="text/javascript">
+          var dataLayer = dataLayer || [];
+          dataLayer.push({
+            'PageType': 'ProductPage',
+            'HashedEmail': '',
+            'ProductTitle': '{{ product.title | escape }}',
+            'ProductID': '{{product.id}}',
+            'ProductCategories': '{{ product.collections|map:'title'|json }}',
+            'ProductImageURL': 'https:{{ product.featured_image.src|img_url:'grande' }}',
+            'ProductURL': '{{ shop.secure_url }}{{ product.url }}',
+            'ProductPrice': '{{ product.price | money }}',
+            'ProductCompareAtPrice': '{{ product.compare_at_price_max | money }}',
+            'ProductHandle': '{{product.handle}}'
+          });
+      </script>
+
+    {% when 'cart' %}
+      <script type="text/javascript">
+        var dataLayer = dataLayer || [];
+        var cart_items = [];
+        {% for item in cart.items %}
+          cart_items.push({
+            id : "{{item.product.handle}}",
+            price : {{item.price | money_without_currency | remove: ','}},
+            quantity : {{item.quantity}}
+          });
+        {% endfor %}
+
+          dataLayer.push({
+            'PageType': 'CartPage',
+            'HashedEmail': '',
+            'ProductsAddedToCart': cart_items
+          });
+      </script>
+
+  {% endcase %}
+
+
+  <script>
+    var dataLayer = dataLayer || [];
+    $(document).ajaxSuccess(function(event, xhr, settings) {
+      var cart_items = [];
+      if (settings.url == "/cart/add.js" || settings.url == "/cart/update.js") {
+        $.getJSON('/cart.js', function(data) {
+          cart_items = data.items.map(function(item) {
+            return {
+              id: item.handle,
+              price: item.price / 100,
+              quantity: item.quantity
+            }
+          });
+          dataLayer.push({
+            'event': 'AddToCart',
+            'HashedEmail': "",
+            'ProductsAddedToCart': cart_items
+          });
+        });
+      }
+    });
+  </script>
+
+<!-- END GOOGLE GTM -->

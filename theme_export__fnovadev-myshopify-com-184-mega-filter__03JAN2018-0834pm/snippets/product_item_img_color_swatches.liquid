@@ -1,0 +1,32 @@
+{% assign colorIndex = 0 %}
+{% for option in currentProduct.options_with_values %}
+	{% if option.name contains 'Color' or option.name contains 'color' %}
+		{% assign colorIndex = forloop.index %}
+		{% assign colors = option.values %}
+	{% endif %}
+{% endfor %}
+{% assign opt = 'option' | append: colorIndex %}
+
+<a href="{{ currentProduct.url | within: collection }}{% if fromSearch %}#search{% endif %}">
+  <div class="image" id="image-{{ currentProduct.id }}">
+    <img src="{{ currentProduct.featured_image | product_img_url: 'large' }}" />
+
+    {% assign added = "" %}
+    {% for img in currentProduct.images %}
+        {% if colors contains img.variants.first[opt] %}
+    		{% assign colorCheck = img.variants.first[opt] | append: '|' %}
+    		{% unless added contains colorCheck %}
+            	<div class="img" data-variant="{{ img.variants.first.id }}" data-color="{{ img.variants.first[opt] | handleize }}" style="display: none; background-image:url('{{ img | product_img_url: 'large' }}')"></div>
+    			{% assign added = colorCheck %}
+    		{% endunless %}
+        {% endif %}
+    {% endfor %}
+
+    {% if currentProduct.available and currentProduct.price_min < currentProduct.compare_at_price_min %}
+      <div class="sale animation"><div>sale</div></div>
+    {% endif %}
+    {% unless currentProduct.available %}
+      <div class="sold-out animation"><div>sold<br />out</div></div>
+    {% endunless %}
+  </div>
+</a>

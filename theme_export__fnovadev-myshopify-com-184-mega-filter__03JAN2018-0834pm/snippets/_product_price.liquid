@@ -1,0 +1,12 @@
+<div class="price clearfix" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+  {% if currentProduct.price_min < currentProduct.compare_at_price_min %}
+  <div class="retail">
+    <span>{{ currentProduct.compare_at_price | money | remove: '.00' | remove: ' ' }}</span>
+  </div>
+  {% endif %}
+  <div class="deal">
+    <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+    <meta itemprop="price" content="{{ currentProduct.price_min | money_without_currency | remove: '.00' }}" />
+    <span>{{ currentProduct.price_min | money | remove: '.00' | remove: ' ' }}</span>
+  </div>
+</div>

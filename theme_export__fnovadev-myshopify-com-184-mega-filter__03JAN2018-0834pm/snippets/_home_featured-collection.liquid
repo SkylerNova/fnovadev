@@ -1,0 +1,6 @@
+<section class="featured-collection text-center container">
+    {% if settings.home_featured_collection_show %}<img src="{{ 'home_featured_collection_image.jpg' | asset_url }}" alt="{{ settings.home_featured_collection_title }}" />{% endif %}
+    {% if settings.home_featured_collection_title != "" %}<div class="title">{{ settings.home_featured_collection_title }}</div>{% endif %}
+    {% if settings.home_featured_collection_description != "" %}<div class="description">{{ settings.home_featured_collection_description }}</div>{% endif %}
+    {% if settings.home_featured_collection_btn_text != "" %}<a href="{{ settings.home_featured_collection_btn_url }}"><div class="button btn">{{ settings.home_featured_collection_btn_text }}</div></a>{% endif %}
+</section>

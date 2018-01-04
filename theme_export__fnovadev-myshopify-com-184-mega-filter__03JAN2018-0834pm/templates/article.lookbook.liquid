@@ -1,0 +1,63 @@
+<script>
+  $(function(){
+    var row = 1;
+    $('#lookbook .content *').each(function(key, img){
+      if($(this).prop('nodeName').toLowerCase()=="img") {
+        var html = '<div class="item img" style="background-image: url('+$(this).attr('src')+');"></div>';
+        $('#lookbook .container').append(html);
+      } else {
+      	if($(this).prop('nodeName').toLowerCase()=="iframe") {
+          var html = '<div class="item" style="margin-top: -3.3333333%;"><iframe src="'+$(this).attr('src')+'"></iframe></div>';
+          $('#lookbook .container').append(html);
+        }
+      }
+    });
+    
+    $('#lookbook .container .item').each(function(key, img){
+      if(key%2==0) {
+        if(row%2==1) {
+          $(this).addClass('small');
+        } else {
+          $(this).addClass('big');
+        }
+      } else {
+        if(row%2==1) {
+          $(this).addClass('big');
+        } else {
+          $(this).addClass('small');
+        }
+        row++;
+      }
+    });
+    
+    var updateIframes = function(){
+    	var bigWidth = $('#lookbook .item.img.big:last').width();
+      	var bigHeight = $('#lookbook .item.img.big:last').outerHeight();
+      	$('#lookbook .container iframe').width(bigWidth).height(bigHeight);
+    };
+    
+    updateIframes();
+    $(window).resize(function(){
+      updateIframes();
+    });
+    
+  });
+</script>
+
+<style>
+  #lookbook {padding: 20px 0;}
+  #lookbook .item {float: left;}
+  #lookbook .item.img {background-size: cover; padding-top: 46%;}
+  #lookbook .item.img:nth-last-of-type(-n+2){padding-top: 39.3333333%;}
+  #lookbook .item.small {width: 30%;}
+  #lookbook .item.big {width: 70%; overflow: hidden;}
+  #lookbook .item.big:last-of-type {margin-top: -3.4%;}
+</style>
+
+<div id="lookbook">
+  	<div class="content hide">
+  		{{ article.content }}
+  	</div>
+  
+  	<div class="container clearfix"></div>
+</div>

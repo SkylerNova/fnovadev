@@ -1,0 +1,72 @@
+{% comment %}
+<section class="instagram container">
+  {{ 'instafeed.js' | asset_url | script_tag }}
+
+  <h2><a href="{{ settings.instagram_link }}">{{settings.instagram_title}}</a></h2>
+
+  {% assign url = '{{image}}' %}
+  {% assign caption = '{{caption}}' %}
+  {% assign link = '{{link}}' %}
+  {% assign likes = '{{likes}}' %}
+  {% assign comments = '{{comments}}' %}
+  <div id="instagram-card">
+    <div id="instafeed" class="grid"></div>
+    <script type="text/javascript">
+      var userFeed = new Instafeed({
+        get: 'user',
+        limit: 6,
+        userId: {{ settings.instagram_user_id }},
+        accessToken: '{{ settings.instagram_access_token }}',
+        template: '<div class="module grid__item one-third medium--one-half small--one-whole"><a class="fancybox intagramImage" href="{{url}}" title="{{caption}}" rel="ig"><div class="image"><img class="instagram-image ease-animation" src="{{url}}" alt="{{caption}}" /><div class="magnify ease-animation"><span class="lnr lnr-magnifier ease-animation"></span></div></div></a><a href="{{link}}" target="_blank" ><div class="data ease-animation"><span style="margin-right: 10px;"><i class="fa fa-heart-o"></i>{{likes}}</span><span><i class="fa fa-comment-o"></i>{{comments}}</span></div></a></div>',
+        after: function(){
+        	$('.intagramImage').fancybox(fancyboxSettings);
+		}
+      });
+      userFeed.run();
+    </script>
+  </div>
+</section>
+{% endcomment %}
+
+<section class="instagram">
+    <div class="header clearfix container">
+      <div class="one-whole small--one-whole text-center">
+        <a href="{{ settings.instagram_link }}" target="_blank">
+          {{settings.instagram_title}}
+          take a pic of how cute you look wearing our clothes<br/>       + use the hashtag <strong>#novababe</strong> to get featured here!
+        </a>
+      </div>
+    </div>
+    
+    <div class="container">
+    	<script src="//foursixty.com/media/scripts/fs.embed.v2.js" data-feed-id="fashionnova" data-theme="showcase_v2" data-page-size="8"></script>
+    </div>
+  <style>
+    .fs-has-links::after {background-color: {{ settings.content_main_color }}!important ; color: #fff !important;}
+    div.fs-has-links { text-indent: -9999px; position: static; font-weight: 500; } 
+    .fs-has-links::after {  padding: 12px 18px; background-color: #fff; color: rgba(0, 0, 0, 0.63); content: "SHOP IT"; text-indent: 0; display: block; font-size: 10pt; margin: 10px; }
+    .fs-entry-container { width: 25%; padding-top: 25%; }
+    .fs-desktop .fs-timeline-entry div.fs-text-container { display: flex; flex-direction: column;align-items: center; justify-content: center; display: -webkit-flex;  -webkit-flex-direction: column;  -webkit-align-items: center;  -webkit-justify-content: center;  display: -ms-flexbox;  -ms-flex-direction: column;  -ms-flex-align: center;  -ms-flex-pack: center; transition: opacity .25s; } 
+    .fs-desktop .fs-timeline-entry .fs-text-container:hover { opacity: 1; } 
+    .fs-wrapper div.fs-text-container .fs-entry-title, div.fs-detail-title{font-family:Times New Roman, serif;font-style:italic;font-weight:normal;}
+    div.fs-text-container .fs-entry-date, div.fs-detail-container .fs-post-info, div.fs-wrapper div.fs-has-links::after, .fs-text-product, .fs-overlink-text{font-family:Helvetica Neue, Helvetica, Arial, sans-serif;font-style:normal;font-weight:bold;}
+    .fs-wrapper div.fs-text-container * {color:#fff}
+    .fs-wrapper div.fs-text-container {background-color:rgba(0, 0, 0, 0.63); margin: 0px}
+    div.fs-entry-date{display:none}
+    div.fs-entry-title{display:none}
+    .fs-wrapper div.fs-timeline-entry{ margin: 11px }
+    .fs-wrapper .fs-entry-container:nth-child(4n+1) div.fs-timeline-entry {margin-left: 0;}
+    .fs-wrapper .fs-entry-container:nth-child(4n+4) div.fs-timeline-entry {margin-right: 0;}
+    
+    @media only screen and (max-width: 584px){
+      .fs-entry-container {width: 50%; padding-top: 50%;}
+      .fs-wrapper .fs-entry-container:nth-child(2n+1) div.fs-timeline-entry {margin-left: 0;}
+      .fs-wrapper .fs-entry-container:nth-child(2n+2) div.fs-timeline-entry {margin-right: 0;}
+    }
+    @media only screen and (min-width: 585px) and (max-width: 900px){
+      .fs-entry-container {width: 50%; padding-top: 50%;}
+      .fs-wrapper .fs-entry-container:nth-child(2n+1) div.fs-timeline-entry {margin-left: 0;}
+      .fs-wrapper .fs-entry-container:nth-child(2n+2) div.fs-timeline-entry {margin-right: 0;}
+    }
+  </style>
+</section>

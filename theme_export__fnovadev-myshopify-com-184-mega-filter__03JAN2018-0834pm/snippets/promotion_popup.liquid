@@ -1,0 +1,80 @@
+<!-- Promotion Popup -->
+<div class="hide">
+  <div id="promotion-pop-up">
+    <div id="promotion-pop-up-wrapper">
+      <div class="wrap">
+        <h1>{{settings.promo_popup_title}}</h1>
+        <p class="p-bigger">{{settings.promo_popup_promo}}</p>
+        <p>{{settings.promo_popup_text}}</p>
+        <form method="post" action="/contact">
+          <input type="hidden" value="customer" name="form_type">
+          <input type="hidden" id="contact_tags" name="contact[tags]" value="prospect,newsletter"/>
+          <div class="grid">
+            <div class="grid__item one-whole small--one-whole">
+              <input type="email" placeholder="Email" id="email-input" name="contact[email]" class="required email" />
+            </div>
+          </div>
+          <input type='submit' class="btn prefix animation" value="SIGN UP" name="subscribe" id="email-submit" />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Promotion Popup SUCCESS -->
+<div class="hide">
+  <div id="promotion-pop-up-success">
+    <div id="promotion-pop-up-success-wrapper">
+      <div class="wrap">
+        <h1>{{settings.promo_popup_success}}</h1>
+        <p class="p-bigger">{{settings.promo_popup_promo_code}}</p>
+        <p>Almost finished... To complete the subscription process, please click the link in the email we just sent you.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function(){
+  	$('#promotion-pop-up form').submit(function(e){
+    	e.preventDefault();
+      	e.stopImmediatePropagation();
+
+      	$(this).find('.error').removeClass('error');
+      
+      	var error = false;
+      	$(this).find('.required').each(function(){
+          if($(this).val()=="") {
+          	error = true;
+            $(this).addClass('error');
+          }
+        });
+      	if(!error) {
+          if(!validateEmail($(this).find('.email').val())) {
+            error = true;
+          	$(this).find('.email').addClass('error');
+          }
+        }
+
+      	if(!error) {
+      		var form = $(this);
+            $.ajax({
+                url: form.attr('action'),
+                data: form.serialize(),
+                type: 'POST'
+            }).done(function(){
+                $.fancybox({
+                  padding: 0,
+                  margin: [40,30,20,10],
+                  closeEffect: 'fade',
+                  autoCenter: true,
+                  helpers: {
+                    overlay: { speedOut : 500 }
+                  },
+                  href: '#promotion-pop-up-success' 
+                });
+            });
+      	}
+    });
+  });  
+</script>

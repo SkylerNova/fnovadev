@@ -1,0 +1,33 @@
+{% if settings.show_utility_bar %}
+  {% assign goal = settings.utility_bar_goal | times: 100 %}
+
+  <div id="utility-bar" class="hide">
+    {% if settings.utility_bar_link != "" %}
+      <a href="{{settings.utility_bar_link}}">
+    {% else %}
+      <a href="#">
+    {% endif %}
+      <div class="container">
+        <div>
+          
+          {% if cart.total_price == 0 %}
+          	{% assign amount = goal | money %}
+          	<div>{{ settings.utility_bar | replace: '[amount]', goal }}</div>
+          {% else %}
+          	{% if cart.total_price < goal %}
+          		{% assign amount = goal | minus: cart.total_price | money %}
+          		<div>{{ settings.utility_bar_stage2 | replace: '[amount]', amount }}</div>
+          	{% else %}
+          		{% assign amount = goal | money %}
+          		<div>{{ settings.utility_bar_stage3 | replace: '[amount]', amount }}</div>
+          	{% endif %}
+          {% endif %}
+
+        </div>
+      </div>
+    </a>
+    <a href="#">
+      <i class="lnr lnr-cross"></i> 
+    </a>
+  </div>
+{% endif %}

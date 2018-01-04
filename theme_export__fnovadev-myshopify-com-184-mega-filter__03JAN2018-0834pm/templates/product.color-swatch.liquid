@@ -1,0 +1,6 @@
+{% layout none %}
+{% if product.available %}
+	<a href="{{ product.url | within: collection }}" class="link-color-swatch">
+		<div class="color-swatch left" style="{% if product.metafields.linked_products.swatch contains 'http' %}background: url({{ product.metafields.linked_products.swatch }}){% else %}background-color: {{ product.metafields.linked_products.swatch }}{% endif %}"></div>
+	</a>
+{% endif %}

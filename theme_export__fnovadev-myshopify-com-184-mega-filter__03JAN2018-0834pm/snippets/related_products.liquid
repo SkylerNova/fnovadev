@@ -1,0 +1,61 @@
+{% if collection != blank %}
+	{% assign relatedCollection = collection %}
+{% else %}
+	{% assign relatedCollection = currentProduct.collections.first %}
+{% endif %}
+
+{% if relatedCollection.products.size > 1 %}
+  <div class="related-products">
+    <div class="container">
+      <h2>{{settings.related_products_title}}</h2>
+      <div class="product-carousel">
+        {% assign showed = 0 %}
+
+        {% for relprod in relatedCollection.products %}
+          {% if relprod.available %}
+            {% if showed < 10 and relprod.handle != product.handle and relprod.available %}
+        	  {% include 'product_item', currentProduct: relprod, quickview: false, collection: relatedCollection, isCarousel: true %}
+              {% assign showed = showed | plus: 1 %}
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      $('.product-carousel').slick({
+            autoplay: true,
+            speed: 1000,
+        	autoplaySpeed: 6000,
+            slidesToShow: 5,
+            pauseOnHover: false,
+            slidesToScroll: 5,
+            prevArrow: '<i class="lnr lnr-chevron-left left-arrow animation"></i>',
+            nextArrow: '<i class="lnr lnr-chevron-right right-arrow animation"></i>',
+            responsive: [
+              {
+                breakpoint: 584,
+                settings: {
+                  infinite: false,
+                  slidesToShow: 2,
+                  slidesToScroll: 2,
+                  autoplay: false,
+                  arrows: false,
+                  speed: 150,
+                  swipeToSlide: true
+                }
+              },
+              {
+                  breakpoint: 900,
+                  settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 4,
+                  }
+              }
+            ]
+       });
+    });
+  </script>
+{% endif %}

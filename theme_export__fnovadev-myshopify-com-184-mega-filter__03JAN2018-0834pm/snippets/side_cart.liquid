@@ -1,0 +1,124 @@
+<script>
+  $(function() {
+    var itemsCount = 0;
+    $('#side-cart .quantity select').each(function(){
+      itemsCount += parseInt($(this).val());
+    });
+    $('.header .cart-wrap span.count').html(itemsCount);
+
+    function updateCart(){
+    	$('#add-cart-overlay').fadeIn();
+
+        $.ajax({
+          type: 'POST',
+          url: '/cart/update.js',
+          //async: false,
+          data: $('#side-cart form').serialize(),
+          dataType: 'json',
+          error: function(){
+            console.log('error');
+          },
+          success: function(){
+            addToCartSuccess();
+            $('#add-cart-overlay').fadeOut();
+          },
+        });
+    }
+    
+    $('#side-cart .remove').click(function(){
+      $(this).closest('.item').find('.quantity select').val(0);
+      updateCart();
+    });
+
+    $('#side-cart .quantity select').change(function(){
+      updateCart();
+    });
+
+    $('#side-cart .buttons-wrapper .btn-checkout').click(function(){
+      hideSideCart();
+      return false;
+    });
+
+
+  });
+</script>
+<link href='https://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'>
+
+<div id="side-cart" class="ease-animation-med">
+
+  <div class="wrapper">
+    <div class="header clearfix">
+      <div class="left"><h1>My Bag</h1></div>
+      <div class="right">
+        <a href="#" class="close" onclick="hideSideCart();return false;"><i class="lnr animation lnr-cross"></i></a>
+      </div>
+    </div>
+    <div class="wrap">
+      {% if cart.items == empty %}
+      <div class="empty">Your cart is empty</div>
+      {% else %}
+      <div>
+        <form>
+          {% for item in cart.items %}
+          <div class="item">
+            <div class="grid">
+              <div class="grid__item one-third small--two-fifths">
+                <a href="{{ item.product.url }}">
+                  {% if item.variant.image %}
+                  {% assign variantImg = item.variant.image | img_url: "large" %}
+                  {% else %}
+                  {% assign variantImg = item.product.featured_image | img_url: "large" %}
+                  {% endif %}
+                  <img src="{{ variantImg }}"  alt="{{ item.product.title }}" />
+                </a>
+              </div>
+              <div class="grid__item two-thirds small--three-fifths">
+                <a href="{{ item.url }}">
+                  <p class="text">{{ item.product.title }}{% unless item.variant.title contains 'Default' %}: <span class="variant">{{ item.variant.title }}</span>{% endunless %}</p>
+                </a>
+                <div class="grid-full display-table">
+                  <div class="price grid__item one-whole">
+                    <div class="pri">{{ item.line_price | money }}</div>
+                  </div>
+                  <div class="grid__item one-whole quantity clearfix">
+                    {% if item.quantity < 9 %}
+                    	{% assign to = 9 %}
+                    {% else %}
+                    	{% assign to = item.quantity | plus: 2 %}
+                    {% endif %}
+                    <select name="updates[]">
+                      {% for i in (0..to) %}
+                          <option {% if i == item.quantity %}selected="selected"{% endif %}>{{ i }}</option>
+                      {% endfor %}
+                    </select>
+                    <a class="remove"><span class="lnr lnr-cross animation"></span></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </form>
+      </div>
+      <div class="footer">
+        <div class="grid subtotal">
+          <div class="grid__item one-quarter">
+            Subtotal:
+          </div>
+          <div class="grid__item three-quarters text-right">
+            {{ cart.total_price | money }}
+          </div>
+        </div>
+      </div>
+      <div class="buttons-wrapper clearfix">
+        <div class="btn btn-checkout animation" style="cursor: pointer" onclick="$('#checkout-form').submit()">
+          <form action="/cart" method="post" id="checkout-form">
+            CHECK OUT
+            <input type="hidden" name="checkout" value="Checkout" />
+          </form>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,409 @@
+{% assign currentProduct = product %}
+
+{% comment %}
+	**** This remove the vendor from the code (it was a requirement) ****
+{% endcomment %}
+{% assign removeVendor = '"vendor":"' | append: product.vendor | append: '",' %}
+
+<script>
+  $(function(){
+    var product = {{ currentProduct | json | remove: removeVendor }};
+    var productJs = ProductJs(product);
+    
+    $(document).on('afterVariantSelected', function(e){
+      	if(e.variant && e.variant.inventory_quantity>0 && e.variant.inventory_quantity<=20) {
+        	e.item.find('.low-stock .qty').html(e.variant.inventory_quantity);
+          	e.item.find('.low-stock').show();
+        } else {
+        	e.item.find('.low-stock').hide();
+        }
+    });
+
+    if(window.location.hash.indexOf('search') >= 0) {
+      $('.collection-nav .return_search').removeClass('hide');
+    }
+    
+    $('.share-icon').click(function(){
+      	var conf = {};
+        $.extend(conf, fancyboxSettings, {href: '#sharing-popup'});
+        $.fancybox(conf);
+      	return false;
+    });
+    //$('.copy-url a').oneClickSelect();
+    
+    $('#product-item-{{ currentProduct.id }} .description .head').click(function(){
+      	if($(this).parent().hasClass('collapsed')) {
+            $(this).parent().find('.group-body').slideUp(function(){
+              $(this).parent().removeClass('collapsed');
+            });
+        } else {
+          	$(this).parent().find('.group-body').slideDown();
+        	$(this).parent().addClass('collapsed');
+        }
+      	
+      	
+      	return false;
+    });
+    
+  	if(smIsMobile.any()) {
+    	var waypoint = new Waypoint({
+          element: $('#active-wrapper'),
+          handler: function(direction) {
+            if(direction=='down') {
+                $('#product-gallery .slick-dots').css('position', 'absolute');
+            } else {
+                $('#product-gallery .slick-dots').css('position', 'fixed');
+            }
+          },
+          offset: 'bottom-in-view'
+        });
+    }
+    
+    {% comment %}
+    if(smIsMobile.any()) {
+    	var waypoint = new Waypoint({
+          element: $('#product-info .cta .item.middle'),
+          handler: function(direction) {
+            if(direction=='down') {
+                $('#product-info .cta .item.middle .content-available').removeClass('sticky');
+            } else {
+                $('#product-info .cta .item.middle .content-available').addClass('sticky');
+            }
+          },
+          offset: function(){
+          return this.context.innerHeight() - this.adapter.outerHeight() - 60;
+          }
+        });
+      	var waypoint2 = new Waypoint({
+          element: $('#product-info .cta .item.middle'),
+          handler: function(direction) {
+            if(direction=='down') {
+                //$('#product-info .cta .item.middle .content-available').addClass('sticky');
+            } else {
+                $('#product-info .cta .item.middle .content-available').removeClass('sticky');
+            }
+          }
+        });
+    }
+    {% endcomment %}
+  });
+</script>
+
+{% comment %}
+{% if quickView != true %}
+<div class="product-top container">
+  <div class="wrap clearfix">
+    {% include 'breadcrumb' %}
+    <div class="{% if collection != blank %}shown{% endif %} collection-nav clearfix">
+      {% if collection.previous_product %}
+      <a href="{{ collection.previous_product }}" class="previous_product">&laquo; Prev</a>
+      {% endif %}
+      {% if collection.next_product %}
+      <a href="{{ collection.next_product }}" class="next_product">Next &raquo;</a>
+      {% endif %}
+
+      <a href="#" onclick="window.history.back(); return false;" class="return_search hide">&laquo; Return to Search Results</a>
+    </div> <!-- /.collection-nav -->
+  </div>
+</div>
+{% endif %}
+{% endcomment %}
+
+<div id="product-wrap" class="container" itemscope itemtype="http://schema.org/Product">
+  <div id="product-item-{{ currentProduct.id }}" class="clearfix {% if collection.handle == "plus" or collection.handle contains 'plus-' %}product-plus{% endif %}" style="position:relative;">
+    {% include '_product_gallery' %}
+
+    <section id="product-info" class="clearfix">
+      <div class="clearfix">
+      	<h1 class="title large--left small--left" itemprop="name">{{ currentProduct.title }}</h1>
+        <div id="sharing" class="right hide small--show">
+          <a href="#" class="share-icon"><span>SHARE</span></a>
+        </div>
+      </div>
+      
+      <form action="/cart/add" method="post" class="variants add-to-cart-form" id="product-actions" enctype="multipart/form-data">
+        <span class="validation-msg hide"></span>
+        {% include '_product_price' %}
+        
+        {% if currentProduct.metafields.yotpo['reviews_count'] != '0' %}
+        <!-- Yotpo star rating and QnA -->
+        <div class="yotpo bottomLine"           
+             data-domain="{{ shop.permanent_domain | escape }}"
+             data-product-id="{{ currentProduct.id }}"
+             data-product-models="{{ currentProduct.id }}"
+             data-name="{{ currentProduct.title | escape }}"
+             data-url="{{ page.url }}"
+             data-image-url="{{ currentProduct.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&','%26'}}"
+             data-description="{{ currentProduct.description | escape }}"
+             data-bread-crumbs="{% for tag in currentProduct.tags %}{{ tag | escape }};{% endfor %}">
+        </div>
+        {% endif %}
+        
+        {% if quickView != true %}
+        	{% include 'shappify-sales-clock' %}
+        {% endif %}
+        
+        {% assign dateNow = 'now' | date: '%Y-%m-%dT%H:%M:%SZ' %}
+        {% assign countdownCollection = false %}
+        {% for i in (1..5) %}
+          {% assign item_collection = 'countdown_collection_' | append: i %}
+          {% assign item_start_date = 'countdown_startdate_' | append: i %}
+          {% assign item_end_date = 'countdown_enddate_' | append: i %}
+          {% for eachCollection in currentProduct.collections %}
+            {% if eachCollection.handle == settings[item_collection] %}
+              {% assign endDate = settings[item_end_date] | date: '%Y-%m-%dT%H:%M:%SZ' %}
+              {% assign startDate = settings[item_start_date] | date: '%Y-%m-%dT%H:%M:%SZ' %}
+              {% if startDate < dateNow and endDate > dateNow %}
+                {% assign countdownCollection = true %}
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+        {% if countdownCollection %}
+        <div class="countdown-banner hide">
+          <p>Hurry! Sale ends in <span class="countdown-days">2</span> days, <span class="countdown-hours">39</span> hours, <span class="countdown-minutes">38</span> minutes and <span class="countdown-seconds">19</span> seconds.</p>
+        </div>
+        <script type="text/javascript">
+          $(document).ready(function(){
+            updateCountdown();
+            timeout();
+          });
+          function timeout() {
+            setTimeout(function () {
+              updateCountdown();
+              timeout();
+            }, 1000);
+          }
+
+          var currentDate = new Date('{{dateNow}}');
+          var startDate = new Date('{{startDate}}');
+          var endDate = new Date('{{endDate}}');                                     
+                   
+		  var delta = Math.abs(endDate - currentDate) / 1000;
+          
+          var daysLeft = Math.round(delta/86400);
+          //currentDate.setTime(currentDate.getTime()+(daysLeft*86400000));
+          if(daysLeft>=3){
+          	currentDate.setDate(currentDate.getDate()+(daysLeft-3));
+          }
+          
+          function updateCountdown(){
+            // get total seconds between the times
+            delta = Math.abs(endDate - currentDate) / 1000;
+
+            if(delta == 0){
+              $(".countdown-banner").addClass('hide');
+            }else{
+              $(".countdown-banner").removeClass('hide');
+
+              // calculate (and subtract) whole days
+              var days = Math.floor(delta / 86400);
+              delta -= days * 86400;
+
+              // calculate (and subtract) whole hours
+              var hours = Math.floor(delta / 3600) % 24;
+              delta -= hours * 3600;
+
+              // calculate (and subtract) whole minutes
+              var minutes = Math.floor(delta / 60) % 60;
+              delta -= minutes * 60;
+
+              // what's left is seconds
+              var seconds = Math.round(delta % 60); 
+
+
+              $(".countdown-banner .countdown-days").html(days);
+              $(".countdown-banner .countdown-hours").html(hours);
+              $(".countdown-banner .countdown-minutes").html(minutes);
+              $(".countdown-banner .countdown-seconds").html(seconds);
+
+              currentDate = new Date(currentDate - (-1000));
+            }
+          }
+        </script>
+
+        {% endif %}
+        
+        
+        <div class="description medium--hide small--hide" itemprop="description">
+          <div class="group collapsed">
+            <div class="head"><a href="#">PRODUCT DETAILS <i class="fa fa-plus"></i><i class="fa fa-minus"></i></a></div>
+          	<div class="group-body">{{ currentProduct.description }}</div>
+          </div>
+          {% comment %}
+          {% if currentProduct.tags contains 'M - Jodi' or currentProduct.tags contains 'M - Janet' or currentProduct.tags contains 'M - Sierra' %}
+            <div class="group no-border">
+              <div class="head"><a href="#">MODEL STATS <i class="fa fa-plus"></i><i class="fa fa-minus"></i></a></div>
+              <div class="group-body">
+                {% if currentProduct.tags contains 'M - Jodi' %}
+                  {{ settings.product_model_stats_jodi }}
+                {% else %}
+                  {% if currentProduct.tags contains 'M - Janet' %}
+                    {{ settings.product_model_stats_janet }}
+                  {% else %}
+                  	{{ settings.product_model_stats_sierra }}
+                  {% endif %}
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+          {% endcomment %}
+          
+          <div class="group">
+            <div class="head"><a href="#">SHIPPING INFORMATION <i class="fa fa-plus"></i><i class="fa fa-minus"></i></a></div>
+          	<div class="group-body">{{ settings.product_shipping }}</div>
+          </div>
+          
+        </div>
+        
+        {% include '_color_swatches' %}
+        
+        <div class="table">
+          	<div class="table-cell">{% include '_product_variants' %}</div>
+          	<div class="table-cell qty-container hide">{% include '_product_quantity' %}</div>
+        </div>
+        
+        {% include 'size-chart' %}
+
+        <div class="table cta">
+          <div class="table-cell one-whole">{% include '_product_buttons' %}</div>
+          {% if quickView != true %}
+            <div class="table-cell">{% include 'wishlist' with 'product' %}</div>
+            <div class="table-cell last medium-down--hide">
+              <div id="sharing">
+                <a href="#" class="share-icon"><span class="small--hide">SHARE</span></a>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+        <div id="shopmessage-checkbox"></div>
+        <div class="low-stock text-center">
+          <img src="{{ 'fire.svg' | asset_url }}" />
+          {% comment %}
+          <span>ONLY <span class="qty"></span> LEFT!</span>
+          {% endcomment %}
+          <span>Hurry! Almost Sold Out...</span>
+        </div>
+        <div class="info clearfix">
+          <div class="hide description medium--show small--show" itemprop="description">
+            <div class="group collapsed">
+              <div class="head"><a href="#">PRODUCT DETAILS <i class="fa fa-plus"></i><i class="fa fa-minus"></i></a></div>
+              <div class="group-body">{{ currentProduct.description }}</div>
+            </div>
+            {% comment %}
+            {% if currentProduct.tags contains 'M - Jodi' or currentProduct.tags contains 'M - Janet' or currentProduct.tags contains 'M - Sierra' %}
+              <div class="group no-border">
+                <div class="head"><a href="#">MODEL STATS <i class="fa fa-plus"></i><i class="fa fa-minus"></i></a></div>
+                <div class="group-body">
+                  {% if currentProduct.tags contains 'M - Jodi' %}
+                    {{ settings.product_model_stats_jodi }}
+                  {% else %}
+                    {% if currentProduct.tags contains 'M - Janet' %}
+                      {{ settings.product_model_stats_janet }}
+                    {% else %}
+                      {{ settings.product_model_stats_sierra }}
+                    {% endif %}
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+            {% endcomment %}
+            <div class="group">
+              <div class="head"><a href="#">SHIPPING INFORMATION <i class="fa fa-plus"></i><i class="fa fa-minus"></i></a></div>
+              <div class="group-body">{{ settings.product_shipping }}</div>
+            </div>
+          </div>
+        </div>
+        <input type="hidden" class="all-product-status" value="{{ productStatus }}" />
+        <input type="hidden" class="product-status" value="{{ productStatus }}" />
+      </form>
+      {% if quickView != true %}
+      {% include 'get-the-look'%}
+      {% endif %}
+    </section><!-- /#product-information -->
+
+  </div><!-- /#product -->
+</div><!-- /#product-wrap -->
+
+{% if settings.show_related_products %}
+  {% if quickView != true %}
+      {% include 'related_products' %}
+  {% endif %}
+{% endif %}
+
+{% if quickView != true %}
+  {{ 'jquery.products.min.js' | asset_url | script_tag }}
+  <script>
+    $(function(){
+      Shopify.Products.recordRecentlyViewed();
+    });
+  </script>
+  {% comment %}
+  {% include 'recently_viewed' %}
+  {% endcomment %}
+{% endif %}
+
+{% if quickView != true %}
+  <div class="nosto_element" id="categorypage-nosto-1"></div>
+  {% include 'nosto-element' with 'productpage-nosto-3' %}
+  {% include 'nosto-element' with 'productpage-nosto-2' %}
+{% endif %}
+<div id="foursixty-product-gallery" style="display:block">
+	<div style="font-family:Oswald, sans-serif; font-weight:normal; font-size: 20px; text-align:center;">Styled on Insta</div>
+	<script data-has-posts-selector="#foursixty-product-gallery" src="//foursixty.com/media/scripts/fs.slider.v2.5.js" data-feed-id="fashionnova" data-theme="slider_v2_5" data-cell-size="33.333%" data-product-ids="{{product.id}}"></script>
+	<style>.fs-has-links::after {  padding: 3px 6px; color:rgb(245, 15, 150); content: "SHOP THE LOOK";  }.fs-wrapper { height: auto } .fs-entry-container { height: 0 !important; width: 33.333% !important; padding-top: 33.333% !important; }.fs-wrapper div.fs-text-container .fs-entry-title, div.fs-detail-title{font-family:Circular; font-size: 12px;;font-style:normal;font-weight:normal;}div.fs-text-container .fs-entry-date, div.fs-detail-container .fs-post-info, div.fs-wrapper div.fs-has-links::after, .fs-text-product, .fs-overlink-text{font-family:Circular; font-size: 13px;;font-style:normal;font-weight:normal;}.fs-wrapper div.fs-text-container * {color:rgb(245, 15, 150)}.fs-wrapper div.fs-text-container {background-color:rgba(0, 0, 0, 0.59); margin: 0px}div.fs-entry-date{display:block}div.fs-entry-title{display:block}.fs-wrapper div.fs-timeline-entry{ margin: 4px } #fs-detail-products { display:block; } .fs-slider-prev-button, .fs-slider-next-button {display: flex !important; background-color: transparent; opacity: 1;} div.fs-wrapper {width: calc(100% - 120px); margin: 0 auto;} .fs-slider-container .fs-slider-prev-button.fs-hidden, .fs-slider-container .fs-slider-next-button.fs-hidden {display: flex !important; opacity: 0.5;} @media only screen and (max-width: 768px) {.fs-wrapper div.fs-entry-container {width: 100% !important; padding-top: 100% !important;}} path.fs-arrow {stroke-width: 2px;}
+	</style>
+</div>
+<div class="container product-reviews">
+    {% if quickView != true %}
+    <h2 class="subheading">REVIEWS</h2>
+	<div class="yotpo yotpo-main-widget"
+         data-product-id="{{ currentProduct.id }}"
+         data-name="{{ currentProduct.title | escape }}"
+         data-url="{{ page.url }}"
+         data-image-url="{{ currentProduct.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}"
+         data-description="{{ currentProduct.description | escape }}">
+    </div>
+    {% endif %}
+</div>
+
+{% if quickView != true %}
+  {{ 'clipboard.min.js' | asset_url | script_tag }}
+  {% include 'social_sharing' %}
+{% endif %}
+
+{% unless customer %}
+<div class="hide">
+  <div id="customer-login" class="register-login text-center">
+    <h1>Customer Login</h1>
+
+    {% form 'customer_login' %}
+    <input type="hidden" name="checkout_url" value="/products/{{ currentProduct.handle }}" />
+    <div id="login_email" class="clearfix form-row">
+      <label for="customer_email" class="login">Email Address</label>
+      <input type="email" value="" name="customer[email]" placeholder="Email Address" id="customer_email" class="large" size="30" />
+    </div>
+
+    {% if form.password_needed %}
+    <div id="login_password" class="clearfix form-row">
+      <label for="customer_password" class="login">Password</label>
+      <input type="password" value="" name="customer[password]" placeholder="Password" id="customer_password" class="large password" size="16" />
+      <div style="clear: both"></div>
+      <div class="join-us"><a href="/account/register">Not a member? Join Us</a></div>
+    </div>
+    {% endif %}
+
+    <div class="action-bottom">
+      <input class="btn animation" type="submit" value="Sign In" />
+    </div>
+    {% endform %}
+	{% comment %}
+    <div class="horizontal-line"><span>OR</span></div>
+	
+    <div class="text-center">
+      <script src='//open-signin.okasconcepts.com/customer/script?shop=fnovadev.myshopify.com'></script>
+    </div>
+    {% endcomment %}
+  </div>
+</div>
+{% endunless %}

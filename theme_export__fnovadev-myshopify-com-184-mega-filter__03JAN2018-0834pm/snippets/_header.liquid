@@ -1,0 +1,183 @@
+<header id="header" class="header animation {% if settings.header_behavior == "drop-over" and template == "index" %}over-carousel{% endif %}">
+  {% include 'utility_bar' %}
+  <div class="container">
+    <div class="header-wrapper grid-full medium-down--hide">
+      <div class="logo table-cell">
+        <a href="/"><img src="{{ "logo.png" | asset_url }}" alt="{{shop.name}}" /></a>
+      </div>
+      <div class="table-cell search">
+        <div class="medium-down--hide searchbar container">
+        	<form action="/pages/search-results" method="get" class="clearfix">
+              <div class="left four-fifths">
+                  <input type="text" placeholder="Search" name="q" id="nxt-autocomplete" autocomplete="off">
+              	  <input type="hidden" name="type" value="product">
+              </div>
+              <div class="left one-fifth">
+                  <a href="#" onclick="$(this).closest('form').submit();return false;">
+                    <div class="btn"><i class="fa fa-search"></i></div>
+                  </a>
+              </div>
+            </form>
+      	</div>
+      </div>
+      <div class="table-cell utils-wrapper">
+        <div class="top-header clearfix medium--hide small--hide">
+          {% include 'top_utils' %}
+          {% if settings.show_social_header %}
+          <div class="social-top">
+            {% include 'social_links' %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="header-wrapper grid-full hide medium-down--show">
+      <div class="menu-mobile grid__item one-quarter">
+        <div class="table">
+          <div class="table-cell">
+            <div class="left one-half text-left">
+              {% include 'menu_mobile' %}
+            </div>
+            <div class="left one-half search-target text-left {% unless template contains 'product' or template contains 'cart' %}hide{% endunless %}">
+              <a href="#">
+                <i class="fa fa-search"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="logo grid__item two-quarters">
+        <div class="table">
+          <a href="/" class="table-cell">
+            <img src="{{ "logo-white.png" | asset_url }}" alt="{{shop.name}}" />
+          </a>
+        </div>
+      </div>
+      <div class="grid__item one-quarter utils">
+        <div class="table">
+          <div class="table-cell">
+            {% include 'top_utils' %}
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="hide header-searchbar container">
+      <form action="/pages/search-results" method="get" class="clearfix">
+        <div class="left four-fifths">
+          <input type="text" placeholder="Search" name="q" id="q" class="nxt-autocomplete" autocomplete="off">
+          <input type="hidden" name="type" value="product">
+        </div>
+        <div class="left one-fifth">
+          <a href="#" onclick="$('.header-searchbar form').submit();return false;">
+            <div class="btn"><i class="fa fa-search"></i></div>
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="shipping-banner medium--hide small--hide">
+    <div class="container">
+      <div class="grid text-center">
+        <div class="grid__item one-third small--hide medium--hide">
+          <span>{{ settings.shipping_tout_1}}</span>
+        </div>
+        <div class="grid__item one-third small--hide medium--hide">
+          <span  style="color: #f00;" >
+          {% assign dateNow = 'now' | date: '%Y-%m-%dT%H:%M:%SZ' %}
+          {% assign countdownCollection = false %}
+          {% assign item_start_date = 'countdown_startdate_0'%}
+          {% assign item_end_date = 'countdown_enddate_0' %}
+          {% assign endDate = settings[item_end_date] | date: '%Y-%m-%dT%H:%M:%SZ' %}
+          {% assign startDate = settings[item_start_date] | date: '%Y-%m-%dT%H:%M:%SZ' %}
+            {% if startDate < dateNow and endDate > dateNow %}
+              {% assign countdownCollection = true %}
+            {% endif %}
+            {% if countdownCollection %}
+              <span class="countdown-tout">
+                Hurry! Sale ends in <span class="countdown-days">2</span>D, <span class="countdown-hours">20</span>H, <span class="countdown-minutes">38</span>M <span class="countdown-seconds">19</span>S.
+              <span>
+
+              <script type="text/javascript">
+              $(document).ready(function(){
+                updateCountdown2();
+                timeout2();
+              });
+              function timeout2() {
+                setTimeout(function () {
+                  updateCountdown2();
+                  timeout2();
+                }, 1000);
+              }
+
+              var currentDate2 = new Date('{{dateNow}}');
+              var startDate2 = new Date('{{startDate}}');
+              var endDate2 = new Date('{{endDate}}');
+
+              var delta = Math.abs(endDate2 - currentDate2) / 1000;
+
+              var daysLeft = Math.round(delta/86400);
+              //currentDate.setTime(currentDate.getTime()+(daysLeft*86400000));
+              if(daysLeft>=3){
+                currentDate2.setDate(currentDate2.getDate()+(daysLeft-3));
+              }
+
+              function updateCountdown2(){
+                // get total seconds between the times
+                delta = Math.abs(endDate2 - currentDate2) / 1000;
+
+                if(delta == 0){
+                  $(".countdown-banner").addClass('hide');
+                }else{
+                  $(".countdown-banner").removeClass('hide');
+
+                  // calculate (and subtract) whole days
+                  var days = Math.floor(delta / 86400);
+                  delta -= days * 86400;
+
+                  // calculate (and subtract) whole hours
+                  var hours = Math.floor(delta / 3600) % 24;
+                  delta -= hours * 3600;
+
+                  // calculate (and subtract) whole minutes
+                  var minutes = Math.floor(delta / 60) % 60;
+                  delta -= minutes * 60;
+
+                  // what's left is seconds
+                  var seconds = Math.round(delta % 60); 
+
+
+                  $(".countdown-tout .countdown-days").html(days);
+                  $(".countdown-tout .countdown-hours").html(hours);
+                  $(".countdown-tout .countdown-minutes").html(minutes);
+                  $(".countdown-tout .countdown-seconds").html(seconds);
+
+                  currentDate2 = new Date(currentDate2 - (-1000));
+                }
+              }
+              </script>
+
+            {% endif %}
+          </span>
+        </div>
+        <div class="grid__item one-third small--hide medium--hide">
+          <span>{{ settings.shipping_tout_3}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav class="main-menu medium--hide small--hide clearfix">
+    {% include 'menu_main_mega' %}
+  </nav>
+  {% comment %}
+  <nav class="main-menu medium--hide small--hide clearfix">
+    {% include 'menu_main' %}
+  </nav>
+  {% endcomment %}
+  <div class="clearfix"></div>
+</header>
+
+{% if settings.header_behavior == "drop" or settings.header_behavior == "drop-over" %}
+	{% include '_header_drop' %}
+{% endif %}

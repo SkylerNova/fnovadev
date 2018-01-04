@@ -1,0 +1,64 @@
+<tr class="item {{ item.product.handle }} row-{{ forloop.index | modulo: 2 }} ">
+  <td class="details">
+    <table>
+      <tr>
+        <td class="image three-tenths small--one-whole">
+          {% if item.variant.image %}
+          {% assign variantImg = item.variant.image | img_url: "compact" %}
+          {% else %}
+          {% assign variantImg = item.product.featured_image | img_url: "compact" %}
+          {% endif %}
+          <img src="{{ variantImg }}"  alt="{{ item.product.title }}" />
+        </td>
+        <td class="title text-left animation seven-tenths small--one-whole">
+          <a href="{{ item.url }}">
+            <p class="text">{{ item.product.title }}</p>
+          </a>
+          {% unless item.variant.title contains 'Default' %}
+          	<p>{{ item.variant.title }}</p>
+          {% endunless %}
+    
+          <b>{{ item.price | money }}</b>      
+          {% if item.quantity < 9 %}
+              {% assign to = 9 %}
+          {% else %}
+              {% assign to = item.quantity | plus: 2 %}
+          {% endif %}
+          <select name="updates[]" id="updates_{{ item.id }}">
+            {% for i in (0..to) %}
+              <option {% if i == item.quantity %}selected="selected"{% endif %}>{{ i }}</option>
+            {% endfor %}
+          </select>
+          
+          {% for p in item.properties %}
+            {% unless p.last == blank %}
+              <p>
+                {{ p.first }}:
+                {% if p.last contains '/uploads/' %}
+                <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                {% else %}
+                {{ p.last }}
+                {% endif %}
+              </p>
+            {% endunless %}
+          {% endfor %}
+        </td>
+      </tr>
+    </table>
+  </td>
+  <td class="remove one-eighth">
+    <a class="remove-from-cart animation" data-line="{{ forloop.index }}" href="/cart/change?line={{ forloop.index }}&quantity=0"><i class="lnr lnr-cross"></i></a>
+  </td>
+  <td>
+  	{% if customer %}
+      <a href="#" title="Save for later" class="saveForLater" data-producthandle="{{ item.product.handle }}" data-productid="{{ item.product.id }}" data-variantid="{{ item.variant.id }}" data-line="{{ forloop.index }}">
+        Save for later
+      </a>
+    {% else %}
+      <a href="#customer-login" class="login-popup-link">Save for later</a>
+    {% endif %}
+  </td>
+  <td class="total-price one-eighth small--hide ">
+    <b>{{ item.line_price | money }}</b>
+  </td>
+</tr>

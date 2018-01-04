@@ -1,0 +1,26 @@
+<div class="clearfix color-swatches prod-{{ currentProduct.id }}" style="display: block;">
+  {% if isGrid %}
+  	{% assign limit = 5 %}
+  {% else %}
+  	{% assign limit = 99 %}
+  {% endif %}
+
+  {% assign swatches = product.metafields['linked_products'].swatches | split: ',' %}
+  {% assign showed = 0 %}
+  {% for swatch in swatches %}
+  	  {% if showed < limit %}
+        {% assign swatch = swatch | replace: 'https:', '' | replace: 'http:', '' %}
+        {% assign handle = swatch | split: ':' | first %}
+        {% assign color = swatch | split: ':' | last %}
+        {% unless handle == currentProduct.handle %}
+          <a href="/products/{{ handle }}" class="link-color-swatch">
+              <div class="color-swatch left" style="{% if color contains '//' %}background: url({{ color }}){% else %}background-color: {{ color }}{% endif %}"></div>
+          </a>
+  		  {% assign showed = showed | plus: 1 %}
+        {% endunless %}
+  	  {% endif %}
+  {% endfor %}
+  {% if swatches.size > limit %}
+  	<div class="more-color">- AVAILABLE IN MORE COLORS -</div>
+  {% endif %}
+</div>

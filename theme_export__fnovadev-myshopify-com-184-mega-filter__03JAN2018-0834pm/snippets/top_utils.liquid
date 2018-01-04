@@ -1,0 +1,105 @@
+<div class="top-utils">
+  <ul class="clearfix">
+    {% if settings.show_newsletter_header %}
+    <li class="newsletter-target small--hide">
+      <a href="#">
+        <i class="fa fa-envelope"></i>
+        <span>Newsletter</span>
+      </a>
+    </li>
+    {% endif %}
+    <!--<li class="search-target">
+      <a href="#">
+        <i class="fa fa-search"></i>
+        <span>Search</span>
+      </a>
+    </li>-->
+
+    <li class="cart-wrap medium-down--one-half">
+       <div class="hide small--show bag">
+          <a href="/cart">	
+            <div class="handle"></div>
+              <div class="body">
+                  <span class="count">{{ cart.item_count }}</span>
+              </div>
+          </a>  
+          	<div class="floating-cart">
+              <div class="head">Item was added to your bag!</div>
+              <div class="grid">
+                <div class="grid__item one-third img"></div>
+                <div class="grid__item two-thirds info">
+                  <div class="title"></div>
+                  <div class="price"></div>
+                </div>
+              </div>
+              <div class="grid buttons">
+                <div class="grid__item one-half">
+                  <a href="/cart"><div class="btn secondary">View Bag</div></a>
+                </div>
+                <div class="grid__item one-half">
+                  <a href="/checkout"><div class="btn">Checkout</div></a>
+                </div>
+              </div>
+              <div class="continue-shopping">
+                <a href="#" onclick="$('.floating-cart').slideUp(); return false;">Continue Shopping</a>
+              </div>
+          	</div>
+        </div>
+        <div class="small--hide">
+        	<a href="/cart">	
+          	<i class="fa fa-shopping-bag"></i>
+            <span class="text">My Bag</span>
+            <span class="count">{{ cart.item_count }}</span>
+          </a>
+          	<div class="floating-cart">
+              <div class="head">Item was added to your bag!</div>
+              <div class="grid">
+                <div class="grid__item one-third img"></div>
+                <div class="grid__item two-thirds info">
+                  <div class="title"></div>
+                  <div class="price"></div>
+                </div>
+              </div>
+              <div class="grid buttons">
+                <div class="grid__item one-half">
+                  <a href="/cart"><div class="btn secondary">View Bag</div></a>
+                </div>
+                <div class="grid__item one-half">
+                  <a href="/checkout"><div class="btn">Checkout</div></a>
+                </div>
+              </div>
+              <div class="continue-shopping">
+                <a href="#" onclick="$('.floating-cart').slideUp(); return false;">Continue Shopping</a>
+              </div>
+          	</div>
+        </div>
+    </li>
+    
+    <li class="medium-down--one-half">
+      {% include 'wishlist' with 'link' %}
+    </li>
+    
+    {% if shop.customer_accounts_enabled %}
+      <li class="user medium-down--hide">
+        {% if customer %}
+          <a href="/account" class="my-account animation">
+            <i class="fa fa-user"></i>
+            <span>My Account</span>
+          </a>
+          {% comment %}
+          <span style="font-weight: 300;">&nbsp;&nbsp;|</span>
+          <a href="/account/logout" class="my-account animation">
+            <span>&nbsp;&nbsp;Logout</span>
+          </a>
+          {% endcomment %}
+        {% else %}
+          <a href="/account/login" class="my-account animation">
+            <i class="fa fa-user"></i>
+            <span>Sign in</span>
+          </a>
+        {% endif %}
+      </li>
+    {% endif %}
+
+  </ul>
+</div>

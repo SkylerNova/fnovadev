@@ -1,0 +1,710 @@
+<script>
+  $(function(){
+    var conf = {};
+   	$.extend(conf, fancyboxSettings, {
+      afterShow: function(){
+      	var width = $('#sizechart-popup').width() - 5;
+        $('#sizechart-popup .shoes').parent().width(width);
+      }
+    });
+  	$('.sizechart a.popup').fancybox(conf);
+
+    $('#sizechart-popup .title a').click(function(){
+      	var content = $(this).closest('.section').find('.content');
+      	if(content.is(':visible')) {
+          $(this).closest('.section').find('i').removeClass('fa-angle-up').addClass('fa-angle-down');
+          content.slideUp(function(){
+          	//$.fancybox.update();
+          });
+        } else {
+          $(this).closest('.section').find('i').removeClass('fa-angle-down').addClass('fa-angle-up');
+          content.slideDown(function(){
+          	//$.fancybox.update();
+          });
+        }
+      	return false;
+    });
+    
+    $('.countries a').click(function(){
+    	var country = $(this).attr('href').replace('#', '');
+      
+      	$(this).parent().find('.active').removeClass('active');
+      	$(this).addClass('active');
+      	
+      	$(this).closest('.table').find('.us, .eu, .uk, .jp').addClass('hide');
+      	$(this).closest('.table').find('td.'+country).removeClass('hide');
+      
+      	return false;
+    });
+  });
+</script>
+
+{% if quickView %}
+	<div class="sizechart"><a href="/pages/size-guide">See Size Chart</a></div>
+{% else %}
+	<div class="sizechart"><a href="#sizechart-popup" class="popup">See Size Chart</a></div>
+{% endif %}
+
+<div class="hide">
+	<div id="sizechart-popup" style="max-width: 700px; padding: 10px;">
+    	<div id="page-sizeguide">
+          <div class="clearfix">
+              <div class="">
+                  <h2 class="first">TOPS &amp; DRESSES</h2>
+                  <table>
+                      <tbody>
+                          <tr>
+                              <td>SIZE</td>
+                              <td>XS</td>
+                              <td>S</td>
+                              <td>M</td>
+                              <td>L</td>
+                              <td>XL</td>
+                          </tr>
+                          <tr>
+                              <td>US/CAN</td>
+                              <td>1</td>
+                              <td>3, 5</td>
+                              <td>7, 9</td>
+                              <td>11, 13</td>
+                              <td>15</td>
+                          </tr>
+                          <tr>
+                              <td>Bust (in)</td>
+                              <td>31-33</td>
+                              <td>33-35</td>
+                              <td>35-37</td>
+                              <td>37-39</td>
+                              <td>39-41</td>
+                          </tr>
+                          <tr>
+                              <td>Waist (in)</td>
+                              <td>24-25</td>
+                              <td>26-27</td>
+                              <td>28-29</td>
+                              <td>30-31</td>
+                              <td>32</td>
+                          </tr>
+                          <tr>
+                              <td>Hips (in)</td>
+                              <td>33-34</td>
+                              <td>35-36</td>
+                              <td>37-38</td>
+                              <td>39-40</td>
+                              <td>41</td>
+                          </tr>
+                          <tr>
+                              <td>UK</td>
+                              <td>2, 4</td>
+                              <td>6, 8</td>
+                              <td>10, 12</td>
+                              <td>14, 16</td>
+                              <td>18</td>
+                          </tr>
+                          <tr>
+                              <td>EU</td>
+                              <td>32, 34</td>
+                              <td>36, 38</td>
+                              <td>40, 42</td>
+                              <td>44, 46</td>
+                              <td>48</td>
+                          </tr>
+                          <tr>
+                              <td>AUS</td>
+                              <td>2, 4</td>
+                              <td>6, 8</td>
+                              <td>10, 12</td>
+                              <td>14, 16</td>
+                              <td>18</td>
+                          </tr>
+                          <tr>
+                              <td>Bust (cm)</td>
+                              <td>78-83</td>
+                              <td>83-89</td>
+                              <td>89-94</td>
+                              <td>94-99</td>
+                              <td>99-104</td>
+                          </tr>
+                          <tr>
+                              <td>Waist (cm)</td>
+                              <td>60-65</td>
+                              <td>65-70</td>
+                              <td>70-75</td>
+                              <td>75-80</td>
+                              <td>80-85</td>
+                          </tr>
+                          <tr>
+                              <td>Hips (cm)</td>
+                              <td>83-88</td>
+                              <td>88-93</td>
+                              <td>93-98</td>
+                              <td>98-103</td>
+                              <td>103-108</td>
+                          </tr>
+                      </tbody>
+                  </table>
+                  <h2>BOTTOMS &amp; SKIRTS</h2>
+                  <table>
+                      <tbody>
+                          <tr>
+                              <td>SIZE</td>
+                              <td>XS</td>
+                              <td>S</td>
+                              <td>M</td>
+                              <td>L</td>
+                              <td>XL</td>
+                          </tr>
+                          <tr>
+                              <td>US/CAN</td>
+                              <td>0, 1</td>
+                              <td>3, 5</td>
+                              <td>7, 9</td>
+                              <td>11, 13</td>
+                              <td>15, 17</td>
+                          </tr>
+                          <tr>
+                              <td>Waist (in)</td>
+                              <td>24-25</td>
+                              <td>26-27</td>
+                              <td>28-29</td>
+                              <td>30-31</td>
+                              <td>32-33</td>
+                          </tr>
+                          <tr>
+                              <td>Hips (in)</td>
+                              <td>33-34</td>
+                              <td>35-37</td>
+                              <td>38-40</td>
+                              <td>41-42</td>
+                              <td>43-44</td>
+                          </tr>
+                          <tr>
+                              <td>UK</td>
+                              <td>2, 4</td>
+                              <td>6, 8</td>
+                              <td>10, 12</td>
+                              <td>14, 16</td>
+                              <td>18, 20</td>
+                          </tr>
+                          <tr>
+                              <td>EU</td>
+                              <td>32, 34</td>
+                              <td>36, 38</td>
+                              <td>40, 42</td>
+                              <td>44, 46</td>
+                              <td>46, 48</td>
+                          </tr>
+                          <tr>
+                              <td>AUS</td>
+                              <td>2, 4</td>
+                              <td>6, 8</td>
+                              <td>10, 12</td>
+                              <td>14, 16</td>
+                              <td>18, 20</td>
+                          </tr>
+                          <tr>
+                              <td>Waist (cm)</td>
+                              <td>60-65</td>
+                              <td>65-70</td>
+                              <td>70-75</td>
+                              <td>75-80</td>
+                              <td>80-85</td>
+                          </tr>
+                          <tr>
+                              <td>Hips (cm)</td>
+                              <td>83-88</td>
+                              <td>88-93</td>
+                              <td>93-98</td>
+                              <td>98-103</td>
+                              <td>103-108</td>
+                          </tr>
+                      </tbody>
+                  </table>
+                  <h2>SHOES &amp; BOOTS</h2>
+                  <table>
+                      <tbody>
+                          <tr>
+                              <td>US/CAN</td>
+                              <td>5</td>
+                              <td>5,5</td>
+                              <td>6</td>
+                              <td>6,5</td>
+                              <td>7</td>
+                              <td>7,5</td>
+                              <td>8</td>
+                              <td>8,5</td>
+                              <td>9</td>
+                              <td>9,5</td>
+                              <td>10</td>
+                          </tr>
+                          <tr>
+                              <td>UK</td>
+                              <td>3</td>
+                              <td>3,5</td>
+                              <td>4</td>
+                              <td>4,5</td>
+                              <td>5</td>
+                              <td>5,5</td>
+                              <td>6</td>
+                              <td>6,5</td>
+                              <td>7</td>
+                              <td>7,5</td>
+                              <td>8</td>
+                          </tr>
+                          <tr>
+                              <td>EU</td>
+                              <td>36</td>
+                              <td>36,5</td>
+                              <td>37</td>
+                              <td>37,5</td>
+                              <td>38</td>
+                              <td>38,5</td>
+                              <td>39</td>
+                              <td>39,5</td>
+                              <td>40</td>
+                              <td>40,5</td>
+                              <td>41</td>
+                          </tr>
+                          <tr>
+                              <td>AUS</td>
+                              <td>5</td>
+                              <td>5,5</td>
+                              <td>6</td>
+                              <td>6,5</td>
+                              <td>7</td>
+                              <td>7,5</td>
+                              <td>8</td>
+                              <td>8,5</td>
+                              <td>9</td>
+                              <td>9,5</td>
+                              <td>10</td>
+                          </tr>
+                      </tbody>
+                  </table>
+                  <h2>SWIMWEAR &amp; LINGERIE</h2>
+                  <table>
+                      <tbody>
+                          <tr>
+                              <td>SIZE</td>
+                              <td>XS</td>
+                              <td>S</td>
+                              <td>M</td>
+                              <td>L</td>
+                              <td>XL</td>
+                          </tr>
+                          <tr>
+                              <td>US/CAN</td>
+                              <td>1</td>
+                              <td>3, 5</td>
+                              <td>7, 9</td>
+                              <td>11, 13</td>
+                              <td>15</td>
+                          </tr>
+                          <tr>
+                              <td>Bust (in)</td>
+                              <td>31-33</td>
+                              <td>33-35</td>
+                              <td>35-37</td>
+                              <td>37-39</td>
+                              <td>39-41</td>
+                          </tr>
+                          <tr>
+                              <td>Waist (in)</td>
+                              <td>24-25</td>
+                              <td>26-27</td>
+                              <td>28-29</td>
+                              <td>30-31</td>
+                              <td>32</td>
+                          </tr>
+                          <tr>
+                              <td>Hips (in)</td>
+                              <td>33-34</td>
+                              <td>35-36</td>
+                              <td>37-38</td>
+                              <td>39-40</td>
+                              <td>41</td>
+                          </tr>
+                          <tr>
+                              <td>Cup Size</td>
+                              <td>32A-32B</td>
+                              <td>32C-34B</td>
+                              <td>34C-36B</td>
+                              <td>36C-38C</td>
+                              <td>38D-40D</td>
+                          </tr>
+                          <tr>
+                              <td>UK</td>
+                              <td>2, 4</td>
+                              <td>6, 8</td>
+                              <td>10, 12</td>
+                              <td>14, 16</td>
+                              <td>18</td>
+                          </tr>
+                          <tr>
+                              <td>EU</td>
+                              <td>32, 34</td>
+                              <td>36, 38</td>
+                              <td>40, 42</td>
+                              <td>44, 46</td>
+                              <td>48</td>
+                          </tr>
+                          <tr>
+                              <td>AUS</td>
+                              <td>2, 4</td>
+                              <td>6, 8</td>
+                              <td>10, 12</td>
+                              <td>14, 16</td>
+                              <td>18</td>
+                          </tr>
+                          <tr>
+                              <td>Bust (cm)</td>
+                              <td>78-83</td>
+                              <td>83-89</td>
+                              <td>89-94</td>
+                              <td>94-99</td>
+                              <td>99-104</td>
+                          </tr>
+                          <tr>
+                              <td>Waist (cm)</td>
+                              <td>60-65</td>
+                              <td>65-70</td>
+                              <td>70-75</td>
+                              <td>75-80</td>
+                              <td>80-85</td>
+                          </tr>
+                          <tr>
+                              <td>Hips (cm)</td>
+                              <td>83-88</td>
+                              <td>88-93</td>
+                              <td>93-98</td>
+                              <td>98-103</td>
+                              <td>103-108</td>
+                          </tr>
+                          <tr>
+                              <td>UK / EU Cup Size</td>
+                              <td>70B-70C</td>
+                              <td>70D-75C</td>
+                              <td>75D-80C</td>
+                              <td>80D-85D</td>
+                              <td>85DD-90DD</td>
+                          </tr>
+                          <tr>
+                              <td>AUS Cup Size</td>
+                              <td>10A-10B</td>
+                              <td>10C-12B</td>
+                              <td>12C-14B</td>
+                              <td>14C-16C</td>
+                              <td>16D-18D</td>
+                          </tr>
+                      </tbody>
+                  </table>
+                  <h2>PLUS</h2>
+                  <table>
+                      <tbody>
+                          <tr>
+                              <td>SIZE</td>
+                              <td>1X</td>
+                              <td>2X</td>
+                              <td>3X</td>
+                          </tr>
+                          <tr>
+                              <td>US/CAN</td>
+                              <td>14, 16</td>
+                              <td>18, 20</td>
+                              <td>22, 24</td>
+                          </tr>
+                          <tr>
+                              <td>Bust (in)</td>
+                              <td>44-45</td>
+                              <td>46-47</td>
+                              <td>48-50</td>
+                          </tr>
+                          <tr>
+                              <td>Waist (in)</td>
+                              <td>37-38</td>
+                              <td>39-40</td>
+                              <td>41-43</td>
+                          </tr>
+                          <tr>
+                              <td>Hips (in)</td>
+                              <td>47.5-48.5</td>
+                              <td>49.5-50.5</td>
+                              <td>51.5-53.5</td>
+                          </tr>
+                          <tr>
+                              <td>UK</td>
+                              <td>20-22</td>
+                              <td>24-26</td>
+                              <td>28-30</td>
+                          </tr>
+                          <tr>
+                              <td>EU</td>
+                              <td>46-48</td>
+                              <td>50-52</td>
+                              <td>54-56</td>
+                          </tr>
+                          <tr>
+                              <td>AUS</td>
+                              <td>20-22</td>
+                              <td>24-26</td>
+                              <td>28-30</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+              <div class="image">
+                  <img src="//cdn.shopify.com/s/files/1/0628/4681/files/dress-measurements.gif?14616235328209913660" class="measurements" />
+              </div>
+          </div>
+          <div>
+            <ul>
+              <li><span>All Fashion Nova models are wearing size small in tops and dresses, and size 1, 3, or 5 in jeans depending on their body type.</span></li>
+              <li><span>Most Fashion Nova jeans & dresses have great stretch, please refer to product description for fabric details.</span></li>
+              <li><span>Most Fashion Nova bottoms have an inseam of 31-34” depending on the cut and style.</span></li>
+              <li><span>Sizing may vary depending on cut and style. Please use the model figure above as a guideline to determine the most accurate size for your fit.</span></li>
+            </ul>
+          </div>
+      </div>
+      
+      {% comment %}
+      <div class="section">
+      	<p>
+          To ensure a proper fit, we suggest following the measurement guidelines that are
+          provided.  Then compare your measurements to our sizing chart supplied below.
+          If you do not have a measuring tape handy, use a piece of string & a ruler.
+        </p>
+      </div>
+      <div class="section">
+        <div class="title"><a href="#">Size charts <i class="fa fa-angle-up"></i></a></div>
+        <div class="content show">
+          <div class="black-section">Women's tops size chart</div>
+          <div class="table">
+          	<div class="countries">
+              <a href="#us" class="active"><span class="flag-us"></span></a>
+              <a href="#eu"><span class="flag-eu"></span></a>
+              <a href="#uk"><span class="flag-uk"></span></a>
+              <a href="#jp"><span class="flag-jp"></span></a>
+            </div>
+            <div style="overflow: auto;">
+              <table>
+                <tr>
+                  <td class="bold">BUST</td>
+                  <td class="bold">SIZE</td>
+                </tr>
+                <tr>
+                  <td>31-32</td>
+                  <td class="us">XS</td>
+                  <td class="eu hide">71-76</td>
+                  <td class="uk hide">0-2</td>
+                  <td class="jp hide">S</td>
+                </tr>
+                <tr>
+                  <td>33-34</td>
+                  <td class="us">S</td>
+                  <td class="eu hide">76-81</td>
+                  <td class="uk hide">4-6</td>
+                  <td class="jp hide">M</td>
+                </tr>
+                <tr>
+                  <td>35-36</td>
+                  <td class="us">M</td>
+                  <td class="eu hide">81-86</td>
+                  <td class="uk hide">8-10</td>
+                  <td class="jp hide">L</td>
+                </tr>
+                <tr>
+                  <td>37-38</td>
+                  <td class="us">L</td>
+                  <td class="eu hide">86-91</td>
+                  <td class="uk hide">12-14</td>
+                  <td class="jp hide">XL</td>
+                </tr>
+                <tr>
+                  <td>39-40</td>
+                  <td class="us">XL</td>
+                  <td class="eu hide">91-97</td>
+                  <td class="uk hide">16</td>
+                  <td class="jp hide">XXL</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          
+          <div class="black-section">Women's bottoms size chart</div>
+          <div class="table">
+            <div class="countries">
+              <a href="#us" class="active"><span class="flag-us"></span></a>
+              <a href="#eu"><span class="flag-eu"></span></a>
+              <a href="#uk"><span class="flag-uk"></span></a>
+              <a href="#jp"><span class="flag-jp"></span></a>
+            </div>
+            <div style="overflow: auto;">
+              <table>
+                <tr>
+                  <td class="bold">WAIST</td>
+                  <td class="bold">HIP</td>
+                  <td class="bold">SIZE</td>
+                  <td class="bold us">DENIM</td>
+                </tr>
+                <tr>
+                  <td>23-24</td>
+                  <td>33-34</td>
+                  <td class="us">XS</td>
+                  <td class="us">0</td>
+                  <td class="eu hide">30,32</td>
+                  <td class="uk hide">2,4</td>
+                  <td class="jp hide">3.5</td>
+                </tr>
+                <tr>
+                  <td>25-26</td>
+                  <td>35-36</td>
+                  <td class="us">S</td>
+                  <td class="us">1.3</td>
+                  <td class="eu hide">34,36</td>
+                  <td class="uk hide">6,8</td>
+                  <td class="jp hide">7.9</td>
+                </tr>
+                <tr>
+                  <td>27-28</td>
+                  <td>37-38</td>
+                  <td class="us">M</td>
+                  <td class="us">5.7</td>
+                  <td class="eu hide">38,40</td>
+                  <td class="uk hide">10,12</td>
+                  <td class="jp hide">11,13</td>
+                </tr>
+                <tr>
+                  <td>29-30</td>
+                  <td>39-40</td>
+                  <td class="us">L</td>
+                  <td class="us">9,11,13</td>
+                  <td class="eu hide">42</td>
+                  <td class="uk hide">14</td>
+                  <td class="jp hide">15</td>
+                </tr>
+                <tr>
+                  <td>31-32</td>
+                  <td>41-42</td>
+                  <td class="us">XL</td>
+                  <td class="us">15,17</td>
+                  <td class="eu hide">44</td>
+                  <td class="uk hide">16</td>
+                  <td class="jp hide">17</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          
+          <div class="black-section">Shoes</div>
+          <div class="table">
+            <div style="overflow: auto;">
+              <table class="shoes">
+                <tr>
+                  <td class="bold">US</td>
+                  <td>5</td>
+                  <td>5.5</td>
+                  <td>6</td>
+                  <td>6.5</td>
+                  <td>7</td>
+                  <td>7.5</td>
+                  <td>8</td>
+                  <td>8.5</td>
+                  <td>9</td>
+                  <td>10</td>
+                </tr>
+                <tr>
+                  <td class="bold">EU</td>
+                  <td>35</td>
+                  <td>35.5</td>
+                  <td>36</td>
+                  <td>37</td>
+                  <td>37.5</td>
+                  <td>38</td>
+                  <td>38.5</td>
+                  <td>39</td>
+                  <td>40</td>
+                  <td>42</td>
+                </tr>
+                <tr>
+                  <td class="bold">[mm]</td>
+                  <td>220</td>
+                  <td>225</td>
+                  <td>230</td>
+                  <td>235</td>
+                  <td>240</td>
+                  <td>245</td>
+                  <td>250</td>
+                  <td>250</td>
+                  <td>260</td>
+                  <td>270</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="title"><a href="#">Tips <i class="fa fa-angle-down"></i></a></div>
+        <div class="content">
+          <ul>
+            <li>All Fashion Nova models are wearing a size Small or Medium and a Size 3 in jeans depending on their right fit for clothes.</li>
+            <li>The average inseam on our jeans is 30-31.</li>
+            <li>All of Fashion Nova's jeans have great stretch, we suggest rounding down when unsure about what size to get!</li>
+            <li>All of our dresses also have great stretch!</li>
+            <li>If you receive an item that does not fit the way you expected, don't worry - we have a quick and easy hassle-free return policy!</li>
+          </ul>
+        </div>
+      </div>
+      <div class="section">
+        <div class="title"><a href="#">Guidelines <i class="fa fa-angle-down"></i></a></div>
+        <div class="content">
+          	<div class="title">Chest</div>
+          	<div class="subcategory">
+          		<ul>
+                    <li>This is not your bra size</li>
+                    <li>Wear an unpaddded bra</li>
+                    <li>Relax arms at sides</li>
+                </ul>
+                <p>
+                    Pull tape across the fullest part of the bust & measure the circumference of your chest.
+                    Place one end of the tape measure at the fullest part of your bust & wrap it around (under your armpits, around your shoulder blades,
+                    and back to the front) to get the measurement.
+                </p>
+          	</div>
+
+            <div class="title">Waist</div>
+          	<div class="subcategory">
+          		<ul>
+                    <li>Find your natural waist</li>
+                    <li>This is the smallest part of the waist</li>
+                    <li>Usually about 1 inch above belly button</li>
+                    <li>keep tape slightly loose to allow for breathing room</li>
+                </ul>
+                <p>
+                    Measure the circumference of your waist. Use the tape to circle your waist (sort of like a belt would)
+                    at your natural waistline, wich is located above your belly button and below your rib cage. 
+                    (if you bend to the side, the crease that forms is your natural waistline.) Don't suck inchyour stomach, or 
+                    you'll get a false measurement. If you generally wear your clothes below your waist, take that measurement as well.
+                </p>
+          	</div>
+
+            <div class="title">Hips</div>
+          	<div class="subcategory">
+          		<ul>
+                    <li>Find the widest part of the hips</li>
+                    <li>Usually about 7 in. below natural waist</li>
+                    <li>Tape should brush across both hipbones</li>
+                </ul>
+                <p>
+                    Measure the circumference of your hips. Start at one hip and wrap the tape measure around your rear,
+                    around the other hip, and back to where you started. Make sure the tape is over the largest part of your buttocks.
+                    Because making sure the tape is level back there can be hard, try to do it in front of a mirror.
+                </p>
+          	</div>
+          
+          	<div class="text-center"><img src="{{ 'dress-measurements.gif' | asset_url }}" class="measurements" /></div>
+        </div>
+      </div>
+      {% endcomment %}
+    </div>
+</div>

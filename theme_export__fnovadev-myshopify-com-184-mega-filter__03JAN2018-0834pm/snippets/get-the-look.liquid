@@ -1,0 +1,121 @@
+<script>
+  $(function(){
+    var toShow = 6;
+    var shown = 0;
+    var productHandleQueue = ['{{ product.metafields['related_products'].handles | split: ',' | join: "','" }}'];
+    var wrapper = $('section.getalook .look-slider');
+
+    var processItem = function(){
+    	if(productHandleQueue.length && shown < toShow) {
+            if(productHandleQueue[0]!="") {
+				jQuery.ajax({
+                  url: '/products/' + productHandleQueue[0] + '?view=get-the-look-ajax',
+                  cache: false,
+                  success: function(product) {
+                    if(product.indexOf('product-item') > 0 && product.indexOf('product-item') < 100) {
+                    	wrapper.append(product);
+                    	shown++;
+                    }
+                    productHandleQueue.shift();
+                    processItem();
+                  },
+                  error: function() {
+                    productHandleQueue.shift();
+                    processItem();
+                  }
+                });
+            } else {
+            	productHandleQueue.shift();
+                processItem();
+            }
+         } else {
+           if(shown > 0) {
+           	$('section.getalook').show();
+           	initSlider();
+           }
+         }
+    };
+    
+  	var initSlider = function(){
+      $('.look-slider').slick({
+        autoplay: false,
+        speed: 1000,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        infinite: false,
+        verticalSwiping: true,
+        prevArrow: '<i class="lnr lnr-chevron-left left-arrow animation"></i>',
+        nextArrow: '<i class="lnr lnr-chevron-right right-arrow animation"></i>',
+        responsive: [
+          {
+            breakpoint: 900,
+            settings: {
+              vertical: false,
+              verticalSwiping: false,
+              slidesToShow: 4,
+              slidesToScroll: 4
+            }
+          },
+          {
+            breakpoint: 584,
+            settings: {
+              vertical: false,
+              verticalSwiping: false,
+              infinite: false,
+              slidesToShow: 2,
+              slidesToScroll: 2,
+              initialSlide: 1,
+              autoplay: false,
+              arrows: false,
+              speed: 150,
+              swipeToSlide: true
+            }
+          }
+        ]
+      });
+      setTimeout(function(){
+      	var current = $('.look-slider').slick('slickCurrentSlide');
+      	$('.look-slider').slick('slickGoTo', current);
+      }, 100);
+      
+    };
+  
+  	processItem();
+  
+  	var showQuickView = function(handle){
+  		var url = '/products/' + handle + '?view=quick-view';
+        var conf = {};
+        $.extend(conf, fancyboxSettings, {type: 'ajax', href: url});
+        $.fancybox(conf);
+  	};
+  
+  	var lookHandles = [];
+  	$('.getalook .add-all').click(function(){
+      lookHandles = []
+      $('.getalook .product-item').each(function(){
+          lookHandles.push( $(this).data('handle') );
+      });
+      
+      showQuickView(lookHandles[0]);
+      lookHandles.shift();
+    });
+  	$(document).on('afterQuickViewAdded', function(){
+      	setTimeout(function(){
+          	if(lookHandles.length > 0) {
+            	showQuickView(lookHandles[0]);
+      			lookHandles.shift();
+            } else {
+            	$.fancybox.close();
+            }
+        }, 500);
+  	});
+  });
+</script>
+
+<section class="getalook get-the-look" style="display: none;">
+  <div class="container">
+  	<h2 class="subheading">Get the Look</h2>
+  	<div class="look-slider"></div>
+    <div class="text-left medium--text-center small--text-center"><div class="btn add-all">Add Look To Bag</div></div>
+  </div>
+</section>

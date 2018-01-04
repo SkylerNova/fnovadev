@@ -1,0 +1,30 @@
+{% for child_link in linklists[parent_handle].links %}
+  <li>
+    {% assign child_handle = child_link.title | handleize %}
+    {% assign child_first = linklists[child_handle].links.first.title | handleize %}
+    {% if linklists[child_handle].links != blank %}
+      <span href="{{ child_link.url }}">
+        {{ linklists[child_handle].links.first.title }}
+      </span>
+      <ul>
+        {% if linklists[child_handle].links.first.url != "#" %}
+            <li class="all_collection"><a href="{{ linklists[child_handle].links.first.url }}">All</a></li>
+        {% endif %}
+        {% include 'menu_mobile_level', parent_handle: child_handle %}
+      </ul>
+    {% else %}
+      {% unless child_link.title == 'untitled' %}
+        <a href="{{ child_link.url }}">
+          {% assign tmp2 = child_link.title | escape | truncate: 4, "" %}
+          {% if tmp2 == "Plus" %}
+              {{ child_link.title | escape | remove: "[no-drop]" | remove_first: "Plus " }}
+          {% elsif tmp2 == "Mega" %}
+              {{ child_link.title | escape | remove: "[no-drop]" | remove_first: "Mega " }}          
+          {% else %}
+              {{ child_link.title | escape | remove: "[no-drop]" }}
+          {% endif %}
+        </a>
+      {% endunless %}
+    {% endif %}
+  </li>
+{% endfor %}

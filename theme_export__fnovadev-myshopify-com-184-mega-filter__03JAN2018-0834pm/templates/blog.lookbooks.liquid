@@ -1,0 +1,9 @@
+<div id="lookbooks" class="container">
+  {% for article in blog.articles %}
+  	<div class="item">
+      <a href="{{ article.url }}">
+        <img src="{{ article.image | img_url: 'master' }}" alt="{{ article.title }}" />
+      </a>
+  	</div>
+  {% endfor %}
+</div>

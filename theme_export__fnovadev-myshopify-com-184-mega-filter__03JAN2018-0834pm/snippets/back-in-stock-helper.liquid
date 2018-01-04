@@ -1,0 +1,25 @@
+{% comment %}
+Don't edit this file.
+This snippet is auto generated and will be overwritten.
+{% endcomment %}
+
+<script id="back-in-stock-helper">
+  var _BISConfig = _BISConfig || {};
+{% if product %}
+  {% comment %}
+	**** This remove the vendor from the code (it was a requirement) ****
+  {% endcomment %}
+  {% assign removeVendor = '"vendor":"' | append: product.vendor | append: '",' %}
+  _BISConfig.product = {{ product | json | remove: removeVendor }};
+{% endif %}
+{% if customer %}
+  _BISConfig.customer = { email: {{ customer.email | json }} };
+{% endif %}
+  $(function(){
+      setTimeout(function(){
+          if($('.BIS_trigger').length>0 && $('.BIS_trigger').attr('style') && $('.BIS_trigger').attr('style').indexOf('display: block') >= 0 && window.location.hash.indexOf('bis')>=0) {
+              $('.BIS_trigger').trigger('click');
+          }                    
+      }, 1000);
+  });
+</script>

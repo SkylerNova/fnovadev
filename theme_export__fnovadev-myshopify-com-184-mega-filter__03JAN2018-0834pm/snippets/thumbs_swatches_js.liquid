@@ -1,0 +1,82 @@
+<script>
+  $(function(){
+    var switchImage = function(index, obj) {
+    	obj.parent().find('div').removeClass('active');
+        obj.addClass('active');
+      
+      	{% if settings.grid_product_image_behavior == "thumbs_swatches" %}
+      		if(obj.parent().parent().find('.image .img:eq('+index+')').length > 0) {
+                var activeImage = obj.parent().parent().find('.image .img:eq('+index+')');
+                obj.parent().parent().find('.image .img').hide();
+                activeImage.show();
+                changeProductHref(obj, activeImage.data('variant'));
+            }
+      	{% else %}
+      		var color = obj.data('color');
+      		if(obj.parent().parent().find('.image .img[data-color="'+color+'"]').length > 0) {
+                var activeImage = obj.parent().parent().find('.image .img[data-color="'+color+'"]:eq(0)');
+                obj.parent().parent().find('.image .img').hide();
+                activeImage.show();
+                changeProductHref(obj, activeImage.data('variant'));
+            }
+      	{% endif %}
+    };
+    
+    var changeProductHref = function(obj, variantId){
+    	var href = obj.closest('.item').find('a:eq(0)').attr('href');
+        if(href.indexOf('?variant')>=0) {
+          href = href.substring(0, href.indexOf('?variant'));
+        }
+      	if(variantId) {
+      		href = href + '?variant=' + variantId;
+      	}
+        obj.closest('.item').find('a').each(function(){
+          $(this).attr('href', href);
+        });
+    };
+
+    if(!smIsMobile.any()) {
+      $(document).on('mouseenter', '.thumbs-swatches-wrap div', function(){  /* HOVER ON DESKTOP */
+          var wrapper = $(this).closest('.thumbs-swatches-wrap');
+          var thumbs = wrapper.find('div');
+          var index = thumbs.index($(this));
+          switchImage(index, $(this));
+      });
+    } else {
+      $(document).on('click', '.thumbs-swatches-wrap div', function(){  /* CLICK ON MOBILE */
+          var wrapper = $(this).closest('.thumbs-swatches-wrap');
+          var thumbs = wrapper.find('div');
+          var index = thumbs.index($(this));
+          switchImage(index, $(this));
+      });
+    }
+    
+    
+    
+    /*$('.thumbs-swatches-wrap').each(function(){
+      var divs = $(this).find('div');
+      divs.each(function(index, obj){
+        if(!smIsMobile.any()) {
+          $(this).hover(function() { /* HOVER ON DESKTOP */
+         /*   switchImage(index, $(this));
+          });
+        }else{
+          $(this).click(function() { /* CLICK ON MOBILE */
+           /* switchImage(index, $(this));
+          });
+        }
+      });
+    });*/
+    
+    {% if settings.grid_product_image_behavior == "color_swatches" %}
+      {% for tag in current_tags %}
+          {% if tag contains 'color-' %}
+              {% assign color = tag | remove: 'color-' %}
+              $('.thumbs-swatches-wrap div[data-color="{{ color }}"]').each(function(){
+                  switchImage(null, $(this));
+              });
+          {% endif %}
+      {% endfor%}
+  	{% endif %}
+  });
+</script>

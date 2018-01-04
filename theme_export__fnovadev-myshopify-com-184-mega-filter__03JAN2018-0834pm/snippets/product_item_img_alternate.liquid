@@ -1,0 +1,75 @@
+{% if currentProduct.images.size > 1 and settings.alternate_image %}
+  {% assign showSecondImage = true %}
+{% else %}
+  {% assign showSecondImage = false %}
+{% endif %}	
+
+
+{% assign firstImage = false %}
+{% assign secondImage = false %}
+{% for image in currentProduct.images %}
+  {% if collection.handle == "plus" or collection.handle contains 'plus-' %}
+    {% if image.alt contains "plus-size" %}
+	  {% unless firstImage %}
+        {% assign firstImage = image %}
+      {% else %}
+		{% unless secondImage %}
+          {% assign secondImage = image %}
+        {% endunless %}
+      {% endunless %}
+    {% endif %}
+  {% else %}
+    {% unless image.alt contains "plus-size" %}
+	  {% unless firstImage %}
+        {% assign firstImage = image %}
+      {% else %}
+		{% unless secondImage %}
+          {% assign secondImage = image %}
+        {% endunless %}
+      {% endunless %}
+    {% endunless %}
+  {% endif %}
+{% endfor %}
+
+{% unless firstImage %}
+  {% assign firstImage = currentProduct.featured_image %}
+  {% assign secondImage = currentProduct.images[1] %}
+{% endunless %}
+
+<a href="{{ currentProduct.url | within: collection }}{% if fromSearch %}#search{% endif %}">
+  <div class="image {% if showSecondImage %}show-second-image{% endif %}" id="image-{{ currentProduct.id }}">
+    <img src="{{ firstImage | product_img_url: '800x' }}" alt="{{ firstImage.alt | escape }}" />
+
+    {% if showSecondImage %}
+      <div class="img second-img animation">
+    	<img class="" src="{{ secondImage | img_url: '800x' }}" alt="{{ secondImage.alt | escape }}" />
+      </div>
+    {% endif %}
+    
+    {% if miniView != true %}
+    {% if currentProduct.available %}
+      {% for col in currentProduct.collections %}
+      {% if col.handle == 'new' %}
+       <div class="new animation"><div>NEW</div></div>
+      {% endif %}
+      {% endfor %}
+   {% elsif currentProduct.available and currentProduct.price_min < currentProduct.compare_at_price_min %}
+      <div class="sale animation"><div>SALE</div></div>
+   {% endif %}
+    
+    {% unless currentProduct.available %}
+      {% assign soldOut = true %}
+    
+      {% for col in currentProduct.collections %}
+        {% if col.handle == 'coming-soon' %}
+          {% assign soldOut = false %}
+        {% endif %}
+      {% endfor %}
+    
+      {% if soldOut == true %}
+        <div class="sold-out animation"><div>SOLD<br />OUT</div></div>
+      {% endif %}
+    {% endunless %}
+    {% endif %}
+  </div>
+</a>

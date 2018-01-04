@@ -1,0 +1,17 @@
+<div class="thumbs-swatches-wrap clearfix">
+  {% assign colorIndex = 0 %}
+  {% assign colors = "" %}
+  {% for option in currentProduct.options_with_values %}
+  	{% if option.name contains 'Color' or option.name contains 'color' %}
+  		{% assign colorIndex = forloop.index %}
+  		{% assign colors = option.values %}
+  	{% endif %}
+  {% endfor %}
+  {% assign opt = 'option' | append: colorIndex %}
+
+  {% assign totalThumbs = 0 %}
+  {% for color in colors %}
+  	<div class="{% if totalThumbs == 0 %}first{% endif %}" data-color="{{ color | handleize }}" style="background-color: {{ color }}"></div>
+  	{% assign totalThumbs = totalThumbs | plus: 1 %}
+  {% endfor %}
+</div>

@@ -1,0 +1,14 @@
+<div class="my-account-menu animation">
+  <h1 class="small--hide"><a href="/account">Dashboard</a></h1><h1 class="hide small--show"><a href="/account">My Account</a></h1>
+  <ul>
+    <a href="/account"><li class="animation">MY ACCOUNT</li></a>
+    <a href="/account"><li class="animation">ACCOUNT INFORMATION</li></a>
+    <a href="/account/addresses"><li class="animation">ADDRESS BOOK</li></a>
+    {% if template == "customers/account" %}
+    <a href="#customer_orders" class="scroll"><li class="animation">MY ORDERS</li></a>
+    {% else %}
+    <a href="/account#customer_orders" class="scroll"><li class="animation">MY ORDERS</li></a>
+    {% endif %}
+  </ul>
+  <div class="action-bottom smaller logout"><a href="/account/logout"><div class="btn">LOGOUT</div></a></div>
+</div>

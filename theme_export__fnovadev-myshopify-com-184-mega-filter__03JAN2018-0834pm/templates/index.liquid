@@ -1,0 +1,91 @@
+<div id="home">
+
+  {% if linklists['homepage-top-collctions'].links.size > 0 %}
+  <div class="top-collection container">
+    <div class="grid">
+      {% for item in linklists['homepage-top-collctions'].links %}
+        <div class="grid__item one-quarter medium--one-half small--one-whole">
+          <a href="{{ item.url }}">
+            <div class="image" style="background-image: url( {{ item.object.image | img_url: 'large' }} );">
+              <div class="layer animation">
+                <div class="table">
+                    <div class="table-cell text-center">
+                      {{ item.title }}
+                    </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+  
+  {% comment %}
+  {% include 'carousel' %}
+  {% section 'carousel' %}
+  {% endcomment %}
+  {% section 'banners' %}
+  
+  
+  {% if linklists['homepage-middle-collctions'].links.size > 0 %}
+  <div class="middle-collection container">
+    <div class="grid">
+      {% for item in linklists['homepage-middle-collections'].links %}
+        <div class="grid__item one-third medium--one-half small--one-whole">
+          <a href="{{ item.url }}">
+            <div class="image" style="background-image: url( {{ item.object.image | img_url: 'large' }} );">
+              <div class="layer animation">
+                <div class="table">
+                    <div class="table-cell text-center">
+                      {{ item.title }}
+                    </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+  
+  {% if settings.home_show_featured_collection %}
+  <div class="hide small--show">
+    {% include '_home_featured-collection' %}
+  </div>
+  {% endif %}
+  
+  {% comment %}
+  {% if settings.home_show_quick_links %}
+  <div class="hide small--show">
+    {% include '_home_quick-links' %}
+  </div>
+  {% endif %}
+  {% endcomment %}
+  
+  {% if settings.home_show_featured_products %}
+  <div style="background-color: #F8F8F8">
+    {% include '_home_featured-products' %}
+  </div>
+  {% endif %}
+  
+  {% if settings.home_show_featured_touts %}
+  <div>
+    {% include '_home_featured-touts' %}  
+  </div>
+  {% endif %}
+  
+  {% include 'nosto-element' with 'frontpage-nosto-1' %}
+
+  {% include 'nosto-element' with 'frontpage-nosto-2' %}
+
+  {% if settings.show_instagram_feed %}
+    {% include 'instagram_feed' %}
+  {% endif %}
+</div>
+
+{% include 'nosto-element' with 'frontpage-nosto-3' %}
+
+{% include 'nosto-element' with 'frontpage-nosto-4' %}

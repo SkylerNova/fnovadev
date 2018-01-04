@@ -1,0 +1,170 @@
+
+{% include 'nosto-element' with 'categorypage-nosto-1' %}
+
+<script>
+  $(function(){
+    $('.collection-top .refine > a').click(function(){
+    	$(this).find('div').toggle();
+      	$(this).next().slideToggle();
+      	return false;
+    });
+    $('.collection-top .refine-menu .title a').click(function(){
+    	$(this).parent().next().slideToggle();
+      	return false;
+    });
+    
+    {% comment %}
+    $('.collection-top .per-row select.main').change(function(){
+      	Cookies.set('items-per-row-main', $(this).val());
+    	$('#collection .product-item').removeClass('large--one-half').removeClass('large--one-third').removeClass('large--one-quarter').removeClass('large--one-fifth');
+      	$('#collection .product-item').addClass($(this).val());
+      	return false;
+    });
+    $('.collection-top .per-row select.medium').change(function(){
+      	Cookies.set('items-per-row-medium', $(this).val());
+      	$('#collection .product-item').removeClass('medium--one-half').removeClass('medium--one-third').removeClass('medium--one-quarter');
+      	$('#collection .product-item').addClass($(this).val());
+      	return false;
+    });
+    $('.collection-top .per-row select.mobile').change(function(){
+      	Cookies.set('items-per-row-mobile', $(this).val());
+    	$('#collection .product-item').removeClass('small--one-whole').removeClass('small--one-half');
+      	$('#collection .product-item').addClass($(this).val());
+      	return false;
+    });
+
+    if(Cookies.get('items-per-row-main')) {
+    	$('.collection-top .per-row select.main').val(Cookies.get('items-per-row-main')).change();
+    }
+    if(Cookies.get('items-per-row-medium')) {
+    	$('.collection-top .per-row select.medium').val(Cookies.get('items-per-row-medium')).change();
+    }
+    if(Cookies.get('items-per-row-mobile')) {
+    	$('.collection-top .per-row select.mobile').val(Cookies.get('items-per-row-mobile')).change();
+    }
+    {% endcomment %}
+  });
+  
+  $(document).ready(function(){
+  	$('#carousel').slick({
+      autoplay: true,
+      dots: {% if settings.show_carousel_dots %}true{% else %}false{% endif %},
+      arrows: {% if settings.show_carousel_nav %}true{% else %}false{% endif %},
+      fade: false,
+      pauseOnHover: false,
+      speed: 1000,
+      prevArrow: '<i class="lnr lnr-chevron-left animation left-arrow"></i>',
+      nextArrow: '<i class="lnr lnr-chevron-right animation right-arrow"></i>'
+    });
+  });
+</script>
+{% if settings.show_collections_banner %}
+<div class="collection-banner">
+  <img src="{{ "collections-banner-2.gif" | file_url }}" class="img-responsive">
+</div>
+{% endif %}
+<div id="collection-carousel">
+  {% if collection.description contains "<img" %}
+  <div id="carousel">
+    {% assign images = collection.description | split: '<img' | split: '"' %}
+    {% assign contentSrc = collection.description | split: 'src="' %}
+    {% assign contentSize = contentSrc.size | minus:1 %}
+    {% for i in (1..contentSize) %}
+    {% assign src = contentSrc[i] | split: '"' | first | replace: '//cdn', 'http://cdn' | replace: 'http:http://', 'http://' | remove: 'https:' %}
+    <div>
+      <div class="item_img" style="background-image: url('{{ src }}');"></div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+
+
+{% comment %}
+{% if collection.image %}
+  <div class="collection-banner">
+    <div class="image" style="background-image: url({{ collection.image | img_url: 'master' }});"></div>
+    {% comment %}
+    <div class="layer">
+      <div class="table">
+          <div class="table-cell text-center">
+              <h1>{{ collection.title }}</h1>
+          </div>
+      </div>
+    </div>
+    {% endcomment %}
+  </div>
+{% endif %}
+{% endcomment %}
+
+<div class="collection-title"><h1>{{ collection.title }}</h1></div>
+
+<div class="collection-top">
+  <div class="container clearfix">
+    {% comment %}
+    <div class="per-row hide">
+    	<select class="main medium-down--hide">
+            <option value="large--one-half" {% if settings.grid_items_per_row == 'one-half' %}selected="selected"{% endif %}>2 per Row</option>
+            <option value="large--one-third" {% if settings.grid_items_per_row == 'one-third' %}selected="selected"{% endif %}>3 per Row</option>
+            <option value="large--one-quarter" {% if settings.grid_items_per_row == 'one-quarter' %}selected="selected"{% endif %}>4 per Row</option>
+          	<option value="large--one-fifth" {% if settings.grid_items_per_row == 'one-fifth' %}selected="selected"{% endif %}>5 per Row</option>
+        </select>
+      	<select class="medium hide medium--show">
+            <option value="medium--one-half" {% if settings.grid_items_per_row_medium == 'one-half' %}selected="selected"{% endif %}>2 per Row</option>
+            <option value="medium--one-third" {% if settings.grid_items_per_row_medium == 'one-third' %}selected="selected"{% endif %}>3 per Row</option>
+            <option value="medium--one-quarter" {% if settings.grid_items_per_row_medium == 'one-quarter' %}selected="selected"{% endif %}>4 per Row</option>
+        </select>
+    </div>
+    {% endcomment %}
+    <div class="sort-by">
+      	<label for="sort-by">
+          <span>SORT</span>
+          <i class="fa fa-angle-down"></i>
+      	</label>
+    	<select id="sort-by">
+              <option value="manual">Featured</option>
+          	  <option value="created-descending">Newest</option>
+              <option value="price-ascending">Price: Low to High</option>
+              <option value="price-descending">Price: High to Low</option>
+          </select>
+    </div>
+    {% comment %}
+    <div class="refine">
+      <a href="#">
+        <div>REFINE <i class="fa fa-angle-down"></i></div>
+        <div class="done">DONE <i class="fa fa-angle-up"></i></div>
+      </a>
+    </div>
+    {% endcomment %}
+  </div>
+</div>
+
+<div class="grid">
+  <div class="grid__item one-fifth medium--one-whole small--one-whole">
+	{% include 'filter-menu' %}
+  </div>
+  <div class="grid__item four-fifths medium--one-whole small--one-whole">
+	{% include '_collection' %}
+  </div>
+</div>
+
+<script>
+  Shopify.queryParams = {};
+  if (location.search.length) {
+    for (var aKeyValue, i = 0, aCouples = location.search.substr(1).split('&'); i < aCouples.length; i++) {
+      aKeyValue = aCouples[i].split('=');
+      if (aKeyValue.length > 1) {
+        Shopify.queryParams[decodeURIComponent(aKeyValue[0])] = decodeURIComponent(aKeyValue[1]);
+      }
+    }
+  }
+  jQuery('#sort-by')
+  .val('{{ collection.sort_by | default: collection.default_sort_by | escape }}')
+       .bind('change', function() {
+    Shopify.queryParams.sort_by = jQuery(this).val();
+    location.search = jQuery.param(Shopify.queryParams).replace(/\+/g, '%20');
+  });
+</script>
+
+{% include 'nosto-element' with 'categorypage-nosto-2' %}

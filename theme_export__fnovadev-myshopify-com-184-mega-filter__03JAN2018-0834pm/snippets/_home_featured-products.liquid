@@ -1,0 +1,108 @@
+<section class="featured container">
+  <h2>{{settings.home_featured_products_title}}</h2>
+  <div class="links text-center">
+    {% if settings.homepage_collection_1 != "" %}
+    	{% assign collection1 = collections[settings.homepage_collection_1] %}
+    	<a href="#home-collection-1" class="active" data-title="{{ collection1.title }}" data-url="{{ collection1.url }}">{{ collection1.title }}</a>
+    {% endif %}
+    {% if settings.homepage_collection_2 != "" %}
+    	{% assign collection2 = collections[settings.homepage_collection_2] %}
+    	<a href="#home-collection-2" data-title="{{ collection2.title }}" data-url="{{ collection2.url }}">{{ collection2.title }}</a>
+    {% endif %}
+    {% if settings.homepage_collection_3 != "" %}
+    	{% assign collection3 = collections[settings.homepage_collection_3] %}
+    	<a href="#home-collection-3" data-title="{{ collection3.title }}" data-url="{{ collection3.url }}">{{ collection3.title }}</a>
+    {% endif %}
+  </div>
+  <div id="sliders-wrapper">
+    {% if collection1 != nil and collection1.products.size > 0 %}
+      <div id="home-collection-1" class="slider-wrapper animation active">
+        <div class="product-carousel">
+          {% for prod in collection1.products limit:10 %}
+          {% if prod.available %}
+          {% include 'product_item', currentProduct: prod, quickview: settings.allow_quick_view, isCarousel: true %}
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+    {% if collection2 != nil and collection2.products.size > 0 %}
+      <div id="home-collection-2" class="slider-wrapper animation">
+        <div class="product-carousel">
+          {% for prod in collection2.products limit:10 %}
+          {% if prod.available %}
+          {% include 'product_item', currentProduct: prod, quickview: settings.allow_quick_view, isCarousel: true %}
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+    {% if collection3 != nil and collection3.products.size > 0 %}
+      <div id="home-collection-3" class="slider-wrapper animation">
+        <div class="product-carousel">
+          {% for prod in collection3.products limit:10 %}
+          {% if prod.available %}
+          {% include 'product_item', currentProduct: prod, quickview: settings.allow_quick_view, isCarousel: true %}
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+  <div class="button text-center">
+    <a href="{{ collection1.url }}"><div class="btn see-more">SEE ALL {{ collection1.title }}</div></a>
+  </div>
+
+  <script>
+    $(function(){
+      	$('.featured .links a').click(function(){
+        	$('.featured .slider-wrapper, .featured .links a').removeClass('active');
+          	$(this).addClass('active');
+          	$($(this).attr('href')).addClass('active');
+          	$('.featured .see-more').html("SEE ALL "+$(this).data('title')).parent().attr('href', $(this).data('url'));
+          	return false;
+        });
+
+      	$('.featured .product-carousel:first').on('init', function(){
+          setTimeout(function(){
+          	$('#sliders-wrapper').height($('.featured .product-carousel:first').height());
+          }, 500);
+      	});
+      	$(window).resize(function(){
+          setTimeout(function(){
+          	$('#sliders-wrapper').height($('.featured .product-carousel:first').height());
+          }, 500);
+          	
+        });
+      
+      	$('.featured .product-carousel').slick({
+          speed: 1000,
+          pauseOnHover: false,
+          slidesToShow: {{settings.home_featured_products_row}},
+          slidesToScroll: {{settings.home_featured_products_row}},
+          prevArrow: '<i class="lnr lnr-chevron-left left-arrow animation"></i>',
+      	  nextArrow: '<i class="lnr lnr-chevron-right right-arrow animation"></i>',
+          responsive: [
+            {
+            	breakpoint: 584,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 2,
+            	  arrows: false,
+          		  speed: 150,
+          		  swipeToSlide: true
+                }
+            },
+			{
+            	breakpoint: 900,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 2,
+                }
+            }
+          ]
+        });
+    });
+  </script>
+
+</section>

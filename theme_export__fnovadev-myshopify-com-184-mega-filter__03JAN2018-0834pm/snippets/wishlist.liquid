@@ -1,0 +1,32 @@
+{% if wishlist == 'footer' %}
+	<script src="{{ 'wishlist.js' | asset_url }}"></script>
+	<script>var wishlist = Wishlist({% if customer %}'{{ customer.id }}'{% else %}false{% endif %});</script>
+{% elsif wishlist == 'product' %}
+	<div class="wishlistProduct">
+      	{% if customer %}
+      		<a href="#" data-producthandle="{{ product.handle }}" data-productid="{{ product.id }}" class="wishlistAdd" title="Add">
+              <i class="fa fa-heart-o"></i>
+            </a>
+            <a href="#" data-producthandle="{{ product.handle }}" data-productid="{{ product.id }}" class="wishlistAdded hide" title="Remove">
+              <i class="fa fa-heart"></i>
+            </a>
+      	{% else %}
+      		<script>
+              $(function(){
+              	$('.login-popup-link').fancybox(fancyboxSettings);
+              });
+      		</script>
+      		<a href="#customer-login" class="login-popup-link">
+              <i class="fa fa-heart-o"></i>
+            </a>
+      	{% endif %}
+	</div>
+{% elsif wishlist == 'link' %}
+	<div class="wishlistLink">
+      	<a href="/pages/wishlist">
+          <i class="fa fa-heart"></i>
+          <span class="text">My Favorites</span>
+          <span class="count">0</span>
+      	</a>
+	</div>
+{% endif %}

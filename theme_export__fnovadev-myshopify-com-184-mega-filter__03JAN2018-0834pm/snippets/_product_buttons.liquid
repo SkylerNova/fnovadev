@@ -1,0 +1,14 @@
+<div class="content-available">
+  <button name="add" id="add-to-cart-button" class="btn animation">
+    <i class="fa fa-check-circle-o"></i>
+    <span>Add to bag</span>
+  </button>
+  <!--<input type="submit" name="add" id="add-to-cart-button" class="btn animation" value="Add to bag" />-->
+</div>
+<div class="content-soldout red-message hide">
+  {% if quickView != true %}
+  	<a href="#" onclick="$('.BIS_trigger').trigger('click');return false;"><div class="btn btn-notice">Notify Me When Available</div></a>
+  {% else %}
+  	<a href="#" onclick="location='/products/{{ currentProduct.handle }}?variant='+$('#product-{{ currentProduct.id }}-variant').val()+'#bis';return false;"><div class="btn">Notify Me When Available</div></a>
+  {% endif %}
+</div>

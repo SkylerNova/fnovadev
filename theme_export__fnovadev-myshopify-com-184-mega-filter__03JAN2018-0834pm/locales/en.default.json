@@ -1,0 +1,1 @@
+{"shopify":{"checkout":{"payment":{"offsite_gateway_redirect_hint":"Click on the \"Complete Order\" button at the bottom of the page to complete your order securely through {{ gateway_label }}."}}},"consistent_cart_addon":{"merge_cart_text":"It seems you already have a cart from a previous session. Would you like to merge your previous cart with your current cart?"}}

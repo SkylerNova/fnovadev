@@ -1,0 +1,95 @@
+{% if search.results == empty %}  
+
+  <div id="blog" class="template-list container alternate clearfix">
+    <div class="articles-wrapper clearfix">
+      <div class="article">
+        <h2 class="animation">Search Results</h2>
+        <div class="text-wrapper">
+          <div class="content">
+            <p class="note">Your search for "{{search.terms | escape}}" did not yield any results.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="blog-sidebar">
+      <h3>Search</h3>
+      <form method="get" action="/search" class="clearfix">
+        <input class="searchBox field" type="text" name="q"{% if search.performed %} value="{{ search.terms | escape | downcase }}"{% endif %} /> 
+        <input type="hidden" name="type" value="article" />
+        <input type="hidden" name="view" value="blog" />
+        <input type="submit" value="&#xf105;" class="fa submit" />
+      </form>
+    </div>
+  </div>
+
+{% else %} 
+
+  <div id="blog" class="template-list container alternate clearfix">
+  
+    {% paginate search.results by 10 %}
+
+    <div class="articles-wrapper clearfix">
+
+      {% for item in search.results %}
+      {% assign article = item %}
+      
+       <a href="{{ article.url }}">
+         <div class="article">
+          <h2>{{ article.title }}</h2>
+
+          <div class="pic-wrapper">
+            <div class="image">
+              {% if article.image %}
+                  {{ article.image.src | img_url: 'master' | img_tag }}
+              {% else %}
+                {% if article.excerpt.size > 0 and article.excerpt contains "<img" %}
+                    {% assign src = article.excerpt | split: 'src="' %}
+                    {% assign src = src[1] | split: '"' | first | replace: '//cdn', 'http://cdn'; | replace: 'http:http://';, 'http://'; | remove: 'https:' %}
+                {% else %}
+                    {% if article.content contains "<img" %}
+                        {% assign src = article.content | split: 'src="' %}
+                        {% assign src = src[1] | split: '"' | first | replace: '//cdn', 'http://cdn'; | replace: 'http:http://';, 'http://'; | remove: 'https:' %}
+                    {% endif %}
+                {% endif %}
+                {{ src | img_tag }}
+              {% endif %}
+            </div>
+            <div class="article-date animation">
+              <span class="day"><strong>{{ article.published_at | date: "%d" }}</strong></span>
+              <span class="month">{{ article.published_at | date: "%b" }}</span>
+            </div>
+            <!-- <time datetime="{{ article.published_at | date: '%Y %m %d' }}">{{ article.published_at | date: format: 'month_day_year' }}</time> -->
+          </div>
+          <div class="text-wrapper">
+            <div class="content">
+              {% if article.excerpt.size > 0 %}
+              <p>{{ article.excerpt | strip_html | truncatewords: 70 }}</p>
+              {% else %}
+              <p>{{ article.content | strip_html | truncatewords: 70 }}</p>
+              {% endif %}
+            </div>
+            <span class="btn">Continue reading</span>
+          </div>
+          {% unless forloop.last %}<hr>{% endunless %}
+      </div>
+      </a>
+      {% endfor %}
+
+    </div>
+
+    <div class="blog-sidebar">
+      <h3>Search</h3>
+      <form method="get" action="/search" class="clearfix">
+        <input class="searchBox field" type="text" name="q"{% if search.performed %} value="{{ search.terms | escape | downcase }}"{% endif %} /> 
+        <input type="hidden" name="type" value="article" />
+        <input type="hidden" name="view" value="blog" />
+        <input type="submit" value="&#xf105;" class="fa submit" />
+      </form>
+    </div>
+
+    {% include 'pagination' %}
+    {% endpaginate %}
+
+  </div> <!-- /#col-main -->
+  
+{% endif %} 

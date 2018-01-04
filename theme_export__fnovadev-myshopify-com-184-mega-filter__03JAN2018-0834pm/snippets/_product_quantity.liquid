@@ -1,0 +1,9 @@
+{% if currentProduct.available %}
+<div class="quantity">
+  <select name="quantity">
+    {% for i in (1..9) %}
+    	<option>{{ i }}</option>
+    {% endfor %}
+  </select>
+</div>
+{% endif %}

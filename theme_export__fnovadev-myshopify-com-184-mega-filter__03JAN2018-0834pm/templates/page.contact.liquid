@@ -1,0 +1,49 @@
+<div id="contact-form-page" class="page container">
+
+  <h1>Contact Us</h1>
+
+  <div class="form">
+
+    {% form 'contact' %}
+
+    {% if form.posted_successfully? %}
+    <p class="success-msg">Thanks for contacting us! We'll get back to you as soon as possible.</p>
+    {% endif %}
+
+    {% if form.errors %}
+    <div class="error-msg">
+      <ul class="error-list">
+        {% for field in form.errors %}
+        {% if field == 'body' %}
+        <li>Your message cannot be blank.</li>
+        {% endif %}
+        {% if field == 'email' %}
+        <li>Please enter a valid email address.</li>
+        {% endif %}        
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <input type="hidden" id="section" name="contact[section]" value="Contact" />
+    <ul id="contact-form">
+      <li class="clearfix type-text">
+        <input placeholder="Name" type="text" id="name" class="name" name="contact[name]" />
+      </li> 
+      <li class="clearfix type-text">
+        <input placeholder="Email" type="email" id="email" class="email  {% if form.errors contains 'email' %} error{% endif %}" name="contact[email]" />
+      </li>  
+      <li class="clearfix type-text">
+        <input placeholder="Phone" type="phone" id="phone" class="phone {% if form.errors contains 'phone' %} error{% endif %}" name="contact[phone]" />
+      </li>
+      <li class="clearfix type-textarea">
+        <textarea placeholder="Message" id="message" class="message {% if form.errors contains 'body' %} error{% endif %}" name="contact[body]"></textarea>
+      </li>
+      <li class="clearfix type-submit">
+        <input type="submit" class="submit btn" value="Send" />
+      </li>
+    </ul>
+    {% endform %}
+  </div>
+
+</div><!-- /#col-main -->

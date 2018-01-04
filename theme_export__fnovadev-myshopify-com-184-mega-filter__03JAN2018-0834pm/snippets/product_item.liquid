@@ -1,0 +1,101 @@
+{% assign showSecondImage = true %}
+
+<div data-handle="{{ currentProduct.handle }}" class="product-item animation {% unless isCarousel %}grid__item large--{{settings.grid_items_per_row}} medium--{{ settings.grid_items_per_row_medium }} small--{{ settings.grid_items_per_row_small }}{% endunless %}" id="grid-item-{{ currentProduct.id }}">
+  <form action="/cart/add" method="post" class="variants add-to-cart-form" id="product-actions-{{ currentProduct.id }}" enctype="multipart/form-data">	
+    <div class="image-wrapper" style="position: relative;">
+      {% if settings.grid_product_image_behavior == "thumbs_swatches" %}
+        {% include 'product_item_img_swatches' %}
+      {% else %}
+      	{% if settings.grid_product_image_behavior == "color_swatches" %}
+      		{% include 'product_item_img_color_swatches' %}
+        {% else %}
+      		{% include 'product_item_img_alternate' %}
+	    {% endif %}
+      {% endif %}
+
+      {% if quickview %}
+        {% unless currentProduct.available %}
+        <a href='javascript:void(0);' class='BIS_trigger notify-me' data-product-handle='{{ currentProduct.handle }}'>
+          Notify Me When Available
+        </a>
+      	{% else %}
+        <div class="layer quick-view-btn ease-animation">
+          <div>QUICK VIEW <i class="lnr lnr-arrow-right"></i></div>
+        </div>
+        {% endunless %}
+      {% endif %}
+      {% if currentProduct.available %}
+        {% assign product_qty = 0 %}
+        {% for variant in currentProduct.variants %}
+          {% if variant.inventory_quantity > 0 %}
+            {% assign product_qty = product_qty | plus: variant.inventory_quantity %}
+          {% endif %}
+        {% endfor %}
+      	{% if product_qty <= 20 %}
+        <div class="layer low-stock">
+          <div>Low stock</div>
+        </div>
+      	{% endif %}
+      {% endif %}
+    </div>
+    
+    {% if settings.grid_product_image_behavior == "thumbs_swatches" %}
+      {% include 'thumbs_swatches' %}
+    {% else %}
+    	{% if settings.grid_product_image_behavior == "color_swatches" %}
+      		{% include 'thumbs_colors' %}
+    	{% endif %}
+    {% endif %}
+    
+    <div class="info">
+      {% if product.metafields['linked_products'].swatches != nil and isCarousel != true %}
+        {% include '_color_swatches', isGrid: true %}
+      {% endif %}
+      <a onClick='trackProduct("{{ currentProduct.title }}", "{{ currentProduct.type }}", "{{ currentProduct.price | money_without_currency }}", {{ forloop.index }})' href="{{ currentProduct.url | within: collection }}{% if fromSearch %}#search{% endif %}">
+        <div class="title animation {{ currentProduct.tags }}">{{ currentProduct.title }}</div>
+      </a>
+      <div class="price clearfix">
+        {% if currentProduct.price_min < currentProduct.compare_at_price_min %}
+          <div class="retail">
+            <span>{{ currentProduct.compare_at_price | money }}</span>
+          </div>
+        {% endif %}
+        <div class="deal">
+          <span class="red-price">{{ currentProduct.price_min | money }}</span>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+  {% if quickview %}  
+    <script>
+      $(function(){
+        $('#grid-item-{{ currentProduct.id }} .quick-view-btn').click(function(){
+          var conf = {};
+          var url = $(this).closest('form').find('a:eq(0)').attr('href').replace('#search', '');
+          var variantId = false;
+          if(url.indexOf('?')>=0) {
+          	url = url + '&view=quick-view';
+            variantId = getQueryParam('variant', url);
+          } else {
+          	url = url + '?view=quick-view';
+          }
+          {% if fromSearch %}
+        	url = url + '#search';
+          {% endif %}
+          $.extend(conf, fancyboxSettings, {/*'autoSize': false, 'width': '100%', 'height': '100%',*/ type: 'ajax', href: url, beforeShow:function(){
+            if(variantId) {
+            	var variantTitle = $('.quick-view .select-variant option[value='+variantId+']').text();
+                $.each(variantTitle.split(' / '), function(key, val){
+                  $('.quick-view .single-option-selector:eq('+key+')').val(val).change();
+                });
+            }
+          }});
+          $.fancybox(conf);
+          return false;
+        });
+      });
+    </script>
+  {% endif %}
+</div>

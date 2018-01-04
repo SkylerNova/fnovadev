@@ -1,0 +1,48 @@
+<div class="refine-menu text-left">
+  
+  {% include 'filter-menu' %}
+  
+{% comment %}
+{% assign sections = 'size|price|color' | split: '|' %}
+{% for section in sections %}
+	<div>
+      <div class="title clearfix">
+        <a href="#">{{ section | upcase }} <i class="fa fa-angle-down right"></i></a>
+      </div>
+      <div class="submenu">
+		<div class="group">
+          <div>
+            <!--Apparel -->
+          </div>
+          <div class="clearfix">
+            {% for tag in collection.tags %}
+            	{% if tag contains section %}
+            		{% assign toRemove = section | append: '-' | upcase %}
+            		{% assign text = tag | upcase | remove: toRemove %}
+            		{% assign html = '<div class="filter left">' | append: text | append: '</div>' %}
+					{% if current_tags contains tag %}
+            			<div class="active">{{ html | link_to_remove_tag: tag }}</div>
+            		{% else %}
+            			<div>{{ html | link_to_add_tag: tag }}</div>
+            		{% endif %}
+            	{% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+{% endfor %}
+{% endcomment %}
+</div>
+
+{% comment %}
+<script>
+  $(function(){
+    $('.collection-top .refine-menu .submenu').each(function(){
+      if($(this).find('.filter').length == 0) {
+      	$(this).parent().remove();
+      }
+    });
+  });
+</script>
+{% endcomment %}

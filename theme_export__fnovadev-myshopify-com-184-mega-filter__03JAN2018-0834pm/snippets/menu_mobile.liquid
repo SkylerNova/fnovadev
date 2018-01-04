@@ -1,0 +1,134 @@
+{{ 'mmenu.css' | asset_url | stylesheet_tag }}
+{{ 'jquery.mmenu.min.all.js' | asset_url | script_tag }}
+
+<a href="#menu-mobile" id="menu-mobile-button" class="hide medium--show small--show">
+  <i class="fa fa-bars"></i>
+  <span class="shop">SHOP</span>
+</a>
+
+<div id="menu-mobile" class="mm-menu mm-offcanvas">
+  <ul class="menu-mobile">
+    <li class="search-bar">
+      <form action="/pages/search-results" method="get" class="clearfix search">
+        <div class="left four-fifths">
+          <input type="text" placeholder="Search" name="q" id="nxt-autocomplete" autocomplete="off">
+          <input type="hidden" name="type" value="product">
+        </div>
+        <div class="left one-fifth">
+          <a href="#" onclick="$('.menu-mobile form.search').submit();return false;">
+            <div class="btn"><i class="fa fa-search"></i></div>
+          </a>
+        </div>
+      </form>
+    </li>
+    <li>
+      <a href="/">HOME</a>
+    </li>
+    <li class="my-account">
+      <a href="/account">MY ACCOUNT</a>
+    </li>
+    {% for first_link in linklists.mega.links %}
+      {% assign first_handle = first_link.title | handleize %}
+      {% assign list_first = linklists[first_handle].links.first.title | handleize %}
+      {% if linklists[list_first].links != blank and linklists[first_handle].links.first.title == linklists[first_handle].links.last.title %}
+    	{% include 'menu_mobile_level', parent_handle: first_handle %}
+      {% else %}
+      <li>
+        {% if linklists[list_first].links.first.title != blank %}
+          <span href="{{ first_link.url }}">
+              {% if first_link.title == "mega-1" %}
+                  {{ settings.mega1_label }}
+              {% elsif first_link.title == "mega-2" %}
+                  {{ settings.mega2_label }}      
+              {% elsif first_link.title == "mega-3" %}
+                  {{ settings.mega3_label }}
+              {% elsif first_link.title == "mega-4" %}
+                  {{ settings.mega4_label }}
+              {% elsif first_link.title == "mega-5" %}
+                  {{ settings.mega5_label }}
+              {% elsif first_link.title == "mega-6" %}
+                  {{ settings.mega6_label }}
+              {%endif %}
+          </span>
+          <ul>
+            {% include 'menu_mobile_level', parent_handle: first_handle %}
+          </ul>
+        {% elsif linklists[first_handle].links != blank %}
+          <span href="{{ first_link.url }}">
+            {{ linklists[first_handle].links.first.title | handleize }}
+          </span>
+          <ul>
+            {% include 'menu_mobile_level', parent_handle: first_handle %}
+          </ul>
+        {% else %}
+          <a href="{{ first_link.url }}">
+            {{ first_link.title | escape | remove: "[no-drop]"}}
+          </a>
+        {% endif %}
+      </li>
+    {% endif %}
+    {% endfor %}
+  </ul>
+</div>
+
+<script>
+	$(function() {
+		$("#menu-mobile").mmenu({
+
+          	"slidingSubmenus": false,
+        	"offCanvas": {
+              	pageSelector: "#page",
+            	//"position": "right",
+              	zposition : "front"
+            },
+          	navbar: {
+                title: "SHOP"
+            },
+            "navbars": [{
+				"position": "top",
+                "content": [
+                	//"prev",
+                    "title",
+                    "close"
+                ]
+             }], 
+             // configuration
+             classNames: {
+                spacer: "space",
+               devider: 'title'
+             }
+        });
+
+        var api = $("#menu-mobile").data('mmenu');
+        api.bind('open', function () {
+          $('#page').addClass('mode-overlay');
+        });
+        api.bind('close', function () {
+          $('#page').removeClass('mode-overlay');
+        });
+      	$('.mm-title').html('SHOP');
+      	
+      	{% comment%}
+      	api.bind("openPanel", function( $panel ) {
+          $('.mm-panels>.mm-panel').scrollTo($panel, {
+            duration: 500,
+            offset: -40
+          });
+    	});
+      	{% endcomment%}
+	});
+</script>
+
+<script>
+  $( document ).ready(function() {
+    if ( $('.mm-listview.mm-vertical li:first-of-type a').children().length > 0 ) {
+    $(this).html("ALL");
+    }
+  });
+</script>
+
+<script>
+  $( document ).ready(function() {
+    $(".all_collection").next().hide();
+  });
+</script>

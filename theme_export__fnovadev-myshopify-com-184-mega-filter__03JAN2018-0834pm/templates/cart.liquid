@@ -1,0 +1,116 @@
+{% include 'vncpc' %}<script>
+  $(function(){
+    /*if(smIsMobile.any()) {
+    	var waypoint = new Waypoint({
+          element: $('.bottom-btns'),
+          handler: function(direction) {
+            if(direction=='down') {
+                $('.checkout-button').removeClass('sticky');
+            } else {
+                $('.checkout-button').addClass('sticky');
+            }
+          },
+          offset: 'bottom-in-view'
+        });
+    }*/
+    
+    var refreshCart = function(){
+    	$.ajax({
+          url: '/cart?view=ajax'
+        }).done(function(data){
+          $('#cart-wrap').html(data);
+          var itemsCount = 0;
+          $('#cart-wrap select').each(function(){
+            itemsCount += parseInt($(this).val());
+          });
+          $('.header .cart-wrap span.count').html(itemsCount);
+        }).always(function(){
+          $('#add-cart-overlay').fadeOut();
+        });
+    };
+    
+    $(document).on('change', '#cart-wrap select', function(){
+      	$('#add-cart-overlay').fadeIn();
+    	var form = $(this).closest('form');
+      	$.ajax({
+          url: '/cart/update.js',
+          dataType: 'json',
+          data: form.serialize()
+        }).done(function(data){
+        	refreshCart();
+          	updateUtilityBar();
+        }).error(function(){
+        	$('#add-cart-overlay').fadeOut();
+        });
+    });
+    $(document).on('click', '#cart-wrap .remove-from-cart', function(){
+      	$('#add-cart-overlay').fadeIn();
+      	var line = $(this).data('line');
+      	$.ajax({
+          url: '/cart/change.js',
+          dataType: 'json',
+          data: {line: line, quantity: 0}
+        }).done(function(data){
+        	refreshCart();
+          	updateUtilityBar();
+        }).error(function(){
+        	$('#add-cart-overlay').fadeOut();
+        });
+      	return false;
+    });
+    
+    $('.login-popup-link').fancybox(fancyboxSettings);
+    $(document).on('click', '.saveForLater', function(){
+    	wishlist.add($(this).data('producthandle'), $(this).data('productid'), $(this).data('variantid'));
+      	$('#cart-wrap .remove-from-cart:eq(' + ($(this).data('line')-1) + ')').click();
+      	//location = '/cart/change?line=' + $(this).data('line') + '&quantity=0';
+      	return false;
+    });
+  });
+</script>
+
+<div id="cart-wrap" class="container">
+    {% include '_cart' %}
+</div><!--/#cart-wrap -->
+
+{% unless customer %}
+<div class="hide">
+  <div id="customer-login" class="register-login text-center">
+    <h1>Customer Login</h1>
+
+    {% form 'customer_login' %}
+    <input type="hidden" name="checkout_url" value="/cart" />
+    <div id="login_email" class="clearfix form-row">
+      <label for="customer_email" class="login">Email Address</label>
+      <input type="email" value="" name="customer[email]" placeholder="Email Address" id="customer_email" class="large" size="30" />
+    </div>
+
+    {% if form.password_needed %}
+    <div id="login_password" class="clearfix form-row">
+      <label for="customer_password" class="login">Password</label>
+      <input type="password" value="" name="customer[password]" placeholder="Password" id="customer_password" class="large password" size="16" />
+      <div style="clear: both"></div>
+      <div class="join-us"><a href="/account/register">Not a member? Join Us</a></div>
+    </div>
+    {% endif %}
+
+    <div class="action-bottom">
+      <input class="btn animation" type="submit" value="Sign In" />
+    </div>
+    {% endform %}
+
+    {% comment %}
+    <div class="horizontal-line"><span>OR</span></div>
+    <div class="text-center">
+      <script src='//open-signin.okasconcepts.com/customer/script?shop=fnovadev.myshopify.com'></script>
+    </div>
+    {% endcomment %}
+  </div>
+</div>
+{% endunless %}
+
+{% include 'nosto-element' with 'cartpage-nosto-1' %}
+
+{% include 'nosto-element' with 'cartpage-nosto-2' %}
+
+{% include 'nosto-element' with 'cartpage-nosto-3' %}

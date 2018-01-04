@@ -1,0 +1,19 @@
+<div class="breadcrumb">
+  <a href="/" class="homepage-link" title="Back to the frontpage">Home</a>
+  {% if template contains "product" %}
+  {% if collection %}  
+  <i class="separator fa fa-angle-right"></i> 
+  <a href="/collections/{{ collection.handle }}" class="homepage-link">{{ collection.title | escape }}</a>
+  {% else %}
+    {% if product.type != blank %}
+    <i class="separator fa fa-angle-right"></i>  
+    {{ product.type | link_to_type }}
+    {% endif %}
+  {% endif %}
+  {% elsif template == "article" %}
+  <i class="separator fa fa-angle-right"></i> 
+  {{ blog.title | link_to: blog.url }}
+  {% endif %}
+  <i class="separator fa fa-angle-right"></i> 
+  <span class="page-title">{{ page_title }}</span>
+</div>

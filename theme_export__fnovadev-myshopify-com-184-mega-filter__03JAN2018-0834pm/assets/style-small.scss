@@ -1,0 +1,408 @@
+/* #### Mobile Phones Portrait #### */
+
+@media all and (max-width: 584px) {
+
+  h2 {margin-bottom: 0;}
+  
+  /*
+  /******************************** HEADER *****************************
+  */
+
+  .header-drop {display: none;}  
+
+  #header.over-carousel {color: #000000 !important; position: fixed; border-bottom: 0; z-index: 10; box-shadow: 0 0 10px rgba(0,0,0,0.1); background: #ffffff !important;}  
+  #header {position: fixed; border-bottom: 0;top:0; z-index: 10; box-shadow: 0 0 10px rgba(0,0,0,0.1); background: #000 !important; color: #fff;}
+  #header .header-wrapper {padding-top: 0; padding-bottom: 0; height: 55px;}
+  #header .container {position: relative; padding: 0 12px;}
+  #header .logo {margin: 0; float: left; height: 100%; text-align: center;}
+  #header .logo img {display: block;}
+  #header .utils {height: 100%;}
+  #header .menu-mobile {margin-top: 0; height: 100%;}
+  #header .menu-mobile .shop {font-size: 9px; display: block; position: relative; left: -3px; line-height: 10px;}
+  #header .menu-mobile .search-target {position: relative; top: 4px;}
+  #header .menu-mobile .search-target i {font-size: 18px;}
+  #header .top-utils {text-align: right; font-size: 12px; font-weight: 700; margin-top: 0; }
+  #header .top-utils .newsletter {display: none; }
+  #header .top-utils ul {list-style-type: none;}
+  #header .top-utils li {float: right; margin-left: 0; position: relative; top: 1px;}
+  #header .top-utils li span {display: none;}
+  #header .top-utils i {font-size: 18px;}
+  #header .top-utils .bag {margin-top: -10px;}
+  #header .top-utils .bag .handle {width: 10px; height: 10px; border: 1px solid #fff; border-radius: 100%; position: relative; top: 6px; left: -4px; z-index: -1; margin-left: auto; background-color: transparent !important;}
+  #header .top-utils .bag .body {height: 15px; width: 18px; border: 1px solid #000; background: #fff; text-align: center; margin-left: auto;}
+  #header .social-top {display: none;}
+  #header .cart-wrap {position: relative; top: 3px !important;}
+  #header .cart-wrap .text {display: none;}  
+  #header .wishlistLink i {font-size: 20px;}
+  #header .cart-wrap .count, #header .wishlistLink .count {padding: 0; margin: 0; font-size: 9px; display: inline; position: absolute; top: -5px; background: transparent; color: #fff; background-color: #f50f96; border-radius: 100%; width: 14px; height: 14px; line-height: 14px; text-align: center; right: -6px;}
+  #header .cart-wrap .count {top: -7px;}
+  #header .cart-wrap .count:before, #header .wishlistLink .count:before {display: none;}
+  #header .cart-wrap .body {color: #000;}
+  
+  #header .header-searchbar.container {padding-bottom: 8px;}
+  #header .header-searchbar input {background-color: #fff;}
+  
+  .shipping-banner{font-size:13px;letter-spacing:normal;}
+  
+  #utility-bar { font-size: 11px; font-weight: normal; }
+  #utility-bar .container {padding: 0 30px;}
+  #utility-bar i {font-size: 20px; right: 2px; margin-top: -12px;}
+  
+  .content-searchbar, .header-searchbar {padding-top: 15px; padding-bottom: 15px;}
+  .content-searchbar input, .header-searchbar input {padding: 0px 12px; line-height: 33px;}
+  .content-searchbar .btn, .header-searchbar .btn {padding: 0px 20px; display: block; line-height: 35px;}
+
+  /*
+  /******************************** SERCH AND MAILING MODALS *****************************
+  */
+
+  .search-mailing .form {width: 86%; margin-left: -43%;}
+  .search-mailing i.lnr-cross {font-size: 25px;}
+  .search-mailing .form .input-icon {font-size: 20px; top: 8px;}
+  .search-mailing .form input {font-size: 25px;}
+  
+  /*
+  /******************************** PROMOTION POP UP *****************************
+  */
+  #promotion-pop-up-wrapper {padding: 50px 25px; background-position: right; box-sizing: border-box;}
+  #promotion-pop-up-success-wrapper  {padding: 50px 25px; background-position: right; box-sizing: border-box;}
+
+  /*
+  /******************************** MENU *****************************
+  */
+
+  #menu-mobile-button {display: block !important; font-size: 18px; height: 100%; width: 40px; background: rgba(0,0,0,0); color: #fff; position: relative; top: 0;}
+  #menu-mobile-button i {}
+  #menu-container {display: none;}
+
+
+  /*
+  /******************************** FOOTER *****************************
+  */
+
+  #footer .title {margin-bottom: 20px;}
+  #footer #social-links {margin-bottom: 35px;max-width:none;}
+  #footer #social-links li {margin-left: 2.5px;margin-right: 2.5px;}  
+  #footer .links {margin-bottom: 30px;}
+  #footer .links .grid__item {margin-bottom: 20px;}
+  #footer .links li {display: inline;}
+  #footer #payment-methods {margin-top: 20px;}
+  #footer .currency {margin-top: 20px;}
+  #footer #payment-methods img {margin: 0;}
+  #footer #payment-methods img.apple {display: inline !important;}
+  #footer .mailing-list form input.email {line-height: 22px;}
+
+  /*
+  /******************************** HOME *****************************
+  */
+
+  #home .collections .bigger .bg_img {height: 230px;}
+  #home .collections .bg_img {height: 230px;}
+  #home .homepage-banner {font-size: 18px; padding: 30px 20px;}
+  #home .featured .links {margin-bottom: 20px;}
+  #home .featured .links a {margin-bottom: 25px;}
+  #home .instagram {padding: 10px 8px; background: #f5f5f5; margin: 0;}
+  #home .instagram h2 {font-size: 30px; font-weight: normal;}
+  #home .instagram .header img {max-width: 90%; margin: 15px auto;}
+  #home .featured .slick-list {padding-right: 50px;}
+  #home .featured h2 {margin-bottom: 10px; padding-bottom: 0; font-size: 20px;}
+  #home .featured .links a {font-size: 14px;}
+  #home .featured .links a.active {border-width: 3px;}
+  #home .featured.container {padding: 16px 0; padding-bottom: 0;}
+  #home .featured .product-item .title {font-size: 10px; text-align: left; line-height: 16px; min-height: 48px;}
+  #home .featured .product-item .price {font-size: 12px; text-align: left;}
+  #home .featured .product-item .price .retail, #home .featured .product-item .price .deal {margin-left: 0;}
+  #home .featured .see-more {margin-top: 20px; display: block;}
+  #home .featured .button {padding: 0 20px;}
+  #home .featured .slick-slider .slick-slide {margin: 0 0 0 20px;}
+  
+  #home .featured-collection {margin-top: 20px;}
+  #home .featured-touts {margin: 10px 0; padding: 0;}
+  #home .featured-touts .lookbooks { margin-top: 0; margin-bottom: 10px; }
+  #home .featured-collection {padding: 0 20px;}
+  #home .featured-touts .title, #home .featured-collection .title {margin-top: 6px; font-size: 16px; line-height: initial;}
+  #home .featured-touts .item  {margin-bottom: 10px; padding-left: 10px}
+  #home .featured-collection .item {margin-bottom: 40px;}
+  #home .featured-touts .item:last-child, #home .featured-collection .item:last-child {margin-bottom: 0;}
+  #home .featured-touts .btn, #home .featured-collection .btn {padding: 6px 20px; font-size: 10px;}
+  
+  #home .quick-links {margin-top: 10px; margin-bottom: 0;}
+  #home .quick-links .grid {margin-left: -14px; margin-top: -7px;}
+  #home .quick-links .grid__item {margin: 7px 0; padding-left: 14px;}
+  #home .quick-links .grid__item div {background-color: #000; color: #fff; text-transform: uppercase; padding: 14px 0;}
+  
+  /*
+  /******************************** CAROUSEL *****************************
+  */
+
+  #carousel .item_img.normal {padding-top: 110%;}
+  #carousel .item_img.normal.not-wide {padding-top: 150%;}
+  #carousel .item-overlay {width: 100%; right: 0; top: 0; left: 0; bottom: 0; text-align: center; padding: 0; }
+  #carousel .item-overlay h1 {font-size: 16px;  padding: 0;}
+  #carousel .item-overlay p {display: none; font-size: 13px; letter-spacing: 0.07em; padding: 0 40px;}
+  
+
+  /*
+  /******************************** SINGLE PRODUCT *****************************
+  */
+
+  .product-top {margin-top: 40px;}  
+  .product-top .breadcrumb {float: none;}
+  .collection-nav {float: none; text-align: left;}
+  .collection-nav.shown {margin-top: 20px;}
+
+  #product-gallery {float: none; width: 100%; margin: 0 auto; padding: 0 16px; box-sizing: border-box;}
+  #product-gallery.vertical #thumbs {margin-top: 20px; padding: 0;}
+  #product-gallery .slick-dots {position: fixed; bottom: 20px;}
+  #active-wrapper {width: 100%; overflow: hidden; margin: 0; }
+  #active-wrapper .img {width: 100%; margin: 0}
+  #active-wrapper.slick-slider .slick-slide {margin: 0;}
+  #product-wrapper .red-message {font-size: 14px; line-height: 22px;}
+  #product-info {float: none; margin: 40px 0 0 0; width: 100%; text-align: left;}
+  #product-info .title {text-align: left; font-size: 20px; width: 84%;}  
+  #product-info .swatch {margin: 0;}
+  #product-info .swatch label {height: 24px !important; margin: 0 8px 8px 0; line-height: 170%} 
+  #product-info .price {font-size: 20px; margin-bottom: 20px;}
+  #product-info .price .retail {margin: 0 7px; }
+  #product-info .price .deal {margin: 0 7px 0 0;}
+  #product-info .description {margin-top: 0px; margin-bottom: 30px;}
+  #product-info .description p {margin-bottom: 10px; font-size: 12px;}
+  
+  #thumbs-wrapper {box-sizing: border-box; padding: 0;}
+  #thumbs-wrapper #thumbs img {width: 100%; max-height: none;}
+  #thumbs-wrapper .slick-slider .slick-arrow {font-size: 10px; margin-top: -5px; font-weight: bold; text-shadow: 0 0 0 #000;}
+  #thumbs-wrapper .slick-initialized .slick-slide {margin: 0 3px;}    
+  #thumbs-wrapper .slick-slider .slick-arrow.left-arrow {left: -22px;}
+  #thumbs-wrapper .slick-slider .slick-arrow.right-arrow {right: -22px;}
+  
+  #product-info .cta {width: 100%; padding: 0;}
+  #product-info .cta .item.first {width: 20%; margin-right: 10%;}
+  #product-info .cta .item.middle {width: 70%;}
+  #product-info .cta .item.last {float: none; clear: both;}
+  #product-info .content-available .btn {display: block; width: 100%; padding: 15px 16px; font-size: 14px; line-height: 19px;}
+  #product-info .content-available.sticky {position: fixed; bottom: 10px; width: 100%; box-sizing: border-box; padding: 0 20px; margin-left: 0px; margin-bottom: 0; left: 0; z-index: 1;}
+  #product-info .content-soldout .btn {line-height: 28px;}
+  
+  #product-info .quantity {/*margin: 0; */min-width: 64px;}
+  #product-info .quantity .wrap {display: block;}
+  
+  #product-wrap {padding: 0; margin-top: 0; margin-bottom: 0;}
+  #product-gallery {padding: 0;}
+  #product-info {padding: 0 20px;}
+	
+  #product-wrap{position:relative;}
+  #product-info .wishlistProduct{position: absolute;top: 15px;right: 15px;}
+  
+  #product-info .low-stock {margin-left: 0; padding-left: 0; margin-bottom: 15px;}
+  
+  #product-wrap .getalook {width: 100%; background: #f8f8f8; float: none; box-sizing: border-box; padding: 25px 0; margin-top: 30px;}
+  #product-wrap .getalook h2 {text-transform: uppercase; font-size: 18px;}
+  #product-wrap .getalook .img {width: 100%; }
+  #product-wrap .getalook .slick-slider .slick-arrow {font-size: 26px; margin-top: -13px; }
+  #product-wrap .getalook .slick-slider .slick-arrow.lnr-chevron-down {margin-top: -13px;}
+  #product-wrap .getalook .slick-list, #product-wrap .related-products .slick-list, #product-wrap .recently-viewed .slick-list {padding-right: 50px;}
+  .related-products, .recently-viewed, .getalook {margin-top: 0; background: #fff; padding-top: 0; padding-bottom: 20px;}
+  .related-products h2, .recently-viewed h2, .getalook h2 {font-size: 18px;}
+  .related-products .container, .recently-viewed .container {padding: 0;}
+
+  #product-wrap .getalook.get-the-look{background:none;}
+  #product-wrap .getalook.get-the-look .title{width:auto;}
+  #product-wrap .getalook.get-the-look .slick-slider .slick-track{margin:auto;}
+  #product-wrap .getalook.get-the-look .slick-slider .slick-list{padding-right:0;}
+  #product-wrap .getalook.get-the-look h2{text-align:center;}
+  #product-wrap .getalook.get-the-look .price{font-size:12px;text-align:center;}
+  #product-wrap .getalook.get-the-look .price .deal{margin-right:0;}
+  
+  #sharing {margin-left: 5px; margin-top: -6px;}
+  #sharing i {font-size: 13px; width: 30px; height: 30px;}
+  #sharing .share-icon {font-size: 10px;}
+  #sharing-popup {padding: 8px;}
+  
+  #sizechart-popup .section .content {padding: 0;}
+  #sizechart-popup .section .content .countries a span {margin: 0;}
+  .countdown-banner{margin-left: -10px;margin-right:-10px;}
+  .countdown-banner p{padding:5px 30px;}
+  /*.countdown-banner{margin-top: 30px;}
+  .countdown-banner p{font-size:14px;}*/
+  
+  //QUICK VIEW
+  .quick-view #product-wrap {margin: auto; padding: 0; width: 300px;}
+  .quick-view #product-info {float: none; width: 100%;}
+  .quick-view #product-info .swatch-element label {padding: 4px 10px;}
+  .quick-view #product-gallery {width: 100%;}
+  .quick-view #active-wrapper {width: 100%;}
+  .quick-view #active-wrapper .slick-dots {display: none !important;}
+  .quick-view #sharing {display: none !important;}
+  .quick-view .sizechart {display: none;}
+  
+  #product-info .bf-countdown { margin: 0 auto; display: block; /*width: 350px;*/ }
+  #product-info .bf-countdown h3 {padding-bottom:20px;text-align:center;}
+  #product-info .bf-countdown .flip-clock-wrapper ul {width:25px}
+  #product-info .bf-countdown .clock{margin-left:auto;max-width: 285px;}
+  
+  #product-info .bf-countdown .clock .flip-clock-divider .flip-clock-label{right:-43px;}
+  #product-info .bf-countdown .flip-clock-divider.hours .flip-clock-label{right:-45px;}
+  #product-info .bf-countdown .flip-clock-divider.minutes .flip-clock-label{right:-50px;}
+  #product-info .bf-countdown .flip-clock-divider.seconds .flip-clock-label{right:-53px;}
+  
+  
+  /*
+  /******************************** COLLECTION GRID *****************************
+  */
+
+  .collection-banner.container {padding: 0; margin-top: 0}
+  .collection-title h1 {margin-top: 10px; margin-bottom: 15px;}
+  
+  .collection-top {margin-top: 15px;}
+  .collection-top .container {max-width: 100%;}
+  .collection-top .breadcrumb {float: none;}
+  .collection-top .sort-select {float: none; text-align: right;} 
+  .collection-top .per-row {/*display: block;*/ margin-bottom: 10px;}
+  .collection-top .sort {/*display: block;*/ margin-bottom: 10px;}
+  .collection-top .refine {/*display: block;*/ font-size: 12px; width: 50%; position: initial;}
+  .collection-top .refine-menu {left: 0; right: 0; top: auto; width: 100%; box-sizing: border-box;}
+  .collection-top label, .collection-top select {font-size: 12px;}
+  
+  #collection {margin-top: 0;}
+  #collection .total-items {margin: 15px 0;}
+  
+  #collection-carousel .container {padding: 0;}
+
+  .product-item {margin-top: 0; margin-bottom: 40px;}
+  .product-item .quick-view-btn {display: none; height: 30px; top: 20%}
+  .product-item .quick-view-btn div {top: 20px;}
+  .product-item .notify-me{opacity: 1; filter: alpha(opacity=100); bottom: 0;height:auto;line-height: 1.2em;padding: 8px 0;}
+  .product-item .notify-me span{top:5px; font-size:8px!important; letter-spacing: 1.5px; }
+  .product-item .price .retail {margin: 0 7px;}
+  .product-item .price .deal {margin: 0 7px;}
+  .product-item .title {font-size: 9px; line-height: 15px;}
+  .product-item .price {font-size: 10px; margin: 0;}
+
+  .thumbs-swatches-wrap {padding: 10px 0 0 0;}  
+  .thumbs-swatches-wrap span.more {font-size: 3vw;}
+
+  .product-item .thumbs-swatches-wrap div {margin-right: 4.5%; width: 15%; padding-top: 15%;}
+  .product-item .thumbs-swatches-wrap div.last {display: none;} 
+  .product-item .thumbs-swatches-wrap span.more {font-size: 2vw;}
+  .product-item .thumbs-swatches-wrap div.feat {margin-right: -4px;}
+  
+  .product-item .available-more-colors {font-size: 7px;}
+  .product-item .image .sale {height: 30px; width: 30px;}
+  .product-item .image .sale div {top: 5px; font-size: 9px;}
+
+  .collection-top .per-row {width: 30%; margin-right: 0; border-right: 0;}
+  .collection-top .sort-by {width: 50%; margin-right: 0; position: relative; margin: auto;}
+  .collection-top .sort-by label {display: block; text-align: center; background-color: #fff; line-height: 31px; position: absolute; width: 100%;}
+  .collection-top .sort-by label span:after {}
+
+  .pagination {margin-top: 5px;}
+  .pagination .prev a {margin-left: 0;}
+  .pagination .next a {margin-right: 0;}
+  
+  /*
+  /****************************** BLOG *********************************
+  */
+
+  #blog.template-grid .text-wrapper .continue {display: block;} 
+  #blog.template-list h2 {text-align: center;}
+  #blog.template-list .articles-wrapper {width: 100%; float: none;}
+  #blog.template-list .article-date {display: none;}
+
+  #article .wrapper {width: 100%}
+
+  .blog-sidebar {display: none;}
+
+
+  /*
+  /******************************** CART *****************************
+  */
+
+  #cart-wrap {margin: 5px auto 20px auto;}
+  #cart-wrap h1 {margin-top: 15px; font-weight: normal;}
+  #cart-wrap table td {margin-bottom: 20px; width: auto; font-size: 10px; padding: 5px;}
+  #cart-wrap table .title {margin-bottom: 0;}
+  #cart-wrap .item .title .text, #cart-wrap .item p {font-size: 10px;}
+  #cart-wrap table .item img {margin: auto; padding: 0; max-width: 80px;}
+  #cart-wrap .item .remove {padding-right: 10px;}
+  #cart-wrap .item .remove a {position: relative;}
+  #cart-wrap .item .remove a i {font-size: 10px; box-sizing: border-box; padding: 4px; background: #000; color: #fff; text-shadow: 0px 0px 1px #fff; border-radius: 50%;}
+  #cart-wrap table tfoot td {background: none;}
+  
+  #cart-wrap .subtotal .number, #cart-wrap .subtotal .label {width: 100%;} 
+  #cart-wrap .bottom-btns div {margin-right: 10px;}
+  #cart-wrap .bottom-btns div.amazon-payments-pay-button {margin-top: 0px;}
+  #cart-wrap .bottom-btns div.checkout-button {display: block; transform: translate3d(0,0,0);}
+  #cart-wrap .bottom-btns div.checkout-button.sticky {position: fixed; bottom: 10px; z-index: 1; width: 100%; box-sizing: border-box; padding: 30px; margin-left: -20px; padding-bottom: 0; margin-bottom: 0;}
+  #cart-wrap .bottom-btns div.checkout-button input {width: 100%;}
+  #cart-wrap .bottom-btns .continue-button input, #cart-wrap .bottom-btns .update-quantities input {font-size: 12px;}
+  
+  #cart-wrap #additional-checkout-buttons {display: block; text-align: center;}
+  #cart-wrap #additional-checkout-buttons-label {display: block;}
+
+  /*
+  /******************************** SHIPPING CALCULATOR *****************************
+  */   
+
+  #shipping-calculator label {margin-top: 15px; margin-bottom: 10px;}    
+
+
+  /*
+  /******************************** SIDE CART *****************************
+  */  
+
+  #side-cart {width: 90%; right: -92%;}
+  #side-cart .wrapper .buttons-wrapper {width: 90%;}
+
+
+  /*
+  /******************************** SLICK *****************************
+  */    
+
+  .slick-dots {bottom: 20px;}  
+  .slick-dots li button {width: 10px; height: 10px;}
+
+  /*
+  /******************************** CUSTOMER ACCOUNT *****************************
+  */
+
+  .my-account-menu {width: 100%; float: none;}
+  .my-account-menu h1 {margin-left: 0;}
+  .my-account-menu ul {margin-bottom: 60px;}
+  .my-account-menu ul li {padding: 6px 8px;}
+  .my-account-content, .order-detail {width: 100%; background: #fff; border: none;  margin-left: 0 !important; float: right !important; padding: 0; margin-top: 0;}
+  .my-account-content .column {float: none; width: 100%;}
+  .account {text-align: center;} 
+  .account .container {padding: 30px 20px;} 
+  .account h1 {text-align: center;}
+  .account .action-bottom.logout {display: none;}
+  .account.register-login h1 {margin-bottom: 20px;}
+  .address_actions {float:none; margin: 25px 0}
+  .account h2 {text-align: center; font-size: 22px; color: #000000; margin-bottom: 30px; }
+  .account h3 {font-size: 15px; }
+  .account h4 {font-size: 15px; }
+  #address_tables {text-align: center; }
+  span.default_address {display: block; margin-top: 5px;}
+
+  .my-account-content h1 span, .order-detail h1 span {float: none;}
+  .my-account-content h1 .action-bottom.smaller {position: static; margin-top: 17px;}
+
+  #customer-accounts {text-align: center !important; }
+  #customer-accounts h1 {text-align: center}
+  .templateCustomersLogin form label, .templateCustomersRegister form label {min-width: 0; width: 100%;}
+  #customer_orders h1 {text-align: center;}
+  #customer_orders {padding-top: 0; margin-top: 40px;}
+  #customer-login {float: none; width: 100%}
+  #customer-register {float: none; width: 100%;}
+  #recover-password {float: none; width: 100%}
+  #order_address #order_payment, #order_address #order_shipping, #customer_sidebar, #customer_orders {float:none; width: 100%;margin-right:0;}
+  #customer_sidebar {margin-top: 50px;}
+
+  /*
+  /******************************** SIZE GUIDE PAGE *****************************
+  */
+
+  #page-sizeguide {padding: 0 20px;}
+  #page-sizeguide h2.first {margin-top: 0px;}
+  #page-sizeguide table td {font-size: 10px;}
+
+}

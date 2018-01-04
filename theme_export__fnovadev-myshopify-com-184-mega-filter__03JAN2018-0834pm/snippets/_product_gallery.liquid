@@ -1,0 +1,83 @@
+<div id="product-gallery" class="clearfix {% if settings.product_thumbs_slide == 'vertical' %}vertical {% endif %}{% if currentProduct.images.size > 0 %}{% if settings.main_image_display == 'Zoom-in' or settings.main_image_display == 'Both' %}zoom-in{% endif %}{% endif %}">
+  <div id="active-wrapper" class="slick-pending {% if settings.product_thumbs_slide == 'vertical' and currentProduct.images.size > 1 %}left medium-down--one-whole{% endif %}">
+    {% assign countPlusImages = 0 %}
+    {% assign countStandardImages = 0 %}
+    
+    {% for image in currentProduct.images %}
+      {% if image.alt contains "plus-size" %}
+        {% assign countPlusImages = countPlusImages | plus: 1 %}
+      {% else %}
+        {% assign countStandardImages = countStandardImages | plus: 1 %}
+      {% endif %}
+    {% endfor %}
+
+	{% for image in currentProduct.images %}
+    
+      {% if collection.handle == "plus" or collection.handle contains 'plus-' %}
+		{% if image.alt contains "plus-size" %}
+          {% assign showImage = true %}
+        {% else %}
+          {% assign showImage = false %}
+    	{% endif %}
+      {% else %}
+		{% if image.alt contains "plus-size" %}
+          {% assign showImage = false %}
+        {% else %}
+          {% assign showImage = true %}
+    	{% endif %}
+      {% endif %}
+    
+      {% if showImage or countPlusImages == 0 or countStandardImages == 0 %}
+        {% if  quickView != true %}
+          {% if settings.main_image_display == 'Lightbox' or settings.main_image_display == 'Both' %}
+            <a href="{{ image | product_img_url: 'master' }}" class="productImage">
+          {% endif %}
+        {% endif %}       
+              <div><img data-image-id="{{image.id}}" class="img" src="{{ image | product_img_url: '1000x' }}" id="large-thumb" itemprop="image" alt="{{ image.alt | escape }}" /></div>
+        {% if  quickView != true %}        
+          <div class="magnify animation"><i class="fa fa-search"></i></div>
+          {% if settings.main_image_display == 'Lightbox' or settings.main_image_display == 'Both' %}
+            </a>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+   	{% endfor %}
+  </div><!-- /#active-wrapper -->
+
+  {% if currentProduct.images.size > 1 %}
+    <div id="thumbs-wrapper" class="{% if settings.product_thumbs_slide == 'vertical' %}left one-eighth medium-down--one-whole{% endif %}">
+      <div id="thumbs" class="slick-pending switch">
+        {% for image in currentProduct.images %}
+          {% if collection.handle == "plus" or collection.handle contains 'plus-' %}
+            {% if image.alt contains "plus-size" %}
+              {% assign showImage = true %}
+            {% else %}
+              {% assign showImage = false %}
+            {% endif %}
+          {% else %}
+            {% if image.alt contains "plus-size" %}
+              {% assign showImage = false %}
+            {% else %}
+              {% assign showImage = true %}
+            {% endif %}
+          {% endif %}
+          {% if showImage or countPlusImages == 0 or countStandardImages == 0 %}
+          <div>
+            <a class="gallery" href="{{ image | product_img_url: 'master' }}" variant-id="{{ image.variants.first.id }}">
+              <img class="img" src="{{ image | product_img_url: '200x' }}" id="large-thumb" itemprop="image" alt="{{ image.alt | escape }}" data-image-id="{{image.id}}" />
+            </a>
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div><!-- /#thumbs-wrapper -->
+  {% endif %}
+  
+  <br style="clear:both;" />
+  <div id="foursixty-product-gallery" style="display:none; padding-top: 15px;" class="small--hide">
+    <div style="font-family:Oswald, sans-serif; font-weight:normal; font-size: 15px; text-align:center;">STYLED ON INSTAGRAM</div>
+    <script data-has-posts-selector="#foursixty-product-gallery" src="//foursixty.com/media/scripts/fs.slider.v2.5.js" data-feed-id="fashionnova" data-theme="slider_v2_5" data-cell-size="25%" data-product-ids="{{product.id}}"></script>
+    <style>.fs-has-links::after {  padding: 3px 6px; color:rgb(245, 15, 150); content: "SHOP THE LOOK";  }.fs-wrapper { height: auto } .fs-entry-container { height: 0 !important; width: 25% !important; padding-top: 25% !important; }.fs-wrapper div.fs-text-container .fs-entry-title, div.fs-detail-title{font-family:Circular; font-size: 12px;;font-style:normal;font-weight:normal;}div.fs-text-container .fs-entry-date, div.fs-detail-container .fs-post-info, div.fs-wrapper div.fs-has-links::after, .fs-text-product, .fs-overlink-text{font-family:Circular; font-size: 13px;;font-style:normal;font-weight:normal;}.fs-wrapper div.fs-text-container * {color:rgb(245, 15, 150)}.fs-wrapper div.fs-text-container {background-color:rgba(0, 0, 0, 0.59); margin: 0px}div.fs-entry-date{display:none}div.fs-entry-title{display:none}.fs-wrapper div.fs-timeline-entry{ margin: 4px } #fs-detail-products { display:none; } .fs-slider-prev-button, .fs-slider-next-button {display: flex !important; background-color: transparent; opacity: 1;} div.fs-wrapper {width: calc(100% - 120px); margin: 0 auto;} .fs-slider-container .fs-slider-prev-button.fs-hidden, .fs-slider-container .fs-slider-next-button.fs-hidden {display: flex !important; opacity: 0.5;} @media only screen and (max-width: 768px) {.fs-wrapper div.fs-entry-container {width: 100% !important; padding-top: 100% !important;}} path.fs-arrow {stroke-width: 2px;}
+    </style>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<script>
+  $(function(){
+    var row = 1;
+    $('#lookbook .content *').each(function(key, img){
+      if($(this).hasClass("lookbook-portrait")) {
+        var html = '<div class="item img lookbook-portrait" style="background-image: url('+$(this).attr('src')+');"></div>';
+        $('#lookbook .container').append(html);
+      }else if($(this).hasClass("lookbook-banner")) {
+        var html = '<div class="item img lookbook-banner" style="background-image: url('+$(this).attr('src')+');"></div>';
+        $('#lookbook .container').append(html);
+      }else if($(this).prop('nodeName').toLowerCase()=="img") {
+        var html = '<div class="item img" style="background-image: url('+$(this).attr('src')+');"></div>';
+        $('#lookbook .container').append(html);
+      } else {
+      	if($(this).prop('nodeName').toLowerCase()=="iframe") {
+          var html = '<div class="item"><iframe src="'+$(this).attr('src')+'"></iframe></div>';
+          $('#lookbook .container').append(html);
+        }
+      }
+    });
+    
+    $('#lookbook .container .item').each(function(key, img){
+      $(this).addClass('medium');
+    });
+    
+    var updateIframes = function(){
+    	var medWidth = $('#lookbook .item.img.medium:last').width();
+      	var medHeight = $('#lookbook .item.img.medium:first').outerHeight();
+      	$('#lookbook .container iframe').width(medWidth).height(medHeight);
+    };
+    
+    updateIframes();
+    $(window).resize(function(){
+      updateIframes();
+    });
+    
+  });
+</script>
+
+<div id="lookbook">
+  	<div class="content hide">
+  		{{ article.content }}
+  	</div>
+  
+  	<div class="container clearfix"></div>
+</div>
